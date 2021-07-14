@@ -1,31 +1,38 @@
 <script lang="ts">
-import Accordion from "../atoms/Accordion.svelte";
+    import { getContext } from "svelte";
+    import type { Writable } from "svelte/store";
+import { applicableOperations } from "../../utils/SvgRules";
+
+    import Accordion from "../atoms/Accordion.svelte";
 
     export let item: any = {};
     export let key: string = "Variables";
+    const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
     let shown = false;
 </script>
 
-
 <Accordion>
     <div slot="header" let:shown class="item">
-            <span class="open-indicator">{shown || !Object.keys(item).length ? "-" : "+"}</span> 
-            <span class="name">{key}</span>
-            <span class="spacer"></span>
-            <span class="actions">
-            </span>
+        <span class="open-indicator"
+            >{shown || !Object.keys(item).length ? "-" : "+"}</span
+        >
+        <span class="name">{key}</span>
+        <span class="spacer" />
+        <span class="actions" />
     </div>
     <div slot="content" class="container">
         {#if item.hasOwnProperty("description")}
-        <span>{item.description}</span>
+            <span>{item.description}</span>
+            {#if $selectedEl && applicableOperations[$selectedEl.nodeName].includes(item.type) }
+                <button>Use</button>
+            {/if}
         {:else}
-        {#each Object.entries(item) as [key, child]}
-            <svelte:self item={child} {key}/>
-        {/each}
+            {#each Object.entries(item) as [key, child]}
+                <svelte:self item={child} {key} />
+            {/each}
         {/if}
     </div>
 </Accordion>
-
 
 <style lang="postcss">
     div.container {
@@ -48,7 +55,11 @@ import Accordion from "../atoms/Accordion.svelte";
     }
     span.spacer::after {
         content: "";
-        background-image: linear-gradient(to right, black 15%, rgba(255,255,255,0) 0%);
+        background-image: linear-gradient(
+            to right,
+            black 15%,
+            rgba(255, 255, 255, 0) 0%
+        );
         background-position: bottom;
         height: 3px;
         background-size: 12px 1px;

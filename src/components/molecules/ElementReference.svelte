@@ -1,19 +1,4 @@
 <script lang="ts" context="module">
-    const friendlyLookup = {
-        svg: "Root",
-        g: "Group",
-        rect: "Rectangle",
-        text: "Text"
-    };
-    const selectableElements = [
-        "text",
-        "image",
-        "rect"
-    ];
-    const hiddenElements = [
-        "tspan",
-        "defs"
-    ]
 </script>
 
 <script lang="ts">
@@ -21,14 +6,19 @@
 
     import type { Writable } from "svelte/store";
     import type { BoundBox } from "../../types";
-import Accordion from "../atoms/Accordion.svelte";
+    import {
+        friendlyLookup,
+        hiddenElements,
+        selectableElements,
+    } from "../../utils/SvgRules";
+    import Accordion from "../atoms/Accordion.svelte";
 
     export let ref: SVGElement;
     let shown = false;
     const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
     const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
     function updateSelection() {
-        if(ref === $selectedEl) {
+        if (ref === $selectedEl) {
             $selectedEl = undefined;
             updateBounds(false);
         } else {
@@ -39,39 +29,55 @@ import Accordion from "../atoms/Accordion.svelte";
     function updateBounds(value: boolean) {
         const rect = ref.getBoundingClientRect();
         if (value) {
-            $indicatorBounds = { x: rect.x, y: rect.y, w: rect.width, h: rect.height };
+            $indicatorBounds = { x: rect.x, y: rect.y, w: rect.width, h: rect.height, };
         } else {
             // Check that the x matches, if it doesn't something else has been located and we shouldn't interfere
-            if($indicatorBounds.x === rect.x) {
+            if ($indicatorBounds.x === rect.x) {
                 $indicatorBounds = { x: -100, y: -100, h: 0, w: 0 };
             }
         }
     }
     let children: SVGElement[];
-    $: children = Array.from(ref.children).filter(c => !hiddenElements.includes(c.nodeName) && c instanceof SVGElement) as SVGElement[];
+    $: children = Array.from(ref.children).filter(
+        (c) => !hiddenElements.includes(c.nodeName) && c instanceof SVGElement
+    ) as SVGElement[];
 </script>
+
 <Accordion>
     <div slot="header" class="item" let:shown>
-        <span class="open-indicator">{shown || !children.length ? "-" : "+"}</span> 
-        <span class="name">{friendlyLookup[ref.nodeName] ?? ref.nodeName}{ref.id && ` (${ref.id})`}</span>
-        <span class="spacer"></span>
+        <span class="open-indicator"
+            >{shown || !children.length ? "-" : "+"}</span
+        >
+        <span class="name"
+            >{friendlyLookup[ref.nodeName] ?? ref.nodeName}{ref.id &&
+                ` (${ref.id})`}</span
+        >
+        <span class="spacer" />
         <span class="actions">
             {#if selectableElements.includes(ref.nodeName)}
-            <button on:click|preventDefault|stopPropagation={updateSelection}>
-                {$selectedEl === ref ? "Unselect" : "Select"}
-            </button>
+                <button
+                    on:click|preventDefault|stopPropagation={updateSelection}
+                >
+                    {$selectedEl == ref ? "Unselect" : "Select"}
+                </button>
             {:else}
-            <button on:mousedown|preventDefault|stopPropagation={() => updateBounds(true)}
-                on:mouseup|preventDefault|stopPropagation={() => setTimeout(() => updateBounds(false), 250)} on:click|preventDefault|stopPropagation> Locate </button>
+                <button
+                    on:mousedown|preventDefault|stopPropagation={() =>
+                        updateBounds(true)}
+                    on:mouseup|preventDefault|stopPropagation={() =>
+                        setTimeout(() => updateBounds(false), 250)}
+                    on:click|preventDefault|stopPropagation
+                >
+                    Locate
+                </button>
             {/if}
         </span>
     </div>
-    <div slot="content" class="container">    
+    <div slot="content" class="container">
         {#each children as child}
             <svelte:self ref={child} />
         {/each}
     </div>
-
 </Accordion>
 
 <style lang="postcss">
@@ -95,7 +101,11 @@ import Accordion from "../atoms/Accordion.svelte";
     }
     span.spacer::after {
         content: "";
-        background-image: linear-gradient(to right, black 15%, rgba(255,255,255,0) 0%);
+        background-image: linear-gradient(
+            to right,
+            black 15%,
+            rgba(255, 255, 255, 0) 0%
+        );
         background-position: bottom;
         height: 3px;
         background-size: 12px 1px;

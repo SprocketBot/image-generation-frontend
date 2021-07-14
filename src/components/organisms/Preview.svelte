@@ -1,12 +1,16 @@
 <script lang="ts">
     import { getContext, onMount } from "svelte";
     import type { Writable } from "svelte/store";
-import Indicator from "../molecules/Indicator.svelte";
+import type { BoundBox } from "../../types";
+    import { selectableElements } from "../../utils/SvgRules";
+    import Indicator from "../molecules/Indicator.svelte";
 
     export let source: string = undefined;
     let container: HTMLElement;
     let svgElement: SVGElement;
     const previewEl = getContext<Writable<SVGElement>>("previewEl");
+    const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
+    const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
 
     onMount(async () => {
         if (!source) {
@@ -21,13 +25,46 @@ import Indicator from "../molecules/Indicator.svelte";
             container.appendChild(newEl);
             console.log(previewEl);
             previewEl.set(newEl);
-            
         }
     });
+
+
+    function handleDoubleClick(e: MouseEvent) {
+        if (!(e.target instanceof Element)) return;
+        if (!$previewEl.contains(e.target)) return;
+
+        let target: Element = e.target;
+        console.log(target.nodeName);
+        if (!selectableElements.includes(target.nodeName)) {
+            while (
+                !selectableElements.includes(target.nodeName) &&
+                $previewEl.contains(target)
+            ) {
+                console.log("pog?")
+                target = target.parentElement;
+            }
+            if (!$previewEl.contains(e.target)) return;
+        }
+        
+        if (!(target instanceof SVGElement)) return;
+        
+        const rect = target.getBoundingClientRect();
+
+        $indicatorBounds = {
+            x: rect.x,
+            y: rect.y,
+            w: rect.width,
+            h: rect.height,
+        };
+
+        $selectedEl = target;
+        console.log(target);
+        console.log($selectedEl);
+    }
 </script>
 
-<div bind:this={container}>
-    <Indicator/>
+<div bind:this={container} on:dblclick={handleDoubleClick}>
+    <Indicator />
 </div>
 
 <style lang="postcss">
@@ -35,6 +72,6 @@ import Indicator from "../molecules/Indicator.svelte";
         @apply h-full w-full p-8 flex justify-center align-middle relative;
     }
     div :global(svg) {
-        @apply h-full w-auto;
+        @apply h-full w-auto select-none;
     }
 </style>

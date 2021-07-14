@@ -21,7 +21,7 @@ import TemplateItems from "../organisms/TemplateItems.svelte";
     </aside>
     <aside class="fields">
         <slot name="fields">
-            <TemplateItems templateName=""/>
+            <TemplateItems templateName="Star of the Week"/>
         </slot>
     </aside>
 </main>
