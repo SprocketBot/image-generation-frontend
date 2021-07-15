@@ -6,9 +6,16 @@ export const friendlyLookup = {
 };
 export const applicableOperations = {
     rect: ["image", "fill", "stroke"],
-    text: ["text"],
+    text: ["text", "fill", "stroke"],
     image: ["image", "stroke"]
 };
+
+export const variableForOperation = {
+    fill: "color",
+    stroke: "color",
+    image: "image",
+    text: "text"
+}
 
 
 export const selectableElements = Object.keys(applicableOperations);

@@ -1,15 +1,24 @@
 <script lang="ts">
-	import { setContext } from "svelte";
-	import type { Writable } from "svelte/store";
+  import { setContext } from "svelte";
+  import type { Writable } from "svelte/store";
 
-	import EditLayout from "./components/layouts/EditLayout.svelte";
-	import { indicatorBounds, previewEl, selectedEl } from "./stores";
-	import type { BoundBox } from "./types";
-	import Tailwindcss from "./utils/Tailwindcss.svelte";
+  import EditLayout from "./components/layouts/EditLayout.svelte";
+  import {
+    indicatorBounds,
+    previewEl,
+    selectedEl,
+    selectedTemplateNode,
+  } from "./stores";
+  import type { TemplateLeafNode, BoundBox } from "./types";
+  import Tailwindcss from "./utils/Tailwindcss.svelte";
 
-	setContext<Writable<SVGElement>>("previewEl", previewEl);
-	setContext<Writable<BoundBox>>("indicatorBounds", indicatorBounds);
-	setContext<Writable<SVGElement>>("selectedEl", selectedEl);
+  setContext<Writable<SVGElement>>("previewEl", previewEl);
+  setContext<Writable<BoundBox>>("indicatorBounds", indicatorBounds);
+  setContext<Writable<SVGElement>>("selectedEl", selectedEl);
+  setContext<Writable<TemplateLeafNode>>(
+    "selectedTemplateNode",
+    selectedTemplateNode
+  );
 </script>
 
 <Tailwindcss />
