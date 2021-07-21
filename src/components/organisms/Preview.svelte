@@ -25,8 +25,60 @@
       container.appendChild(newEl);
       console.log(previewEl);
       previewEl.set(newEl);
+
+      attachListeners(newEl);
+      console.log(newEl.children);
     }
   });
+
+  function attachListeners(el: SVGElement) {
+    if (selectableElements.includes(el.nodeName)) {
+      const rect = el.getBoundingClientRect();
+      el.onmouseenter = handleMouseEnter;
+    }
+    Array.from(el.children).forEach((e) => {
+      if (e instanceof SVGElement) {
+        attachListeners(e);
+      }
+    });
+  }
+
+  function handleMouseEnter(e: MouseEvent) {
+    if ($selectedEl) return;
+    if (!(e.target instanceof Element)) return;
+
+    const el: Element = e.target;
+    const rect = el.getBoundingClientRect();
+
+    $indicatorBounds = {
+      x: rect.x,
+      y: rect.y,
+      w: rect.width,
+      h: rect.height,
+    };
+  }
+
+  function handleMousedown(e: MouseEvent) {
+    if ($selectedEl) {
+      if (!(e.target instanceof SVGElement)) {
+        $indicatorBounds = {
+          x: 0,
+          y: 0,
+          w: 0,
+          h: 0,
+        };
+      }
+    } else {
+      $selectedEl;
+    }
+  }
+
+  function handleKeydown(e: KeyboardEvent) {
+    console.log($selectedEl);
+    if (e.key === "Escape") {
+      $selectedEl = undefined;
+    }
+  }
 
   function handleDoubleClick(e: MouseEvent) {
     if (!(e.target instanceof Element)) return;
@@ -39,7 +91,6 @@
         !selectableElements.includes(target.nodeName) &&
         $previewEl.contains(target)
       ) {
-        console.log("pog?");
         target = target.parentElement;
       }
       if (!$previewEl.contains(e.target)) return;
@@ -57,11 +108,11 @@
     };
 
     $selectedEl = target;
-    console.log(target);
     console.log($selectedEl);
   }
 </script>
 
+<svelte:window on:keydown={handleKeydown} on:mousedown={handleMousedown} />
 <div bind:this={container} on:dblclick={handleDoubleClick}>
   <Indicator />
 </div>

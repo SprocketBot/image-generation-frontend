@@ -85,7 +85,7 @@
             {#each options as option}
               Set {option.option} to :
               <SelectOption
-                bind:x={option.value}
+                bind:value={option.value}
                 options={variableOptions.filter(
                   (x) => x.value.type === variableForOperation[option.option]
                 )}

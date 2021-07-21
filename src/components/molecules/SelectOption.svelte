@@ -9,19 +9,10 @@
   onMount(() => {
     console.log(options);
   });
-  function handleChange() {
-    console.log(value);
-    console.log(x);
-  }
 </script>
 
 <div>
-  <select
-    bind:value={selected}
-    on:blur={() => {
-      handleChange();
-    }}
-  >
+  <select bind:value={selected}>
     <option value="none">Leave As Is</option>
     {#each options as option}
       <option value={option.key}>{option.key}</option>

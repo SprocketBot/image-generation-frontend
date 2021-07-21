@@ -8,7 +8,8 @@
 <main>
   <section class="preview">
     <slot name="preview">
-      <Preview source="/img/techdemo_figma.svg" />
+      <Preview source="/img/player_highlight.svg" />
+      <!-- <Preview source="/img/techdemo_figma.svg" /> -->
     </slot>
   </section>
   <section class="controls">
