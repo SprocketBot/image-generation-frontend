@@ -7,7 +7,7 @@
   export let value;
   let selected;
   onMount(() => {
-    console.log(options);
+    //console.log(options);
   });
 </script>
 

@@ -1,5 +1,8 @@
 import { writable } from "svelte/store";
-import { TemplateLeafNode, BoundBox, LinkType } from "./types";
+import type { TemplateLeafNode, BoundBox, LinkType } from "./types";
+
+export const template = writable<any>({});
+export const svgData = writable<string>("");
 
 export const previewEl = writable<SVGElement>(undefined);
 export const indicatorBounds = writable<BoundBox>({
@@ -12,4 +15,3 @@ export const selectedEl = writable<SVGElement>(undefined);
 export const selectedTemplateNode = writable<TemplateLeafNode>(undefined);
 
 export const links = writable<Array<LinkType>>([]);
-export const template = writable<any>({});

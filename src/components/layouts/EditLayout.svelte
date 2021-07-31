@@ -3,28 +3,65 @@
   import Preview from "../organisms/Preview.svelte";
   import SvgList from "../organisms/SVGList.svelte";
   import TemplateItems from "../organisms/TemplateItems.svelte";
+  // import TemplateItem from "../molecules/TemplateItem.svelte";
+  import { getContext, onMount } from "svelte";
+  import type { Writable } from "svelte/store";
+  import { fly } from "svelte/transition";
+  import { getTemplate } from "../../api";
+
+  export let source: string;
+  export let templateName: string;
+
+  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
+  const template = getContext<Writable<any>>("template");
+  const svgData = getContext<Writable<string>>("svgData");
+
+  let ready = false;
+  onMount(async () => {
+    if (!source || !templateName) {
+      throw new Error("missing a prop for the layout");
+    }
+    // [$svgData, $template] = await Promise.all([
+    //   fetch(source).then((r) => r.text()),
+    //   getTemplate(templateName),
+    // ])
+    $svgData = await fetch(source).then((r) => r.text());
+    $template = await getTemplate(templateName);
+
+    ready = true;
+  });
 </script>
 
 <main>
   <section class="preview">
     <slot name="preview">
-      <Preview source="/img/player_highlight.svg" />
+      {#if ready}
+        <Preview svgData={$svgData} />
+      {:else}
+        <h1>Fetching image</h1>
+      {/if}
       <!-- <Preview source="/img/techdemo_figma.svg" /> -->
     </slot>
   </section>
   <section class="controls">
     <Controls />
   </section>
-  <aside class="previewEls">
-    <slot name="previewEls">
-      <SvgList />
-    </slot>
-  </aside>
-  <aside class="fields">
-    <slot name="fields">
-      <TemplateItems templateName="Star of the Week" />
-    </slot>
-  </aside>
+
+  {#if $selectedEl}
+    <aside class="fields" transition:fly={{ x: 250, opacity: 1 }}>
+      <slot name="fields">
+        {#if ready}
+          <TemplateItems template={$template} />
+        {/if}
+      </slot>
+    </aside>
+  {:else}
+    <aside class="previewEls">
+      <slot name="previewEls">
+        <SvgList />
+      </slot>
+    </aside>
+  {/if}
 </main>
 
 <style lang="postcss">
@@ -54,12 +91,13 @@
   }
   .previewEls {
     @apply bg-gray-200 border-l-2 border-gray-800
-                col-span-2 col-start-5 row-start-1 row-span-3;
+                col-span-2 col-start-5 row-start-1 row-span-6;
     /* grid-area: els; */
   }
   .fields {
     @apply bg-gray-200 border-l-2 border-t-2 border-gray-800
-                col-span-2 col-start-5 row-start-4 row-span-3;
+                col-span-2 col-start-5 row-start-1 row-span-6;
+
     /* grid-area: fields; */
   }
 </style>

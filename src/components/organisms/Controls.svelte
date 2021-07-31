@@ -121,7 +121,7 @@
   .delete {
     @apply text-red-500;
   }
-  .edit {
+  /* .edit {
     @apply text-yellow-500;
-  }
+  } */
 </style>

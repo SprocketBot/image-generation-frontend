@@ -14,3 +14,8 @@ export type LinkType = {
     element: SVGElement,
     options: Array<{option: string, value: string}>
 }
+
+export type LinkOption = {
+    option: string,
+    value: string
+}

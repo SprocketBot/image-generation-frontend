@@ -5,7 +5,7 @@
   import { selectableElements } from "../../utils/SvgRules";
   import Indicator from "../molecules/Indicator.svelte";
 
-  export let source: string = undefined;
+  export let svgData: string = undefined;
   let container: HTMLElement;
   let svgElement: SVGElement;
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
@@ -13,15 +13,16 @@
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
 
   onMount(async () => {
-    if (!source) {
+    if (!svgData) {
       throw new Error("Missing required prop 'source'!");
     }
-    const data = await fetch(source).then((r) => r.text());
     const parser = new DOMParser();
-    const newEl = parser.parseFromString(data, "image/svg+xml").children[0];
+    const newEl = parser.parseFromString(svgData, "image/svg+xml").children[0];
 
     if (newEl.nodeName === "svg" && newEl instanceof SVGElement) {
       newEl.setAttribute("preserveAspectRatio", "xMinYMin");
+      newEl.setAttribute("width", "100%");
+      newEl.setAttribute("height", "100%");
       container.appendChild(newEl);
       console.log(previewEl);
       previewEl.set(newEl);
@@ -58,20 +59,20 @@
     };
   }
 
-  function handleMousedown(e: MouseEvent) {
-    if ($selectedEl) {
-      if (!(e.target instanceof SVGElement)) {
-        $indicatorBounds = {
-          x: 0,
-          y: 0,
-          w: 0,
-          h: 0,
-        };
-      }
-    } else {
-      $selectedEl;
-    }
-  }
+  // function handleMousedown(e: MouseEvent) {
+  //   if ($selectedEl) {
+  //     if (!(e.target instanceof SVGElement)) {
+  //       $indicatorBounds = {
+  //         x: 0,
+  //         y: 0,
+  //         w: 0,
+  //         h: 0,
+  //       };
+  //     }
+  //   } else {
+  //     $selectedEl;
+  //   }
+  // }
 
   function handleKeydown(e: KeyboardEvent) {
     console.log($selectedEl);
@@ -112,7 +113,7 @@
   }
 </script>
 
-<svelte:window on:keydown={handleKeydown} on:mousedown={handleMousedown} />
+<svelte:window on:keydown={handleKeydown} />
 <div bind:this={container} on:dblclick={handleDoubleClick}>
   <Indicator />
 </div>

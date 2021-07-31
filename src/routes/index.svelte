@@ -10,6 +10,7 @@
     selectedTemplateNode,
     template,
     links,
+    svgData,
   } from "../stores";
   import type { BoundBox, LinkType, TemplateLeafNode } from "../types";
   import Tailwindcss from "../utils/Tailwindcss.svelte";
@@ -23,7 +24,11 @@
     "selectedTemplateNode",
     selectedTemplateNode
   );
+  setContext<Writable<string>>("svgData", svgData);
 </script>
 
 <Tailwindcss />
-<EditLayout />
+<EditLayout
+  source={`/static/img/techdemo_figma.svg`}
+  templateName={`Star of the week`}
+/>

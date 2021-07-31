@@ -41,6 +41,8 @@
     $: children = Array.from(ref.children).filter(
         (c) => !hiddenElements.includes(c.nodeName) && c instanceof SVGElement
     ) as SVGElement[];
+
+    
 </script>
 
 <Accordion>
