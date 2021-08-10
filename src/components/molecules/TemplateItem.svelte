@@ -1,8 +1,32 @@
 <script lang="ts">
+  import type {
+    ElementsMap,
+    SVGProperty,
+    TemplateLeafNode,
+    TemplateVariable,
+  } from "../../types";
+  import {
+    applicableOperations,
+    variableOperations,
+  } from "../../utils/SvgRules";
+  import { getContext } from "svelte";
+  import type { Writable } from "svelte/store";
   import Accordion from "../atoms/Accordion.svelte";
+  import DropdownButton from "../atoms/DropdownButton.svelte";
 
   export let item: any = {};
   export let key: string = "Variables";
+  export let name: string = "";
+
+  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
+  const links = getContext<Writable<ElementsMap>>("links");
+  function setLink(event) {
+    if (!$links.get($selectedEl)) {
+      $links.set($selectedEl, new Map<SVGProperty, TemplateVariable>());
+    }
+    $links.get($selectedEl).set(event.detail, name);
+    $links = $links;
+  }
 </script>
 
 <Accordion>
@@ -16,10 +40,18 @@
   </div>
   <div slot="content" class="container">
     {#if item.hasOwnProperty("description")}
-      <span>{item.description}</span>
+      {#if $selectedEl}
+        <DropdownButton
+          on:clicked={setLink}
+          name="Use as"
+          choices={variableOperations[item.type]}
+        />
+      {:else}
+        <span>{item.description}</span>
+      {/if}
     {:else}
       {#each Object.entries(item) as [key, child]}
-        <svelte:self item={child} {key} />
+        <svelte:self name="{name ? `${name}.` : ''}{key}" item={child} {key} />
       {/each}
     {/if}
   </div>

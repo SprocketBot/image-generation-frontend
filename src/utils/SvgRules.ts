@@ -10,6 +10,12 @@ export const applicableOperations = {
     image: ["image", "stroke"]
 };
 
+export const variableOperations = {
+    text: ["text"],
+    color: ["fill", "stroke"],
+    image: ["image"]
+}
+
 export const variableForOperation = {
     fill: "color",
     stroke: "color",

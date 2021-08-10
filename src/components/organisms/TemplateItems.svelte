@@ -6,7 +6,6 @@
   } from "../../utils/SvgRules";
   import { getContext, onMount } from "svelte";
   import type { Writable } from "svelte/store";
-  import { getTemplate } from "../../api";
   import TemplateItem from "../molecules/TemplateItem.svelte";
 
   export let template: any;

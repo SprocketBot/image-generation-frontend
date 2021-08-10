@@ -7,7 +7,6 @@
 
   export let svgData: string = undefined;
   let container: HTMLElement;
-  let svgElement: SVGElement;
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
   const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
@@ -34,7 +33,6 @@
 
   function attachListeners(el: SVGElement) {
     if (selectableElements.includes(el.nodeName)) {
-      const rect = el.getBoundingClientRect();
       el.onmouseenter = handleMouseEnter;
     }
     Array.from(el.children).forEach((e) => {
@@ -49,6 +47,7 @@
     if (!(e.target instanceof Element)) return;
 
     const el: Element = e.target;
+
     const rect = el.getBoundingClientRect();
 
     $indicatorBounds = {
@@ -78,6 +77,7 @@
     console.log($selectedEl);
     if (e.key === "Escape") {
       $selectedEl = undefined;
+      $indicatorBounds = { x: 0, y: 0, h: 0, w: 0 };
     }
   }
 

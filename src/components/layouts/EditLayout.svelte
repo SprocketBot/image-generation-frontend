@@ -3,7 +3,6 @@
   import Preview from "../organisms/Preview.svelte";
   import SvgList from "../organisms/SVGList.svelte";
   import TemplateItems from "../organisms/TemplateItems.svelte";
-  // import TemplateItem from "../molecules/TemplateItem.svelte";
   import { getContext, onMount } from "svelte";
   import type { Writable } from "svelte/store";
   import { fly } from "svelte/transition";

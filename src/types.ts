@@ -1,3 +1,6 @@
+export type SVGProperty = "text" | "fill" | "stroke" | "image"
+//export type OperationType = ""
+export type TemplateVariable = string
 export type BoundBox = {
     w: number,
     h: number,
@@ -10,12 +13,5 @@ export type TemplateLeafNode = {
     type: string
 }
 
-export type LinkType = {
-    element: SVGElement,
-    options: Array<{option: string, value: string}>
-}
-
-export type LinkOption = {
-    option: string,
-    value: string
-}
+export type ElementsMap = Map<SVGElement, PropertiesMap>
+export type PropertiesMap = Map<SVGProperty, TemplateVariable>
