@@ -24,6 +24,6 @@
 
 <Tailwindcss />
 <EditLayout
-  source={`/static/img/player_highlight.svg`}
+  source={`/static/img/techdemo_figma.svg`}
   templateName={`Star of the week`}
 />

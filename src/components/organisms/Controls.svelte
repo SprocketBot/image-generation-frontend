@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
+import { uploadTemplate } from "../../api";
   import type {
     BoundBox,
     TemplateVariable,
@@ -30,7 +31,7 @@
     $links.get(event.detail.el).delete(event.detail.prop);
     $links = $links;
   }
-  function finish() {
+  async function finish() {
     for (const [el, linkmap] of $links) {
       const sproketData: SproketData[] = [];
       for (const [linkType, variable] of linkmap) {
@@ -45,45 +46,48 @@
       el.setAttribute("data-sprocket", JSON.stringify(sproketData));
     }
 
-    var svgData = $previewEl.outerHTML;
-    var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-    var svgUrl = URL.createObjectURL(svgBlob);
-    var downloadLink = document.createElement("a");
-    downloadLink.href = svgUrl;
-    downloadLink.download = "testOutput.svg";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    let svgData = $previewEl.outerHTML;
+    await uploadTemplate(svgData, "sotw", "test.svg")
   }
 </script>
 
 <section>
-  <!-- <div> -->
-  <div>
-    Links
+  <header>
+    <h3>Dynamic Values</h3>
+    <span class="spacer" />
     <button>Test</button>
     <button on:click={finish}>Done</button>
-  </div>
-  {#each [...$links] as [el, linkmap]}
-    <LinksDisplay
-      on:clear_link={clearLink}
-      on:clear_prop={clearProp}
-      {el}
-      {linkmap}
-    />
-  {/each}
-  <!-- </div> -->
+  </header>
+  <section>
+    {#each [...$links] as [el, linkmap]}
+      <LinksDisplay
+        on:clear_link={clearLink}
+        on:clear_prop={clearProp}
+        {el}
+        {linkmap}
+      />
+    {/each}
+  </section>
 </section>
 
 <style lang="postcss">
   section {
-    height: 100%;
-    /* display: grid; */
-    /* grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr; */
+    @apply h-full;
   }
-  section div:first-child {
-    @apply border-b-2 border-gray-600;
+  section > header {
+    @apply border-b-2 border-gray-600 flex items-center px-10;
+  }
+  section > header > h3 {
+    @apply text-lg font-bold;
+  }
+  section > header > .spacer {
+    @apply flex-1;
+  }
+  section > header > button {
+    @apply px-2 py-1 bg-primary-200 hover:bg-primary-400 ml-4;
+  }
+  section > section {
+    @apply pl-10;
   }
   .unconfirmed {
     @apply text-gray-500;
@@ -91,7 +95,4 @@
   .delete {
     @apply text-red-500;
   }
-  /* .edit {
-    @apply text-yellow-500;
-  } */
 </style>

@@ -22,27 +22,43 @@
   function clearProperty(property: SVGProperty) {
     dispatch("clear_prop", { el: el, prop: property });
   }
+  let unselected = true;
+  $: unselected = el === $selectedEl;
 </script>
 
-<div on:click={selectThisElement}>
+<div on:click={selectThisElement} class:unselected>
   {el.id}
-  <span><button on:click|stopPropagation={clearLink}>Del</button></span>
+  <span><button on:click|stopPropagation={clearLink}>Delete</button></span>
   {#if el === $selectedEl}
+  <dl>
     {#each [...linkmap] as [property, variable]}
-      <div>
-        <span class="spacer" />
-        <span>{property}: {variable}</span>
-        <span
-          ><button on:click|stopPropagation={() => clearProperty(property)}
-            >Del</button
-          ></span
-        >
-      </div>
+      <dt>
+        {property}:
+      </dt>
+      <dd>
+        <span>{variable}</span>
+        <button on:click|stopPropagation={() => clearProperty(property)}>
+          Delete
+        </button>
+      </dd>
     {/each}
+  </dl>
   {/if}
 </div>
 
 <style lang="postcss">
+  div {
+    cursor: pointer;
+  }
+  div.unselected {
+    cursor: default;
+  }
+  dt {
+    @apply font-bold pl-4;
+  }
+  dd {
+    @apply pl-8
+  }
   span.spacer {
     @apply pl-5;
   }
