@@ -1,10 +1,16 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
-  import type { BoundBox, TemplateVariable, SVGProperty } from "../../types";
+  import type {
+    BoundBox,
+    TemplateVariable,
+    SVGProperty,
+    SproketData,
+  } from "../../types";
   import LinksDisplay from "../molecules/LinkDisplay.svelte";
 
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
+  const previewEl = getContext<Writable<SVGElement>>("previewEl");
   const links =
     getContext<Writable<Map<SVGElement, Map<SVGProperty, TemplateVariable>>>>(
       "links"
@@ -24,6 +30,31 @@
     $links.get(event.detail.el).delete(event.detail.prop);
     $links = $links;
   }
+  function finish() {
+    for (const [el, linkmap] of $links) {
+      const sproketData: SproketData[] = [];
+      for (const [linkType, variable] of linkmap) {
+        sproketData.push({
+          varPath: variable,
+          type: linkType,
+        });
+      }
+      const sproketDataString = JSON.stringify(sproketData);
+      sproketDataString.replace('"', "'");
+      console.log(sproketDataString);
+      el.setAttribute("data-sprocket", JSON.stringify(sproketData));
+    }
+
+    var svgData = $previewEl.outerHTML;
+    var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    var svgUrl = URL.createObjectURL(svgBlob);
+    var downloadLink = document.createElement("a");
+    downloadLink.href = svgUrl;
+    downloadLink.download = "testOutput.svg";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  }
 </script>
 
 <section>
@@ -31,7 +62,7 @@
   <div>
     Links
     <button>Test</button>
-    <button>Done</button>
+    <button on:click={finish}>Done</button>
   </div>
   {#each [...$links] as [el, linkmap]}
     <LinksDisplay

@@ -6,6 +6,7 @@ export const friendlyLookup = {
 };
 export const applicableOperations = {
     rect: ["image", "fill", "stroke"],
+    polygon:["fill", "stroke"],
     text: ["text", "fill", "stroke"],
     image: ["image", "stroke"]
 };

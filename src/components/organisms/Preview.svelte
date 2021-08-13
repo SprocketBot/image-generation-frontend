@@ -15,16 +15,17 @@
     if (!svgData) {
       throw new Error("Missing required prop 'source'!");
     }
+    console.log(svgData);
     const parser = new DOMParser();
     const newEl = parser.parseFromString(svgData, "image/svg+xml").children[0];
 
     if (newEl.nodeName === "svg" && newEl instanceof SVGElement) {
-      newEl.setAttribute("preserveAspectRatio", "xMinYMin");
-      newEl.setAttribute("width", "100%");
-      newEl.setAttribute("height", "100%");
+      // newEl.setAttribute("preserveAspectRatio", "xMinYMin");
+      // newEl.setAttribute("width", "100%");
+      // newEl.setAttribute("height", "100%");
       container.appendChild(newEl);
-      console.log(previewEl);
       previewEl.set(newEl);
+      console.log($previewEl);
 
       attachListeners(newEl);
       console.log(newEl.children);

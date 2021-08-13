@@ -13,5 +13,10 @@ export type TemplateLeafNode = {
     type: string
 }
 
+export type SproketData = {
+    varPath: TemplateVariable,
+    type: SVGProperty
+}
+
 export type ElementsMap = Map<SVGElement, PropertiesMap>
 export type PropertiesMap = Map<SVGProperty, TemplateVariable>
