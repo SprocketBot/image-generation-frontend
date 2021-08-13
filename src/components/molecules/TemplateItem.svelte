@@ -2,11 +2,9 @@
   import type {
     ElementsMap,
     SVGProperty,
-    TemplateLeafNode,
     TemplateVariable,
   } from "../../types";
   import {
-    applicableOperations,
     variableOperations,
   } from "../../utils/SvgRules";
   import { getContext } from "svelte";
@@ -31,16 +29,19 @@
 
 <Accordion>
   <div slot="header" let:shown class="item">
-    <span class="open-indicator"
-      >{shown || !Object.keys(item).length ? "-" : "+"}</span
-    >
-    <span class="name">{key}</span>
+    <span class="open-indicator">
+      {shown || !Object.keys(item).length ? "-" : "+"}
+    </span>
+    <span class="name">
+      {key}
+    </span>
     <span class="spacer" />
     <span class="actions" />
   </div>
   <div slot="content" class="container">
     {#if item.hasOwnProperty("description")}
       {#if $selectedEl}
+      <p>{item.description}</p>
         <DropdownButton
           on:clicked={setLink}
           name="Use as"
@@ -64,9 +65,6 @@
   div.item {
     @apply flex items-center justify-center cursor-pointer;
   }
-  /* span.open-indicator {
-        @apply w-4;
-    } */
   span:not(.spacer) {
     @apply mr-4;
   }

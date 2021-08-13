@@ -43,9 +43,24 @@
     $selectedEl = undefined;
   }
 </script>
-
-<button on:click={handleClick}>Finish</button>
+<section>
 {#if $selectedEl}
-  <h1>{$selectedEl.id}</h1>
+<header>
+  <h3>Editing Element: <strong>{$selectedEl.id}</strong></h3>
+  <button on:click={handleClick}>Finish</button>
+</header>
   <TemplateItem item={getRelevantItems($selectedEl, template)} />
 {/if}
+</section>
+
+<style lang="postcss">
+  section {
+    @apply px-4;
+  }
+  header {
+    @apply flex justify-between;
+  }
+  button {
+    @apply px-2 py-1 bg-primary-100 hover:bg-primary-400;
+  }
+</style>

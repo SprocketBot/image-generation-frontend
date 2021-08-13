@@ -32,41 +32,20 @@ toggle between hiding and showing the dropdown content */
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   .dropbtn {
-    background-color: #3498db;
-    color: white;
-    padding: 0.25rem;
-    border: none;
-    cursor: pointer;
-  }
-
-  .dropbtn:hover,
-  .dropbtn:focus {
-    background-color: #2980b9;
+    @apply text-white bg-primary-500 p-1 border-none cursor-pointer hover:bg-primary-600 focus:bg-primary-600;
   }
 
   .dropdown {
-    position: relative;
-    display: inline-block;
+    @apply relative inline-block;
   }
 
   .dropdown-content {
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    overflow: auto;
-    z-index: 1;
+    @apply absolute bg-primary-300 w-40 z-10 overflow-auto;
   }
 
   .dropdown-content button {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-
-  .dropdown button:hover {
-    background-color: #ddd;
+    @apply text-black px-2 py-1 no-underline block hover:bg-primary-500 w-full;
   }
 </style>
