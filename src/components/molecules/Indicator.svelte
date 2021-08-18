@@ -4,18 +4,45 @@
   import type { BoundBox } from "../../types";
 
   const bounds = getContext<Writable<BoundBox>>("indicatorBounds");
+  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
+
+  function onWindowResize() {
+    if (!$selectedEl) {
+      $bounds = {
+        x: -1,
+        y: -1,
+        h: 0,
+        w: 0,
+      };
+    } else {
+      const rect = $selectedEl.getBoundingClientRect();
+
+      $bounds = {
+        x: rect.x,
+        y: rect.y,
+        w: rect.width,
+        h: rect.height,
+      };
+    }
+  }
 </script>
 
+<svelte:window on:resize={onWindowResize} />
+
 <div
-  style="top: {$bounds.y - 2}px; left: {$bounds.x - 2}px; width: {$bounds.w +
-    4}px; height: {$bounds.h + 4}px"
+  class:hasSelection={Boolean($selectedEl)}
+  style="top: {$bounds.y - 3}px; left: {$bounds.x - 3}px; width: {$bounds.w +
+    6}px; height: {$bounds.h + 6}px"
 />
 
 <style>
   div {
     position: absolute;
-    border: 1px solid red;
+    border: 2px solid red;
     z-index: 100;
     pointer-events: none;
+  }
+  div.hasSelection {
+    border-color: blue;
   }
 </style>
