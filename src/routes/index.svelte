@@ -31,25 +31,45 @@
   export let source: string = `/static/img/techdemo_figma.svg`;
   export let templateName: string = `Star of the week`;
 
-  let ready = false;
+  let files;
   onMount(async () => {
     if (!source || !templateName) {
       throw new Error("missing a prop for the layout");
     }
-    $svgData = await fetch(source).then((r) => r.text());
-    $template = await getTemplate(templateName);
-
-    ready = true;
   });
+
+  async function handleUpload(){
+    if(files?.[0]){
+      const reader = new FileReader();
+      reader.readAsText(files[0])
+      reader.onloadend = e => {
+        $svgData = e.target.result.toString();
+      }
+      
+    }
+    else{
+      $svgData = await fetch(source).then((r) => r.text());
+    }
+  }
+  async function handleImageType(){
+    $template = await getTemplate(templateName);
+  }
 </script>
 
 <Tailwindcss />
 <EditLayout>
   <div slot="preview">
-    {#if ready}
+    {#if $svgData}
       <Preview svgData={$svgData} />
     {:else}
-      <h1>Fetching image</h1>
+      <input type="file" id="upload" bind:files>
+      <button on:click={handleUpload}>
+        {#if files?.[0]}
+          Go!
+        {:else}
+          Use tech demo
+        {/if}
+      </button>
     {/if}
   </div>
 
@@ -58,15 +78,19 @@
   </div>
 
   <div slot="sidePanel">
-    {#if $selectedEl}
-      <div out:blur={{}} in:fly={{ y: -50 }}>
-        <TemplateItems template={$template}/>
-      </div>
-      
+    {#if $template}
+      {#if $selectedEl}
+        <div out:blur={{}} in:fly={{ y: -50 }}>
+          <TemplateItems template={$template}/>
+        </div>
+        
+      {:else}
+        <div out:blur={{}} in:fly={{ y: -50 }}>
+          <SvgList />
+        </div>
+      {/if}
     {:else}
-      <div out:blur={{}} in:fly={{ y: -50 }}>
-        <SvgList />
-      </div>
+        <button on:click={handleImageType}>Select an Image Type</button>
     {/if}
 </div>
 
