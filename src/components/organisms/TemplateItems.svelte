@@ -55,12 +55,12 @@
 
 <style lang="postcss">
   section {
-    @apply px-4;
+    @apply px-4 py-4 max-w-full w-full;
   }
   header {
     @apply flex justify-between;
   }
   button {
-    @apply px-2 py-1 bg-primary-100 hover:bg-primary-400;
+    @apply px-2 py-1 bg-primary-500 hover:bg-primary-600 text-sproc_dark_gray-500;
   }
 </style>

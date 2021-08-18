@@ -15,7 +15,7 @@ toggle between hiding and showing the dropdown content */
   function handleClickOutside(event) {
     open = false;
   }
-  function clickMe(choice: string) {
+  function choose(choice: string) {
     open = false;
     dispatch("clicked", choice);
   }
@@ -26,7 +26,7 @@ toggle between hiding and showing the dropdown content */
   {#if open}
     <div id="myDropdown" class="dropdown-content">
       {#each choices as choice}
-        <button on:click={() => clickMe(choice)}>{choice}</button>
+        <button on:click={() => choose(choice)}>{choice}</button>
       {/each}
     </div>
   {/if}
@@ -34,7 +34,7 @@ toggle between hiding and showing the dropdown content */
 
 <style lang="postcss">
   .dropbtn {
-    @apply text-white bg-primary-500 p-1 border-none cursor-pointer hover:bg-primary-600 focus:bg-primary-600;
+    @apply text-white bg-primary-500 p-1 border-none cursor-pointer hover:bg-primary-600 focus:bg-primary-600 text-sproc_dark_gray-500;
   }
 
   .dropdown {
@@ -42,10 +42,10 @@ toggle between hiding and showing the dropdown content */
   }
 
   .dropdown-content {
-    @apply absolute bg-primary-300 w-40 z-10 overflow-auto;
+    @apply absolute bg-primary-500 w-40 z-10 overflow-auto;
   }
 
   .dropdown-content button {
-    @apply text-black px-2 py-1 no-underline block hover:bg-primary-500 w-full;
+    @apply text-black px-2 py-1 no-underline block hover:bg-primary-600 w-full;
   }
 </style>

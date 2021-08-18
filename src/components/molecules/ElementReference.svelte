@@ -96,7 +96,7 @@
         @apply mr-4;
     }
     button {
-        @apply bg-gray-400 hover:bg-gray-500 p-1 w-20;
+        @apply bg-primary-500 hover:bg-primary-600 text-sproc_dark_gray-500 p-1 w-20;
     }
     span.spacer {
         @apply flex-1 flex pr-5 pl-5;
