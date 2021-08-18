@@ -1,11 +1,12 @@
 /** Dispatch event on click outside of node */
-export default function clickOutside(node):{destroy:()=>void} {
-  
+export type clickOutsideOptions = {
+  callback: CallableFunction
+}
+
+export default function clickOutside(node: HTMLElement, {callback}: clickOutsideOptions):{destroy:()=>void} {
   const handleClick = event => {
     if (node && !node.contains(event.target) && !event.defaultPrevented) {
-      node.dispatchEvent(
-        new CustomEvent('click_outside', node)
-      )
+      callback()
     }
   }
 

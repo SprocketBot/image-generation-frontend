@@ -21,7 +21,7 @@ toggle between hiding and showing the dropdown content */
   }
 </script>
 
-<div use:clickOutside on:click_outside={handleClickOutside} class="dropdown">
+<div use:clickOutside={{callback: handleClickOutside}} class="dropdown">
   <button on:click={openDropdown} class="dropbtn">{name}</button>
   {#if open}
     <div id="myDropdown" class="dropdown-content">
