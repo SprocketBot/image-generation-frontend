@@ -17,17 +17,11 @@ import { uploadTemplate } from "../../api";
       "links"
     );
 
-  $: {
-    console.log($links);
-  }
-
   function clearLink(event) {
-    console.log(event);
     $links.delete(event.detail);
     $links = $links;
   }
   function clearProp(event) {
-    console.log(event.detail);
     $links.get(event.detail.el).delete(event.detail.prop);
     $links = $links;
   }
@@ -42,7 +36,6 @@ import { uploadTemplate } from "../../api";
       }
       const sproketDataString = JSON.stringify(sproketData);
       sproketDataString.replace('"', "'");
-      console.log(sproketDataString);
       el.setAttribute("data-sprocket", JSON.stringify(sproketData));
     }
 
@@ -87,12 +80,6 @@ import { uploadTemplate } from "../../api";
     @apply px-2 py-1 bg-primary-500 hover:bg-primary-600 ml-4 text-sproc_dark_gray-500;
   }
   section > section {
-    @apply pl-10;
-  }
-  .unconfirmed {
-    @apply text-gray-500;
-  }
-  .delete {
-    @apply text-red-500;
+    @apply pl-10 select-none;
   }
 </style>

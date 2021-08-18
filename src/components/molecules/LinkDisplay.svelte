@@ -12,10 +12,14 @@
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
   const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
   function selectThisElement() {
-    console.log(el);
-    $selectedEl = el;
-    const rect = $selectedEl.getBoundingClientRect();
-    $indicatorBounds = { w: rect.width, h: rect.height, x: rect.x, y: rect.y };
+    if($selectedEl === el) {
+      $selectedEl = undefined
+    } else {
+      $selectedEl = el;
+      const rect = $selectedEl.getBoundingClientRect();
+      $indicatorBounds = { w: rect.width, h: rect.height, x: rect.x, y: rect.y };
+
+    }
   }
   function clearLink() {
     dispatch("clear_link", el);
@@ -26,35 +30,26 @@
   let unselected = true;
   $: unselected = el === $selectedEl;
 
-  let selectedProperty: SVGProperty | undefined = undefined;
-
-  function selectProperty(select: SVGProperty) {
-    if (selectedProperty === select) {
-      selectedProperty = undefined;
-    } else {
-      selectedProperty = select;
-    }
-  }
-
   let options: any = {
     text: {},
     stroke: {},
     fill: {},
   };
-  $: console.log(options);
 </script>
 
-<div on:click={selectThisElement} class:unselected>
-  {el.id}
-  <span><button on:click|stopPropagation={clearLink}>Delete</button></span>
+<div class:unselected>
+  <header on:click={selectThisElement}>
+    {el.id}
+    <span><button on:click|stopPropagation={clearLink}>Delete</button></span>
+  </header>
+  
   {#if el === $selectedEl}
-    <dl>
+    <dl transition:slide>
       {#each [...linkmap] as [property, variable]}
-        <dt on:click={() => selectProperty(property)}>
+        <dt>
           {property}:
         </dt>
-        {#if selectedProperty === property}
-          <dd transition:slide>
+          <dd>
             <span>{variable}</span>
             <button on:click|stopPropagation={() => clearProperty(property)}>
               Delete
@@ -74,7 +69,6 @@
               </label>
             {/if}
           </dd>
-        {/if}
       {/each}
     </dl>
   {/if}
@@ -88,7 +82,7 @@
     cursor: default;
   }
   dt {
-    @apply font-bold pl-4 cursor-pointer;
+    @apply font-bold pl-4;
   }
   dd {
     @apply pl-8;

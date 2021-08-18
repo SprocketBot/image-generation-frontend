@@ -15,17 +15,14 @@
     if (!svgData) {
       throw new Error("Missing required prop 'source'!");
     }
-    console.log(svgData);
     const parser = new DOMParser();
     const newEl = parser.parseFromString(svgData, "image/svg+xml").children[0];
 
     if (newEl.nodeName === "svg" && newEl instanceof SVGElement) {
       container.appendChild(newEl);
       previewEl.set(newEl);
-      console.log($previewEl);
 
       attachListeners(newEl);
-      console.log(newEl.children);
     }
   });
 
@@ -56,23 +53,7 @@
     };
   }
 
-  // function handleMousedown(e: MouseEvent) {
-  //   if ($selectedEl) {
-  //     if (!(e.target instanceof SVGElement)) {
-  //       $indicatorBounds = {
-  //         x: 0,
-  //         y: 0,
-  //         w: 0,
-  //         h: 0,
-  //       };
-  //     }
-  //   } else {
-  //     $selectedEl;
-  //   }
-  // }
-
   function handleKeydown(e: KeyboardEvent) {
-    console.log($selectedEl);
     if (e.key === "Escape") {
       $selectedEl = undefined;
       $indicatorBounds = { x: 0, y: 0, h: 0, w: 0 };
@@ -84,7 +65,6 @@
     if (!$previewEl.contains(e.target)) return;
 
     let target: Element = e.target;
-    console.log(target.nodeName);
     if (!selectableElements.includes(target.nodeName)) {
       while (
         !selectableElements.includes(target.nodeName) &&
@@ -107,7 +87,6 @@
     };
 
     $selectedEl = target;
-    console.log($selectedEl);
   }
 </script>
 

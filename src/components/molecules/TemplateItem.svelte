@@ -1,12 +1,6 @@
 <script lang="ts">
-  import type {
-    ElementsMap,
-    SVGProperty,
-    TemplateVariable,
-  } from "../../types";
-  import {
-    variableOperations,
-  } from "../../utils/SvgRules";
+  import type { ElementsMap, SVGProperty, TemplateVariable } from "../../types";
+  import { variableOperations } from "../../utils/SvgRules";
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
   import Accordion from "../atoms/Accordion.svelte";
@@ -37,35 +31,42 @@
     </span>
     <span class="spacer" />
     <span class="actions" />
+    {#if item.description}
+      <p class="description">{item.description}</p>
+    {/if}
   </div>
   <div slot="content" class="container">
-    {#if item.hasOwnProperty("description")}
-      {#if $selectedEl}
-      <p>{item.description}</p>
-        <DropdownButton
-          on:clicked={setLink}
-          name="Use as"
-          choices={variableOperations[item.type]}
-        />
-      {:else}
-        <span>{item.description}</span>
-      {/if}
+    {#if item.hasOwnProperty("type")}
+      <DropdownButton
+        on:clicked={setLink}
+        name="Use as"
+        choices={variableOperations[item.type]}
+      />
     {:else}
       {#each Object.entries(item) as [key, child]}
-        <svelte:self name="{name ? `${name}.` : ''}{key}" item={child} {key} />
+        {#if key !== "description"}
+          <svelte:self
+            name="{name ? `${name}.` : ''}{key}"
+            item={child}
+            {key}
+          />
+        {/if}
       {/each}
     {/if}
   </div>
 </Accordion>
 
 <style lang="postcss">
+  .open-indicator {
+    @apply w-4;
+  }
   div.container {
-    @apply pl-6;
+    @apply pl-6 py-2;
   }
   div.item {
     @apply flex items-center justify-center cursor-pointer;
   }
-  span:not(.spacer) {
+  span:not(.spacer):not(.open-indicator) {
     @apply mr-4;
   }
   button {
@@ -87,5 +88,8 @@
     background-repeat: repeat-x;
 
     @apply flex-1;
+  }
+  p.description {
+    @apply text-sm;
   }
 </style>

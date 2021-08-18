@@ -3,10 +3,6 @@ import type { Response } from "@sveltejs/kit"
 import { mClient } from "../../../utils/minio";
 
 export const get = async ({ params }: Request) => {
-    
-    //export async function get({ params }: Request) {
-    console.log(params);
-    
     //TODO: make this use params and catch errors if file doesn't exist
     const imageType = await new Promise<unknown>((resolve) => {
         let output = "";
