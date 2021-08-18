@@ -69,9 +69,6 @@
   span:not(.spacer):not(.open-indicator) {
     @apply mr-4;
   }
-  button {
-    @apply bg-gray-400 hover:bg-gray-500 p-1 w-20;
-  }
   span.spacer {
     @apply flex-1 flex pr-5 pl-5;
   }
