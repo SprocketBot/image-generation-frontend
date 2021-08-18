@@ -1,11 +1,3 @@
-<script lang="ts">
-  import { getContext } from "svelte";
-  import type { Writable } from "svelte/store";
-  import { blur, fly } from "svelte/transition";
-
-  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
-</script>
-
 <main>
   <section class="preview">
     <slot name="preview" />
@@ -14,15 +6,9 @@
   <section class="controls">
     <slot name="controls" />
   </section>
-  {#if $selectedEl}
-    <aside class="fields" out:blur={{}} in:fly={{ y: -50 }}>
-      <slot name="fields" />
-    </aside>
-  {:else}
-    <aside class="previewEls" out:blur={{}} in:fly={{ y: -50 }}>
-      <slot name="previewEls" />
-    </aside>
-  {/if}
+  <aside class="side-panel">
+    <slot name="sidePanel"/>
+  </aside>
 </main>
 
 <style lang="postcss">
@@ -42,11 +28,7 @@
     @apply bg-sproc_light_gray-800 border-t-2 border-sproc_dark_gray-800
                 col-span-4 col-start-1 row-start-5 row-span-2;
   }
-  .previewEls {
-    @apply bg-sproc_light_gray-800 border-l-2 border-sproc_dark_gray-800
-                col-span-2 col-start-5 row-start-1 row-span-6;
-  }
-  .fields {
+  .side-panel {
     @apply bg-sproc_light_gray-800 border-l-2 border-sproc_dark_gray-800
                 col-span-2 col-start-5 row-start-1 row-span-6;
   }

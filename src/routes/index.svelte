@@ -19,6 +19,7 @@
   import type { BoundBox, ElementsMap } from "../types";
   import Tailwindcss from "../utils/Tailwindcss.svelte";
   import { getTemplate } from "../api";
+  import {blur, fly} from 'svelte/transition'
 
   setContext<Writable<SVGElement>>("previewEl", previewEl);
   setContext<Writable<BoundBox>>("indicatorBounds", indicatorBounds);
@@ -56,13 +57,20 @@
     <Controls />
   </div>
 
-  <div slot="fields">
-    <TemplateItems template={$template} />
-  </div>
+  <div slot="sidePanel">
+    {#if $selectedEl}
+      <div out:blur={{}} in:fly={{ y: -50 }}>
+        <TemplateItems template={$template}/>
+      </div>
+      
+    {:else}
+      <div out:blur={{}} in:fly={{ y: -50 }}>
+        <SvgList />
+      </div>
+    {/if}
+</div>
 
-  <div slot="previewEls">
-    <SvgList />
-  </div>
+  
 </EditLayout>
 
 
