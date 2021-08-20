@@ -13,7 +13,7 @@
 
   onMount(async () => {
     if (!svgData) {
-      throw new Error("Missing required prop 'source'!");
+      throw new Error("Missing required prop 'svgData'!");
     }
     const parser = new DOMParser();
     const newEl = parser.parseFromString(svgData, "image/svg+xml").children[0];
