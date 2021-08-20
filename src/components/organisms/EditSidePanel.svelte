@@ -2,7 +2,6 @@
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
   import type {
-    BoundBox,
     TemplateVariable,
     SVGProperty,
     SproketData,
@@ -12,6 +11,7 @@
   import DataItems from "./DataItems.svelte";
   import { blur, fly } from "svelte/transition";
   import { uploadTemplate } from "../../api";
+  import {absoluteWhileTransitioning} from "../../utils/absoluteWhileTransitioning";
 
   export let imageType;
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
@@ -52,11 +52,11 @@
   >
   <button on:click={saveOutput}>Save</button>
 {:else if $selectedEl}
-  <div out:blur={{}} in:fly={{ y: -50 }}>
+  <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
     <DataItems {imageType} />
   </div>
 {:else}
-  <div out:blur={{}} in:fly={{ y: -50 }}>
+  <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
     <SvgList />
   </div>
 {/if}
