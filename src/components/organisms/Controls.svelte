@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
-import { uploadTemplate } from "../../api";
+  import { uploadTemplate } from "../../api";
   import type {
     BoundBox,
     TemplateVariable,
@@ -12,6 +12,7 @@ import { uploadTemplate } from "../../api";
 
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
+  const saving = getContext<Writable<boolean>>("saving");
   const links =
     getContext<Writable<Map<SVGElement, Map<SVGProperty, TemplateVariable>>>>(
       "links"
@@ -25,22 +26,8 @@ import { uploadTemplate } from "../../api";
     $links.get(event.detail.el).delete(event.detail.prop);
     $links = $links;
   }
-  async function finish() {
-    for (const [el, linkmap] of $links) {
-      const sproketData: SproketData[] = [];
-      for (const [linkType, variable] of linkmap) {
-        sproketData.push({
-          varPath: variable,
-          type: linkType,
-        });
-      }
-      const sproketDataString = JSON.stringify(sproketData);
-      sproketDataString.replace('"', "'");
-      el.setAttribute("data-sprocket", JSON.stringify(sproketData));
-    }
-
-    let svgData = $previewEl.outerHTML;
-    await uploadTemplate(svgData, "sotw", "test.svg")
+  function finish() {
+    $saving = true;
   }
 </script>
 
@@ -48,8 +35,10 @@ import { uploadTemplate } from "../../api";
   <header>
     <h3>Dynamic Values</h3>
     <span class="spacer" />
-    <button>Test</button>
-    <button on:click={finish}>Done</button>
+    {#if $previewEl && !$saving}
+      <button>Test</button>
+      <button on:click={finish}>Done</button>
+    {/if}
   </header>
   <section>
     {#each [...$links] as [el, linkmap]}

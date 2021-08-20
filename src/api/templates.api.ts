@@ -19,7 +19,7 @@ export async function uploadTemplate(svgHTML: string | SVGElement, reportType: s
         reportType,
         reportName,
     }
-    return await fetch("/api/reports/upload", 
+    return await fetch("/api/outputs/upload", 
             {
                 method: "POST",
                 body: JSON.stringify(body),

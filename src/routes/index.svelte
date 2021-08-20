@@ -14,17 +14,19 @@
     previewEl,
     selectedEl,
     links,
+    saving,
   } from "../stores";
   import type { BoundBox, ElementsMap } from "../types";
   import Tailwindcss from "../utils/Tailwindcss.svelte";
 
   let imageType;
   let svgData;
-  
+
   setContext<Writable<SVGElement>>("previewEl", previewEl);
   setContext<Writable<BoundBox>>("indicatorBounds", indicatorBounds);
   setContext<Writable<SVGElement>>("selectedEl", selectedEl);
   setContext<Writable<ElementsMap>>("links", links);
+  setContext<Writable<boolean>>("saving", saving)
       
 </script>
 
