@@ -26,10 +26,10 @@
   }
   .controls {
     @apply bg-sproc_light_gray-800 border-t-2 border-sproc_dark_gray-800
-                col-span-4 col-start-1 row-start-5 row-span-2;
+                col-span-4 col-start-1 row-start-5 row-span-2 overflow-auto;
   }
   .side-panel {
     @apply bg-sproc_light_gray-800 border-l-2 border-sproc_dark_gray-800
-                col-span-2 col-start-5 row-start-1 row-span-6;
+                col-span-2 col-start-5 row-start-1 row-span-6 overflow-auto;
   }
 </style>
