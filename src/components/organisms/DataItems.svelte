@@ -7,9 +7,9 @@
   } from "../../utils/SvgRules";
   import { getContext, onMount } from "svelte";
   import type { Writable } from "svelte/store";
-  import TemplateItem from "../molecules/TemplateItem.svelte";
+  import DataItem from "../molecules/DataItem.svelte";
 
-  export let template: any;
+  export let imageType: any;
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
   const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
 
@@ -56,7 +56,7 @@
       <h3>Editing Element: <strong>{$selectedEl.id || friendlyLookup[$selectedEl.tagName] || $selectedEl.tagName}</strong></h3>
       <button on:click={handleClick}>Finish</button>
     </header>
-    <TemplateItem item={getRelevantItems($selectedEl, template)} />
+    <DataItem item={getRelevantItems($selectedEl, imageType)} />
   {/if}
 </section>
 

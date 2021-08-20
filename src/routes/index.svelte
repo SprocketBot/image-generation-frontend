@@ -5,7 +5,7 @@
   import ImageTypeSelector from "../components/organisms/ImageTypeSelector.svelte"
   import ImageSelector from "../components/organisms/ImageSelector.svelte"
 
-  import { onMount, setContext } from "svelte";
+  import { setContext } from "svelte";
   import type { Writable } from "svelte/store";
 
   import EditLayout from "../components/layouts/EditLayout.svelte";
@@ -13,29 +13,28 @@
     indicatorBounds,
     previewEl,
     selectedEl,
-    template,
     links,
-    svgData,
   } from "../stores";
   import type { BoundBox, ElementsMap } from "../types";
   import Tailwindcss from "../utils/Tailwindcss.svelte";
 
+  let imageType;
+  let svgData;
+  
   setContext<Writable<SVGElement>>("previewEl", previewEl);
   setContext<Writable<BoundBox>>("indicatorBounds", indicatorBounds);
   setContext<Writable<SVGElement>>("selectedEl", selectedEl);
-  setContext<Writable<any>>("template", template);
   setContext<Writable<ElementsMap>>("links", links);
-  setContext<Writable<string>>("svgData", svgData); 
-  
+      
 </script>
 
 <Tailwindcss />
 <EditLayout>
   <div slot="preview">
-    {#if $svgData}
-      <Preview svgData={$svgData} />
+    {#if svgData}
+      <Preview svgData={svgData} />
     {:else}
-      <ImageSelector />
+      <ImageSelector bind:svgData/>
     {/if}
   </div>
 
@@ -44,10 +43,10 @@
   </div>
 
   <div slot="sidePanel">
-    {#if $template}
-      <EditSidePanel template={$template}/>
+    {#if imageType}
+      <EditSidePanel imageType={imageType}/>
     {:else}
-      <ImageTypeSelector />
+      <ImageTypeSelector bind:imageType/>
     {/if}
 </div>
 
