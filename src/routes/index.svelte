@@ -46,7 +46,7 @@
 
   <div slot="sidePanel">
     {#if imageType}
-      <EditSidePanel imageType={imageType}/>
+      <EditSidePanel {imageType}/>
     {:else}
       <ImageTypeSelector bind:imageType/>
     {/if}
@@ -58,6 +58,6 @@
 
 <style lang="postcss">
   div {
-    @apply h-full;
+    @apply h-full relative;
   }
 </style>
