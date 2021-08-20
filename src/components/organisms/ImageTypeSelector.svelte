@@ -1,13 +1,26 @@
 <script lang="ts">
-  import { getTemplate } from "../../api";
+import { onMount } from "svelte";
+
+  import { getTemplate, getImageTypes } from "../../api";
   export let imageType;
-  //const template = getContext<Writable<any>>("template");
-    
+  
+  let imageTypes = [];
+  let ready = false;
+  onMount(async () => {
+    imageTypes = await getImageTypes();
+    console.log(imageTypes);
+    ready = true;
+  })
   async function handleImageType(id="sotw"){
-      console.log("hello")
       imageType = await getTemplate(id);
     }
 </script>
 
-
-<button on:click={()=>handleImageType()}>Select an Image Type</button>
+{#if !ready}
+  <h1>fetching image types</h1>
+{:else}
+  {#each imageTypes as type}
+    <h1>{type.title}</h1>
+    <button on:click={()=>{handleImageType(type.id)}}>Select</button>
+  {/each}
+{/if}

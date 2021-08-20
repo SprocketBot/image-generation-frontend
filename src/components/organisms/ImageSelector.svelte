@@ -1,10 +1,15 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
+
   export let svgData;
   const source: string = `/static/img/techdemo_figma.svg`;
   let files;
-  
 
-  // const svgData = getContext<Writable<string>>("svgData");
+  let ready = false;
+  onMount(async () => {
+    //TODO: select an image to edit can go here
+  })
 
   async function handleUpload(){
     if(files?.[0]){
@@ -21,11 +26,19 @@
   }
 </script>
 
-<input type="file" id="upload" bind:files>
-<button on:click={handleUpload}>
-  {#if files?.[0]}
-    Go!
-  {:else}
-    Use tech demo
-  {/if}
-</button>
+<div>
+  <input type="file" id="upload" bind:files>
+  <button on:click={handleUpload}>
+    {#if files?.[0]}
+      Go!
+    {:else}
+      Use tech demo
+    {/if}
+  </button>
+</div>
+
+<style lang="postcss">
+  div{
+    @apply h-full w-full p-8 justify-center align-middle;
+  }
+</style>
