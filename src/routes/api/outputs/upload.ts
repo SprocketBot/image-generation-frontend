@@ -7,6 +7,6 @@ export const post = async ({body}: Request): Promise<Response> => {
     return {
         headers: {},
         status: 200,
-        body: ""
+        body: "true"
     }
 }
