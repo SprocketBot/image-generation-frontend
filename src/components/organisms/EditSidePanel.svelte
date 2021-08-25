@@ -55,8 +55,22 @@
   <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
     <DataItems {imageType} />
   </div>
-{:else}
+{:else if $previewEl}
   <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
     <SvgList />
   </div>
+{:else}
+  <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning class="text">
+    <strong>Please upload your svg template.</strong>
+  </div>
 {/if}
+
+
+<style lang="postcss">
+  div.text {
+    @apply p-4;
+  }
+  strong {
+    @apply text-primary-500;
+  }
+</style>

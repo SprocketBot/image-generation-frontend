@@ -61,17 +61,21 @@
         <span class="actions">
             {#if selectableElements.includes(ref.nodeName)}
                 <button
-                    on:click|preventDefault|stopPropagation={updateSelection}>
-                    {$selectedEl == ref ? "Unselect" : "Select"}
+                    on:click|preventDefault|stopPropagation={updateSelection}
+                    on:mouseover|preventDefault|stopPropagation={() =>
+                        updateBounds(true)}
+                    on:mouseleave|preventDefault|stopPropagation={() =>updateBounds(false)}
+                >
+                    {$selectedEl === ref ? "Unselect" : "Select"}
                 </button>
             {:else}
                 <button
                     class="outline"
-                    on:mousedown|preventDefault|stopPropagation={() =>
+                    on:mouseover|preventDefault|stopPropagation={() =>
                         updateBounds(true)}
-                    on:mouseup|preventDefault|stopPropagation={() =>
-                        setTimeout(() => updateBounds(false), 250)}
-                    on:click|preventDefault|stopPropagation>
+                    on:mouseleave|preventDefault|stopPropagation={() => updateBounds(false)}
+                    on:click|preventDefault|stopPropagation
+                >
                     Locate
                 </button>
             {/if}
