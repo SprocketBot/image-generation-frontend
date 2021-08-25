@@ -1,16 +1,12 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
-  import { uploadTemplate } from "../../api";
   import type {
-    BoundBox,
     TemplateVariable,
     SVGProperty,
-    SproketData,
   } from "../../types";
   import LinksDisplay from "../molecules/LinkDisplay.svelte";
 
-  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
   const saving = getContext<Writable<boolean>>("saving");
   const links =
