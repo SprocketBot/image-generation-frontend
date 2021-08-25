@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getTemplate, getImageTypes } from "../../api";
+  import ImageTypeItem from "../molecules/ImageTypeItem.svelte";
   export let imageType;
 
   async function handleImageType(id) {
@@ -8,39 +9,26 @@
   }
 </script>
 
-<ul>
+<section>
+  <h1>Select an Image Type</h1>
   {#await getImageTypes()}
-    <h1>fetching image types</h1>
+    <h2>fetching image types</h2>
   {:then imageTypes}
     {#each imageTypes as type}
-      <li>
-        <h1>{type.display_name}</h1>
-        <p>{type.description}</p>
-        <button
-          on:click={() => {
-            handleImageType(type.report_code);
-          }}>Select</button
-        >
-      </li>
+      <ImageTypeItem {type} select={handleImageType} />
     {/each}
   {:catch error}
     <h1>Sorry!</h1>
     <p>We have encountered an error fetching image types.</p>
     <pre>{error}</pre>
   {/await}
-</ul>
+</section>
 
 <style lang="postcss">
-  ul {
-    @apply px-4 py-2;
+  section {
+    @apply px-4 py-2 overflow-auto h-full select-none;
   }
   h1 {
-    @apply text-lg font-bold border-b-primary-500 border-b-2 mb-2;
-  }
-  button {
-    @apply text-white bg-primary-500 p-1 border-none cursor-pointer hover:bg-primary-600 focus:bg-primary-600 text-sproc_dark_gray-500 float-right;
-  }
-  li {
-    @apply mb-8;
+    @apply text-lg font-bold  border-b-primary-500 border-b-2 mb-2;
   }
 </style>

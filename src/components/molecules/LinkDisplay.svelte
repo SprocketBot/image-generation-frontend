@@ -3,6 +3,7 @@
   import { createEventDispatcher, getContext } from "svelte";
   import { slide } from "svelte/transition";
   import type { Writable } from "svelte/store";
+  import { optionOptions, optionTypes } from "../../utils/SvgRules";
 
   export let el: SVGElement;
   export let linkmap: PropertiesMap;
@@ -31,9 +32,6 @@
   $: unselected = el === $selectedEl;
 
   let options: any = {
-    text: {},
-    stroke: {},
-    fill: {},
   };
 </script>
 
@@ -54,20 +52,15 @@
             <button on:click|stopPropagation={() => clearProperty(property)}>
               Delete
             </button>
-
-            {#if property === "text"}
-              <select bind:value={options.text.align}>
-                <option value="">Do not change</option>
-                <option value="center">Center</option>
-                <option value="left">Left</option>
-                <option value="right">Right</option>
+            Options:
+            {#each optionTypes[property] as option}
+              {option}
+              <select bind:value={options}>
+                {#each optionOptions[option.toString()] as value}
+                  <option value={value}>{value}</option>
+                {/each}
               </select>
-            {:else if property === "fill"}
-              <label>
-                Fill with cool stuff?
-                <input type="checkbox" bind:checked={options.fill.isCool} />
-              </label>
-            {/if}
+            {/each}
           </dd>
       {/each}
     </dl>

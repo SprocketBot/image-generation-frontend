@@ -24,6 +24,17 @@ export const variableForOperation = {
     text: "text"
 }
 
+export const optionTypes = {
+    text: ["justify"],
+    image: ["rescaleOn"],
+    fill: [],
+    stroke:[]
+}
+
+export const optionOptions = {
+    "justify": ["left", "center", "right"],
+    "rescaleOn": ["height", "width", "long", "short"]
+}
 
 export const selectableElements = Object.keys(applicableOperations);
 export const hiddenElements = [
