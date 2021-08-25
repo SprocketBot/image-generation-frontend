@@ -13,25 +13,28 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@sveltejs/kit": "next",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
-    "@typescript-eslint/parser": "^4.19.0",
-    "autoprefixer": "^10.3.1",
-    "eslint": "^7.22.0",
+    "@sveltejs/kit": "^1.0.0-next.156",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "autoprefixer": "^10.3.2",
+    "eslint": "^7.32.0",
     "eslint-plugin-svelte3": "^3.2.0",
-    "postcss": "^8.3.5",
+    "postcss": "^8.3.6",
     "postcss-load-config": "^3.1.0",
     "postcss-nesting": "^8.0.1",
-    "svelte": "^3.34.0",
-    "svelte-check": "^2.0.0",
-    "svelte-preprocess": "^4.0.0",
-    "tailwindcss": "^2.2.4",
-    "tslib": "^2.0.0",
+    "svelte": "^3.42.3",
+    "svelte-check": "^2.2.5",
+    "svelte-preprocess": "^4.8.0",
+    "tailwindcss": "^2.2.7",
+    "tslib": "^2.3.1",
     "typescript": "^4.0.0"
   },
   "type": "module",
   "dependencies": {
     "@types/minio": "^7.0.9",
-    "minio": "^7.0.18"
+    "@types/uuid": "^8.3.1",
+    "minio": "^7.0.19",
+    "nats": "^2.1.0",
+    "uuid": "^8.3.2"
   }
 }

@@ -1,5 +1,5 @@
 // TODO: Create an actual api endpoint for this
-export async function getTemplate(id = "Star of the week"): Promise<any> {
+export async function getTemplate(id): Promise<any> {
     if (typeof window === "undefined") return {}
     return await fetch(`/api/imageTypes/${encodeURI(id)}`).then(r => r.json())
 }
