@@ -2,7 +2,6 @@ export const absoluteWhileTransitioning = (node: HTMLElement) => {
     let originalPosition = node.style.position || undefined;
     let originalWidth = node.style.width;
     const start = () => {
-        console.log("I am animating!");
         originalPosition = node.style.position || undefined;
         originalWidth = node.style.width || undefined;
         node.style.position = "absolute"

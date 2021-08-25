@@ -18,5 +18,11 @@ export type SproketData = {
     type: SVGProperty
 }
 
+export type ImageTypeItemType = {
+    title: string,
+    id: string,
+    description: string,
+}
+
 export type ElementsMap = Map<SVGElement, PropertiesMap>
 export type PropertiesMap = Map<SVGProperty, TemplateVariable>
