@@ -10,8 +10,8 @@ export async function get(): Promise<EndpointOutput> {
     // return {
     //     status: 200,
     //     body: [
-    //         { title: "Stars of the Week", id: "sotw", description: "Stats for top 5 players of last week" },
-    //         { title: "Player Highlight", id: "player-highlight", desciption: "Detailed stats of one player" }
+    //         { display_name: "Stars of the Week", report_code: "sotw", description: "Stats for top 5 players of last week" },
+    //         { display_name: "Player Highlight", report_code: "player-highlight", description: "Detailed stats of one player" }
     //     ]
     // };
 }

@@ -3,7 +3,6 @@ import { mClient } from "../../../utils/minio";
 import { natsRequest } from "../../../utils/nats";
 
 export const get = async ({ params }: Request): Promise<EndpointOutput> => {
-    // //TODO: make this use params and catch errors if file doesn't exist
     // const imageType = await new Promise<unknown>((resolve, reject) => {
     //     let output = "";
         

@@ -6,6 +6,7 @@
   async function handleImageType(id) {
     const template = await getTemplate(id);
     imageType = template.template_structure;
+    // imageType = JSON.parse(template);
   }
 </script>
 
