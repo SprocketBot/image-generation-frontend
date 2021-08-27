@@ -35,8 +35,8 @@
   };
 </script>
 
-<div class:unselected>
-  <header on:click={selectThisElement}>
+<div >
+  <header class:unselected on:click={selectThisElement}>
     {el.id}
     <span><button on:click|stopPropagation={clearLink}>Delete</button></span>
   </header>
@@ -68,11 +68,14 @@
 </div>
 
 <style lang="postcss">
-  div {
+  header {
     cursor: pointer;
   }
-  div.unselected {
-    cursor: default;
+  header.unselected {
+    cursor: pointer;
+  }
+  select{
+    cursor: pointer;
   }
   dt {
     @apply font-bold pl-4;

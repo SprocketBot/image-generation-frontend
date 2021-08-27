@@ -1,5 +1,5 @@
 export type SVGProperty = "text" | "fill" | "stroke" | "image"
-//export type OperationType = ""
+
 export type TemplateVariable = string
 export type BoundBox = {
     w: number,

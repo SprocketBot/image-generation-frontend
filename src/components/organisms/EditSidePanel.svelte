@@ -35,7 +35,6 @@
 
     let svgData = $previewEl.outerHTML;
     await uploadTemplate(svgData, "sotw", "test2.svg"); 
-    //TODO : figure out promise rejection issue here. It saves but then rejects
     $saving = false;
   }
 </script>
