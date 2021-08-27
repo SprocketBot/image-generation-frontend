@@ -1,3 +1,5 @@
+import type { OptionsRecord } from "src/types";
+
 export const friendlyLookup = {
     svg: "Root",
     g: "Group",
@@ -24,16 +26,30 @@ export const variableForOperation = {
     text: "text"
 }
 
-export const optionTypes = {
-    text: ["justify"],
-    image: ["rescaleOn"],
+export const optionTypes:OptionsRecord = {
+    text: [
+        {
+            name: "justify",
+            display_name: "Justify Text",
+            options: ["left", "center", "right"],
+            default: "center",
+        },
+        {
+            name: "test",
+            display_name: "Just testing",
+            options: ["foo", "bar", "baz"],
+            default: "baz",
+        }
+    ],
+    image: [
+        {
+            name: "rescaleOn",
+            display_name: "Rescale Image On",
+            options: ["height", "width", "long", "short"],
+            default: "height",
+        }],
     fill: [],
     stroke:[]
-}
-
-export const optionOptions = {
-    "justify": ["left", "center", "right"],
-    "rescaleOn": ["height", "width", "long", "short"]
 }
 
 export const selectableElements = Object.keys(applicableOperations);

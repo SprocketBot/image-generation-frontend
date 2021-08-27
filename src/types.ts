@@ -8,13 +8,22 @@ export type BoundBox = {
     y: number
 }
 
+export type OptionType = {
+    name: string;
+    display_name: string;
+    options: string[];
+    default: string;
+}
+export type OptionsRecord = Record<SVGProperty, OptionType[]>
+
 export type TemplateLeafNode = {
     description: string,
     type: string
 }
 
-export type SproketData = {
+export type SprocketData = {
     varPath: TemplateVariable,
+    options: {[key: string]: string}
     type: SVGProperty
 }
 
@@ -25,4 +34,4 @@ export type ImageTypeItemType = {
 }
 
 export type ElementsMap = Map<SVGElement, PropertiesMap>
-export type PropertiesMap = Map<SVGProperty, TemplateVariable>
+export type PropertiesMap = Map<SVGProperty, SprocketData>

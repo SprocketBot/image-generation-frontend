@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ElementsMap, SVGProperty, TemplateVariable } from "../../types";
+  import type { ElementsMap, SprocketData, SVGProperty } from "../../types";
   import { variableOperations } from "../../utils/SvgRules";
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
@@ -14,9 +14,13 @@
   const links = getContext<Writable<ElementsMap>>("links");
   function setLink(event) {
     if (!$links.get($selectedEl)) {
-      $links.set($selectedEl, new Map<SVGProperty, TemplateVariable>());
+      $links.set($selectedEl, new Map<SVGProperty, SprocketData>());
     }
-    $links.get($selectedEl).set(event.detail, name);
+    $links.get($selectedEl).set(event.detail, {
+      varPath:name,
+      options: {},
+      type: event.detail
+    });
     $links = $links;
   }
 </script>

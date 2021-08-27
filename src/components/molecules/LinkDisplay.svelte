@@ -3,17 +3,17 @@
   import { getContext } from "svelte";
   import { slide } from "svelte/transition";
   import type { Writable } from "svelte/store";
-  import { optionOptions, optionTypes } from "../../utils/SvgRules";
+  import { optionTypes } from "../../utils/SvgRules";
+  import OptionDisplay from "./OptionDisplay.svelte";
 
   export let el: SVGElement;
   export let linkmap: PropertiesMap;
-
-
+  
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
   const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
   const links = getContext<Writable<ElementsMap>>("links");
   
-  function selectThisElement() {
+    function selectThisElement() {
     if($selectedEl === el) {
       $selectedEl = undefined
     } else {
@@ -29,13 +29,11 @@
   }
   function clearProperty(property: SVGProperty) {
     $links.get(el).delete(property);
-    $links = $links;
+    $links.get(el).size == 0 ? clearLink() : $links = $links;
   }
   let unselected = true;
   $: unselected = el === $selectedEl;
 
-  let options: any = {
-  };
 </script>
 
 <div >
@@ -46,24 +44,25 @@
   
   {#if el === $selectedEl}
     <dl transition:slide>
-      {#each [...linkmap] as [property, variable]}
+      {#each [...linkmap] as [property, data]}
         <dt>
           {property}:
+          <button on:click|stopPropagation={() => clearProperty(property)}>
+            Delete
+          </button>
         </dt>
           <dd>
-            <span>{variable}</span>
-            <button on:click|stopPropagation={() => clearProperty(property)}>
-              Delete
-            </button>
-            Options:
-            {#each optionTypes[property] as option}
-              {option}
-              <select bind:value={options}>
-                {#each optionOptions[option.toString()] as value}
-                  <option value={value}>{value}</option>
-                {/each}
-              </select>
-            {/each}
+            <span>{data.type}</span>
+            {#if optionTypes[property].length}
+              <dl>
+                <dt>Options:</dt>
+                <dd>
+                  {#each optionTypes[property] as option}
+                    <OptionDisplay {el} {property} {option} />
+                  {/each}
+                </dd>
+              </dl>
+            {/if}
           </dd>
       {/each}
     </dl>

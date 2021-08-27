@@ -2,9 +2,8 @@
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
   import type {
-    TemplateVariable,
+    SprocketData,
     ElementsMap,
-    SproketData,
   } from "../../types";
 
   import SvgList from "./SVGList.svelte";
@@ -21,10 +20,11 @@
 
   async function saveOutput() {
     for (const [el, linkmap] of $links) {
-      const sproketData: SproketData[] = [];
-      for (const [linkType, variable] of linkmap) {
+      const sproketData: SprocketData[] = [];
+      for (const [linkType, data] of linkmap) {
         sproketData.push({
-          varPath: variable,
+          varPath: data.varPath,
+          options: data.options,
           type: linkType,
         });
       }
@@ -34,7 +34,7 @@
     }
 
     let svgData = $previewEl.outerHTML;
-    await uploadTemplate(svgData, "sotw", "test2.svg"); 
+    await uploadTemplate(svgData, "sotw", "test2.svg");
     $saving = false;
   }
 </script>
