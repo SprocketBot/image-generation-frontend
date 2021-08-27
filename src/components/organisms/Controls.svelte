@@ -9,14 +9,6 @@
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
   const saving = getContext<Writable<boolean>>("saving");
   const links = getContext<Writable<ElementsMap>>("links");
-  function clearLink(event) {
-    $links.delete(event.detail);
-    $links = $links;
-  }
-  function clearProp(event) {
-    $links.get(event.detail.el).delete(event.detail.prop);
-    $links = $links;
-  }
   function finish() {
     $saving = true;
   }
@@ -34,8 +26,6 @@
   <section>
     {#each [...$links] as [el, linkmap]}
       <LinksDisplay
-        on:clear_link={clearLink}
-        on:clear_prop={clearProp}
         {el}
         {linkmap}
       />

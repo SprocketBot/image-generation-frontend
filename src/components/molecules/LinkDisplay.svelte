@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { BoundBox, PropertiesMap, SVGProperty } from "../../types";
-  import { createEventDispatcher, getContext } from "svelte";
+  import type { BoundBox, ElementsMap, PropertiesMap, SVGProperty } from "../../types";
+  import { getContext } from "svelte";
   import { slide } from "svelte/transition";
   import type { Writable } from "svelte/store";
   import { optionOptions, optionTypes } from "../../utils/SvgRules";
@@ -8,10 +8,11 @@
   export let el: SVGElement;
   export let linkmap: PropertiesMap;
 
-  const dispatch = createEventDispatcher();
 
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
   const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
+  const links = getContext<Writable<ElementsMap>>("links");
+  
   function selectThisElement() {
     if($selectedEl === el) {
       $selectedEl = undefined
@@ -23,10 +24,12 @@
     }
   }
   function clearLink() {
-    dispatch("clear_link", el);
+    $links.delete(el);
+    $links = $links;
   }
   function clearProperty(property: SVGProperty) {
-    dispatch("clear_prop", { el: el, prop: property });
+    $links.get(el).delete(property);
+    $links = $links;
   }
   let unselected = true;
   $: unselected = el === $selectedEl;
