@@ -2,18 +2,13 @@
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
   import type {
-    TemplateVariable,
-    SVGProperty,
+  ElementsMap,
   } from "../../types";
   import LinksDisplay from "../molecules/LinkDisplay.svelte";
 
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
   const saving = getContext<Writable<boolean>>("saving");
-  const links =
-    getContext<Writable<Map<SVGElement, Map<SVGProperty, TemplateVariable>>>>(
-      "links"
-    );
-
+  const links = getContext<Writable<ElementsMap>>("links");
   function clearLink(event) {
     $links.delete(event.detail);
     $links = $links;

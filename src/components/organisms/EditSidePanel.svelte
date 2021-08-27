@@ -3,7 +3,7 @@
   import type { Writable } from "svelte/store";
   import type {
     TemplateVariable,
-    SVGProperty,
+    ElementsMap,
     SproketData,
   } from "../../types";
 
@@ -16,10 +16,7 @@
   export let imageType;
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
-  const links =
-    getContext<Writable<Map<SVGElement, Map<SVGProperty, TemplateVariable>>>>(
-      "links"
-    );
+  const links = getContext<Writable<ElementsMap>>("links");
   const saving = getContext<Writable<boolean>>("saving");
 
   async function saveOutput() {
