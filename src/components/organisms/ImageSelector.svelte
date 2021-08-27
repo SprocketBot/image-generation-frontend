@@ -3,7 +3,7 @@
 
 
   export let svgData;
-  const source: string = `/static/img/techdemo_figma.svg`;
+  const source: string = `/static/img/techdemo_figma2.svg`;
   let files;
 
   let ready = false;
