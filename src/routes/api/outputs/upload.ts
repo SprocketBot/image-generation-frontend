@@ -1,5 +1,5 @@
 import type { Request, Response } from "@sveltejs/kit"
-import { mClient } from "../../../utils/minio";
+import { mClient } from "../../../utils/server/minio";
 
 export const post = async ({body}: Request): Promise<Response> => {
     const data = JSON.parse(body);

@@ -31,10 +31,11 @@
   },
   "type": "module",
   "dependencies": {
+    "@types/knex": "^0.16.1",
     "@types/minio": "^7.0.9",
-    "@types/uuid": "^8.3.1",
     "minio": "^7.0.19",
     "nats": "^2.1.0",
-    "uuid": "^8.3.2"
+    "knex": "^0.95.10",
+    "pg": "^8.7.1"
   }
 }

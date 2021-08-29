@@ -1,6 +1,5 @@
 import type { Response } from "@sveltejs/kit"
-import { mClient } from "../../../utils/minio";
-
+import { mClient } from "../../../utils/server/minio";
 
 export const get = async (): Promise<Response> => {
     const reports = await new Promise<Array<unknown>>(resolve => {

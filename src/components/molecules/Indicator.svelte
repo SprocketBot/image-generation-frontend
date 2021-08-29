@@ -5,6 +5,7 @@
 
   const bounds = getContext<Writable<BoundBox>>("indicatorBounds");
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
+    bounds.subscribe(console.trace);
 
   function onWindowResize() {
     if (!$selectedEl) {
@@ -35,14 +36,11 @@
     6}px; height: {$bounds.h + 6}px"
 />
 
-<style>
+<style lang="postcss">
   div {
-    position: absolute;
-    border: 2px solid red;
-    z-index: 100;
-    pointer-events: none;
+    @apply absolute border-2 border-primary-500 z-50 pointer-events-none;
   }
   div.hasSelection {
-    border-color: blue;
+    @apply absolute border-2 border-green-500;
   }
 </style>

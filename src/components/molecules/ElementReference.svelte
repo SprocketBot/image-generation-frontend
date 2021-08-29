@@ -1,6 +1,3 @@
-<script lang="ts" context="module">
-</script>
-
 <script lang="ts">
     import { getContext } from "svelte";
 
@@ -14,10 +11,14 @@
     import Accordion from "../atoms/Accordion.svelte";
 
     export let ref: SVGElement;
-    let shown = false;
     const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
     const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
+    /**
+     * Used to prevent the mouseleave event from having an effect when a button is clicked.
+     */
+    let shouldUpdateBounds = true;
     function updateSelection() {
+        shouldUpdateBounds = false;
         if (ref === $selectedEl) {
             $selectedEl = undefined;
             updateBounds(false);
@@ -27,6 +28,7 @@
         }
     }
     function updateBounds(value: boolean) {
+        if(!shouldUpdateBounds) return;
         const rect = ref.getBoundingClientRect();
         if (value) {
             $indicatorBounds = {
