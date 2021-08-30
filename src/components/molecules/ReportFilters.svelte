@@ -2,6 +2,7 @@
     import { getFilterValues } from "../../api/filters.api";
 
     export let reportCode: string;
+    export let values = {};
 </script>
 
 {#await getFilterValues(reportCode)}
@@ -11,11 +12,11 @@
         {#each filters as filter}
             <label>
                 <span>{filter.name}</span>
-                <select>
+                <select bind:value={values[filter.code]}>
                     {#each filter.data as option}
-                        <option value={option.value}
-                            >{option.description}</option
-                        >
+                        <option value={option.value}>
+                            {option.description}
+                        </option>
                     {/each}
                 </select>
             </label>

@@ -55,6 +55,7 @@ class ReportTemplateDAO {
                 return {
                     name: filter.name,
                     description: filter.description,
+                    code: filter.code,
                     data: results.rows
                 }
             })
