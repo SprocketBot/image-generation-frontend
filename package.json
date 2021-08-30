@@ -16,26 +16,27 @@
     "@sveltejs/kit": "^1.0.0-next.156",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
-    "autoprefixer": "^10.3.2",
+    "autoprefixer": "^10.3.3",
     "eslint": "^7.32.0",
     "eslint-plugin-svelte3": "^3.2.0",
     "postcss": "^8.3.6",
     "postcss-load-config": "^3.1.0",
     "postcss-nesting": "^8.0.1",
-    "svelte": "^3.42.3",
+    "svelte": "^3.42.4",
     "svelte-check": "^2.2.5",
     "svelte-preprocess": "^4.8.0",
-    "tailwindcss": "^2.2.7",
+    "tailwindcss": "^2.2.8",
     "tslib": "^2.3.1",
-    "typescript": "^4.0.0"
+    "typescript": "^4.4.2"
   },
   "type": "module",
   "dependencies": {
+    "@sveltejs/adapter-node": "^1.0.0-next.43",
     "@types/knex": "^0.16.1",
-    "@types/minio": "^7.0.9",
-    "minio": "^7.0.19",
-    "nats": "^2.1.0",
+    "@types/minio": "^7.0.10",
     "knex": "^0.95.10",
+    "minio": "^7.0.19",
+    "nats": "^2.2.0",
     "pg": "^8.7.1"
   }
 }
