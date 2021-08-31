@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { ImageTypeItemType } from "src/types";
-  import { createEventDispatcher } from "svelte";
 
   export let type: ImageTypeItemType;
   export let select: (id: string) => unknown = () => {};

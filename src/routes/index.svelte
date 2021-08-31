@@ -1,9 +1,9 @@
 <script lang="ts">
   import Controls from "../components/organisms/Controls.svelte";
   import Preview from "../components/organisms/Preview.svelte";
-  import EditSidePanel from "../components/organisms/EditSidePanel.svelte"
-  import ImageTypeSelector from "../components/organisms/ImageTypeSelector.svelte"
-  import ImageSelector from "../components/organisms/ImageSelector.svelte"
+  import EditSidePanel from "../components/organisms/EditSidePanel.svelte";
+  import ImageTypeSelector from "../components/organisms/ImageTypeSelector.svelte";
+  import ImageSelector from "../components/organisms/ImageSelector.svelte";
 
   import { setContext } from "svelte";
   import type { Writable } from "svelte/store";
@@ -17,7 +17,6 @@
     saving,
   } from "../stores";
   import type { BoundBox, ElementsMap } from "../types";
-  import Tailwindcss from "../utils/Tailwindcss.svelte";
 
   let imageType;
   let svgData;
@@ -26,17 +25,15 @@
   setContext<Writable<BoundBox>>("indicatorBounds", indicatorBounds);
   setContext<Writable<SVGElement>>("selectedEl", selectedEl);
   setContext<Writable<ElementsMap>>("links", links);
-  setContext<Writable<boolean>>("saving", saving)
-      
+  setContext<Writable<boolean>>("saving", saving);
 </script>
 
-<Tailwindcss />
 <EditLayout>
   <div slot="preview">
     {#if svgData}
-      <Preview svgData={svgData} />
+      <Preview {svgData} />
     {:else}
-      <ImageSelector bind:svgData/>
+      <ImageSelector bind:svgData />
     {/if}
   </div>
 
@@ -50,11 +47,8 @@
     {:else}
       <ImageTypeSelector bind:imageType/>
     {/if}
-</div>
-
-  
+  </div>
 </EditLayout>
-
 
 <style lang="postcss">
   div {

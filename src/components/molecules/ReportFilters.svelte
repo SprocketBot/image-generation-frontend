@@ -8,20 +8,18 @@
 {#await getFilterValues(reportCode)}
     <h2>Loading...</h2>
 {:then filters}
-    <section>
-        {#each filters as filter}
-            <label>
-                <span>{filter.name}</span>
-                <select bind:value={values[filter.code]}>
-                    {#each filter.data as option}
-                        <option value={option.value}>
-                            {option.description}
-                        </option>
-                    {/each}
-                </select>
-            </label>
-        {/each}
-    </section>
+    {#each filters as filter}
+        <label>
+            <span>{filter.name}</span>
+            <select bind:value={values[filter.code]}>
+                {#each filter.data as option}
+                    <option value={option.value}>
+                        {option.description}
+                    </option>
+                {/each}
+            </select>
+        </label>
+    {/each}
 {/await}
 
 <style lang="postcss">
@@ -32,9 +30,6 @@
         @apply font-bold;
     }
     select {
-        @apply bg-primary-500 text-white px-2 py-1;
-    }
-    section {
-        @apply flex;
+        @apply bg-primary-500 text-sproc_light_gray-800 px-2 py-1 w-full;
     }
 </style>
