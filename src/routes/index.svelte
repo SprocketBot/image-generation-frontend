@@ -5,7 +5,7 @@
   import ImageTypeSelector from "../components/organisms/ImageTypeSelector.svelte";
   import ImageSelector from "../components/organisms/ImageSelector.svelte";
 
-  import { setContext } from "svelte";
+  import { onDestroy, setContext } from "svelte";
   import type { Writable } from "svelte/store";
 
   import EditLayout from "../components/layouts/EditLayout.svelte";
@@ -26,6 +26,13 @@
   setContext<Writable<SVGElement>>("selectedEl", selectedEl);
   setContext<Writable<ElementsMap>>("links", links);
   setContext<Writable<boolean>>("saving", saving);
+  onDestroy(async () => {
+    $previewEl = undefined;
+    $selectedEl = undefined;
+    $indicatorBounds = {x:0, y:0, h:0, w:0}
+    $links.clear();
+    $saving = false;
+  })
 </script>
 
 <EditLayout>
