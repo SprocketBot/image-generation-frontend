@@ -14,3 +14,4 @@ export const indicatorBounds = writable<BoundBox>({
 export const selectedEl = writable<SVGElement>(undefined);
 export const saving = writable<boolean>(false);
 export const links = writable<ElementsMap>(new Map<SVGElement, PropertiesMap>());
+export const fontSet = writable<Set<string>>(new Set());

@@ -1,52 +1,24 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
-  import type {
-    SprocketData,
-    ElementsMap,
-  } from "../../types";
 
   import SvgList from "./SVGList.svelte";
   import DataItems from "./DataItems.svelte";
   import { blur, fly } from "svelte/transition";
-  import { uploadTemplate } from "../../api";
   import {absoluteWhileTransitioning} from "../../utils/absoluteWhileTransitioning";
+  import SaveControls from "./SaveControls.svelte";
 
   export let imageType;
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
-  const links = getContext<Writable<ElementsMap>>("links");
   const saving = getContext<Writable<boolean>>("saving");
 
-  async function saveOutput() {
-    for (const [el, linkmap] of $links) {
-      const sproketData: SprocketData[] = [];
-      for (const [linkType, data] of linkmap) {
-        sproketData.push({
-          varPath: data.varPath,
-          options: data.options,
-          type: linkType,
-        });
-      }
-      const sproketDataString = JSON.stringify(sproketData);
-      sproketDataString.replace('"', "'");
-      el.setAttribute("data-sprocket", JSON.stringify(sproketData));
-    }
-
-    let svgData = $previewEl.outerHTML;
-    await uploadTemplate(svgData, "sotw", "test2.svg");
-    $saving = false;
-  }
 </script>
 
 {#if $saving}
-  <div>Saving page</div>
-  <button
-    on:click={() => {
-      $saving = false;
-    }}>cancel</button
-  >
-  <button on:click={saveOutput}>Save</button>
+  <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
+    <SaveControls />
+  </div>
 {:else if $selectedEl}
   <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
     <DataItems {imageType} />

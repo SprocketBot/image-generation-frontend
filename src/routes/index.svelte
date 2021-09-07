@@ -15,6 +15,7 @@
     selectedEl,
     links,
     saving,
+    fontSet,
   } from "../stores";
   import type { BoundBox, ElementsMap } from "../types";
 
@@ -26,11 +27,14 @@
   setContext<Writable<SVGElement>>("selectedEl", selectedEl);
   setContext<Writable<ElementsMap>>("links", links);
   setContext<Writable<boolean>>("saving", saving);
+  setContext<Writable<Set<string>>>("fontSet", fontSet);
+
   onDestroy(async () => {
     $previewEl = undefined;
     $selectedEl = undefined;
     $indicatorBounds = {x:0, y:0, h:0, w:0}
     $links.clear();
+    $fontSet.clear();
     $saving = false;
   })
 </script>
