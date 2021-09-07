@@ -5,7 +5,7 @@
 
   const bounds = getContext<Writable<BoundBox>>("indicatorBounds");
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
-    bounds.subscribe(console.trace);
+    //bounds.subscribe(console.trace);
 
   function onWindowResize() {
     if (!$selectedEl) {

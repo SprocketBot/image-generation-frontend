@@ -5,7 +5,7 @@
     friendlyLookup,
     variableForOperation,
   } from "../../utils/SvgRules";
-  import { getContext, onMount } from "svelte";
+  import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
   import DataItem from "../molecules/DataItem.svelte";
 

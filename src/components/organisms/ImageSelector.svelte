@@ -6,7 +6,6 @@
   const source: string = `/static/img/techdemo_figma2.svg`;
   let files;
 
-  let ready = false;
   onMount(async () => {
     //TODO: select an image to edit can go here
   })
