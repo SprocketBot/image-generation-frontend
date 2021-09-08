@@ -16,6 +16,7 @@
     links,
     saving,
     fontSet,
+  imageTypeId,
   } from "../stores";
   import type { BoundBox, ElementsMap } from "../types";
 
@@ -28,6 +29,8 @@
   setContext<Writable<ElementsMap>>("links", links);
   setContext<Writable<boolean>>("saving", saving);
   setContext<Writable<Set<string>>>("fontSet", fontSet);
+  setContext<Writable<string>>("imageTypeId", imageTypeId);
+  
 
   onDestroy(async () => {
     $previewEl = undefined;
