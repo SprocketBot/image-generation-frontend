@@ -1,15 +1,19 @@
 import {connect, NatsConnection, PublishOptions, JSONCodec, createInbox} from "nats";
-import {v4} from "uuid";
+import { v4 } from "uuid";
+import config  from "../config.json"
 let client: NatsConnection | undefined;
 
 export async function getNatsClient() {
     if(client) return client;
-    client = await connect({servers: "nats://clyde:4222"});
+    client = await connect({servers: config.transport.url, name: config.transport.queue});
     return client;
 }
 
 export async function natsRequest(subject: string, data: Record<string, unknown> = {}, options: PublishOptions = {}): Promise<unknown> {
-    if(!client) await getNatsClient();
+    if (!subject.startsWith(config.transport.scope)) subject = config.transport.scope + "." + subject
+    console.log(data.filterValues?.players)
+    
+    if (!client) await getNatsClient();
     
     let res, rej;
     
