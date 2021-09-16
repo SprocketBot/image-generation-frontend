@@ -7,6 +7,7 @@
     import { setContext } from "svelte";
     import type { Writable } from "svelte/store";
     import { imageTypeId } from "../stores";
+    import { runReport } from "../api/run.api";
 
     let reportCode;
     let filterValues: Record<string, string>;
@@ -16,6 +17,10 @@
     setContext<Writable<string>>("imageTypeId", imageTypeId);
     function reportCodeSelected(e) {
         reportCode = e.detail;
+    }
+
+    function generateReport(){
+        runReport(reportCode, inputFile, "", filterValues);
     }
 </script>
 
@@ -36,7 +41,7 @@
                 </span>
             </div>
 
-            <button>Generate Image</button>
+            <button on:click={generateReport}>Generate Image</button>
         {/if}
     </section>
 </CardLayout>
