@@ -32,19 +32,18 @@
 
   async function saveOutput() {
     // read in all the font files and bake them into svg
+    const fontsDefs = document.createElementNS($previewEl.namespaceURI, "def");
+    fontsDefs.setAttribute("id", "fonts");
     for(const font of [...$fontSet]){
-      if(fontfiles[font]?.length){
-        const style = document.createElementNS($previewEl.namespaceURI, "style");
-        style.innerHTML = style.innerHTML + `@font-face {
-          font-family: "${font}";
-          src: url("${fontDataURLs[font]}");
-        }`
-  
-        $previewEl.appendChild(style);
+      if(fontDataURLs[font]){
+        const fontATag = document.createElementNS($previewEl.namespaceURI, "a");
+        fontATag.setAttribute("data-font-name", font);
+        fontATag.setAttribute("href", fontDataURLs[font])
+        fontsDefs.appendChild(fontATag);
       }
     }
+    $previewEl.appendChild(fontsDefs);
     
-
     // bake in sproket-data into svg
     for (const [el, linkmap] of $links) {
       const sproketData: SprocketData[] = [];
@@ -64,6 +63,15 @@
     await uploadTemplate(svgData, $imageTypeId, filename);
     $saving = false;
   }
+
+
+  async function onFileSelected(e) {
+    console.log(e);
+    if(e.target.files.length){
+
+      fontDataURLs[e.target.id] = await base64convert(e.target.files[0])
+    }
+  }
 </script>
 
 
@@ -77,7 +85,7 @@
     {#each [...$fontSet] as font}
       <dd>
         <span>{font}:</span> 
-        <input type="file" class="file" bind:files={fontfiles[font]}/>
+        <input type="file" class="file" id={font} on:change={(e)=>onFileSelected(e)} bind:files={fontfiles[font]}/>
       </dd>
     {/each}
     </dl>
