@@ -11,7 +11,7 @@ export const get = async ({ query }: Request): Promise<EndpointOutput> => {
         const output = [];
         mClient.listObjects("svg-reports", `${query.get("reportCode")}/`)
             .on("data", d => {
-                if (d.name.endsWith(".svg")) {
+                if (d.name && d.name.endsWith(".svg")) {
                     output.push(d.name.split("/")[1])
                 }
             })
