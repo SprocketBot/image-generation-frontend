@@ -20,7 +20,7 @@
     }
 
     function generateReport(){
-        runReport(reportCode, inputFile, "", filterValues);
+        runReport(reportCode, inputFile, `${$imageTypeId}/output/${new Date().toJSON()}.png`, filterValues);
     }
 </script>
 

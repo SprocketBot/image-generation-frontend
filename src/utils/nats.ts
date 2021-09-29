@@ -11,7 +11,6 @@ export async function getNatsClient() {
 
 export async function natsRequest(subject: string, data: Record<string, unknown> = {}, options: PublishOptions = {}): Promise<unknown> {
     if (!subject.startsWith(config.transport.scope)) subject = config.transport.scope + "." + subject
-    console.log(data.filterValues?.players)
     
     if (!client) await getNatsClient();
     
@@ -20,7 +19,7 @@ export async function natsRequest(subject: string, data: Record<string, unknown>
     const response = new Promise((a,b)=> {
         res = a;
         rej = b;
-        setTimeout(() => rej("Request Timed Out."), 4000);
+        setTimeout(() => rej("Request Timed Out."), 15000);
     });
 
     const reply = createInbox();
@@ -53,6 +52,5 @@ export async function natsRequest(subject: string, data: Record<string, unknown>
         ...options,
         reply,
     })
-
     return await response;
 }
