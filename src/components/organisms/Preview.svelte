@@ -10,7 +10,6 @@
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
   const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
   const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
-  const fontSet = getContext<Writable<Set<string>>>("fontSet");
 
   onMount(async () => {
     if (!svgData) {
@@ -30,12 +29,6 @@
   function attachListeners(el: SVGElement) {
     if (selectableElements.includes(el.nodeName)) {
       el.onmouseenter = handleMouseEnter;
-    }
-    if(el.nodeName === "text"){
-      if(el.hasAttribute("font-family") && !$fontSet.has(el.getAttribute("font-family"))){
-        $fontSet.add(el.getAttribute("font-family"))
-        $fontSet = $fontSet;
-      }
     }
     Array.from(el.children).forEach((e) => {
       if (e instanceof SVGElement) {

@@ -9,13 +9,12 @@
   const saving = getContext<Writable<boolean>>("saving");
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
   const imageTypeId = getContext<Writable<string>>("imageTypeId");
-  const imageTypeId = getContext<Writable<string>>("imageTypeId")
+  const fontElements = getContext<Writable<Map<string, Element>>>("fontElements");
 
+  let uploading = false;
   let filename = "";
-  let fontfiles = {};
-  let fontDataURLs = {};
 
-  async function base64convert (file) {
+  async function base64convert (file) : Promise<string> {
     return new Promise((resolve, reject)=>{
       const reader = new FileReader()
       reader.onload = (e) => {
@@ -32,15 +31,11 @@
 
   async function saveOutput() {
     // read in all the font files and bake them into svg
+    uploading = true;
     const fontsDefs = document.createElementNS($previewEl.namespaceURI, "def");
     fontsDefs.setAttribute("id", "fonts");
-    for(const font of [...$fontSet]){
-      if(fontDataURLs[font]){
-        const fontATag = document.createElementNS($previewEl.namespaceURI, "a");
-        fontATag.setAttribute("data-font-name", font);
-        fontATag.setAttribute("href", fontDataURLs[font])
-        fontsDefs.appendChild(fontATag);
-      }
+    for(const [, tag] of $fontElements){
+      fontsDefs.append(tag);
     }
     $previewEl.appendChild(fontsDefs);
     
@@ -67,9 +62,20 @@
 
   async function onFileSelected(e) {
     if(e.target.files.length){
-
-      fontDataURLs[e.target.id] = await base64convert(e.target.files[0])
+      for(const file of e.target.files){
+        console.log(file);
+        const tag = document.createElementNS($previewEl.namespaceURI, "a");
+        tag.setAttribute("data-font-name", file.name);
+        tag.setAttribute("href", await base64convert(file));
+        $fontElements.set(file.name, tag);
+      }
+      e.target.value = '';
+      $fontElements = $fontElements;
     }
+  }
+  async function removeFontFile(name:string) {
+    $fontElements.delete(name);
+    $fontElements = $fontElements;
   }
 </script>
 
@@ -79,19 +85,25 @@
     <h3>Saving Page</h3>
     <button on:click={()=>{$saving=false;}}>Cancel</button> 
   </header>
-  <dl>
-    <dt>Upload Fonts: </dt>
-    {#each [...$fontSet] as font}
-      <dd>
-        <span>{font}:</span> 
-        <input type="file" class="file" id={font} on:change={(e)=>onFileSelected(e)} bind:files={fontfiles[font]}/>
-      </dd>
-    {/each}
-    </dl>
+  <ul>
+    <lh>Upload Fonts: </lh>
+    <input type="file" class="file" accept=".ttf, .otf, .woff, .woff2" multiple={true} id="fontFile" on:change={(e)=>onFileSelected(e)} />
+    <li>
+      {#each [...$fontElements] as [name, tag]}
+        {name} <button on:click={()=>removeFontFile(name)}>Remove</button>
+      {/each}
+    </li>
+  </ul>
   <label for="filename">Filename: </label>
   <input type="text" id="filename" bind:value={filename}/>
   
-  <button on:click={saveOutput}>Save</button>
+  <button on:click={saveOutput}>
+    {#if uploading}
+      Working
+    {:else}
+      Save
+    {/if}
+  </button>
 </section>
 
 

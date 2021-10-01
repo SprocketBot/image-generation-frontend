@@ -15,8 +15,8 @@
     selectedEl,
     links,
     saving,
-    fontSet,
-  imageTypeId,
+    imageTypeId,
+    fontElements,
   } from "../stores";
   import type { BoundBox, ElementsMap } from "../types";
 
@@ -28,8 +28,8 @@
   setContext<Writable<SVGElement>>("selectedEl", selectedEl);
   setContext<Writable<ElementsMap>>("links", links);
   setContext<Writable<boolean>>("saving", saving);
-  setContext<Writable<Set<string>>>("fontSet", fontSet);
   setContext<Writable<string>>("imageTypeId", imageTypeId);
+  setContext<Writable<Map<string, Element>>>("fontElements", fontElements);
   
 
   onDestroy(async () => {
@@ -37,7 +37,7 @@
     $selectedEl = undefined;
     $indicatorBounds = {x:0, y:0, h:0, w:0}
     $links.clear();
-    $fontSet.clear();
+    $fontElements.clear();
     $saving = false;
   })
 </script>
