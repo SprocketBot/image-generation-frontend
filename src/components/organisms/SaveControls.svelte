@@ -5,10 +5,10 @@
 
   import { uploadTemplate } from "../../api";
 
-  const links = getContext<Writable<ElementsMap>>("links")
+  const links = getContext<Writable<ElementsMap>>("links");
   const saving = getContext<Writable<boolean>>("saving");
   const previewEl = getContext<Writable<SVGElement>>("previewEl");
-  const fontSet = getContext<Writable<Set<string>>>("fontSet")
+  const imageTypeId = getContext<Writable<string>>("imageTypeId");
   const imageTypeId = getContext<Writable<string>>("imageTypeId")
 
   let filename = "";
@@ -66,7 +66,6 @@
 
 
   async function onFileSelected(e) {
-    console.log(e);
     if(e.target.files.length){
 
       fontDataURLs[e.target.id] = await base64convert(e.target.files[0])
