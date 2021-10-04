@@ -63,7 +63,6 @@
   async function onFileSelected(e) {
     if(e.target.files.length){
       for(const file of e.target.files){
-        console.log(file);
         const tag = document.createElementNS($previewEl.namespaceURI, "a");
         tag.setAttribute("data-font-name", file.name);
         tag.setAttribute("href", await base64convert(file));
