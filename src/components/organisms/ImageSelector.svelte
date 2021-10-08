@@ -22,16 +22,13 @@
       $svgData = await fetch(source).then((r) => r.text());
     }
   }
+
 </script>
 
 <div>
-  <input type="file" accept=".svg" id="upload" bind:files>
+  <input type="file" accept=".svg" id="upload" bind:files on:change={handleUpload}>
   <button on:click={handleUpload}>
-    {#if files?.[0]}
-      Go!
-    {:else}
       Use tech demo
-    {/if}
   </button>
 </div>
 
