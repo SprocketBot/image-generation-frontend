@@ -23,10 +23,10 @@
         @apply w-2/3 m-auto;
     }
     header h1 {
-        @apply text-xl font-bold text-center mt-2;
+        @apply text-3xl font-bold text-center mt-2;
     }
     header nav {
-        @apply mt-2 border-b-2 border-solid border-primary-500 pb-2;
+        @apply text-xl mt-2 border-b-2 border-solid border-primary-500 pb-2 flex items-center justify-center;
     }
     header nav a {
         @apply ml-2 text-primary-500 hover:text-primary-300;

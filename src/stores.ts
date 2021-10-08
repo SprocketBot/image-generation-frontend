@@ -1,6 +1,8 @@
 import { writable } from "svelte/store";
 import type { BoundBox, ElementsMap, PropertiesMap } from "./types";
+import { WorkState } from "./types"
 
+export const workstate = writable<WorkState>(WorkState.Linking);
 export const template = writable<any | undefined>(undefined);
 export const svgData = writable<string>("");
 export const imageType = writable<any>(undefined);

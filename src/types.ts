@@ -1,5 +1,10 @@
 export type SVGProperty = "text" | "fill" | "stroke" | "image"
 
+export enum WorkState {
+    Linking,
+    Fonts,
+    Saving
+}
 export type TemplateVariable = string
 export type BoundBox = {
     w: number,

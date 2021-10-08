@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { previewEl, saving, links} from "../../stores";
-  import LinksDisplay from "../molecules/LinkDisplay.svelte";
-
+  import { WorkState } from "../../types";
+  import LinkControls from "../molecules/LinkControls.svelte";
+  import { previewEl, saving, workstate} from "../../stores";
+  import FontControls from "../molecules/FontControls.svelte";
+  import SaveControls from "./SaveControls.svelte";
   function finish() {
     $saving = true;
   }
@@ -9,21 +11,24 @@
 
 <section class="controls">
   <header>
-    <h3>Dynamic Values</h3>
+    <h3 on:click={()=>$workstate = WorkState.Linking} class={$workstate === WorkState.Linking ? "selected" : ""}>Assign Values</h3>
+    <h3 on:click={()=>$workstate = WorkState.Fonts} class={$workstate === WorkState.Fonts ? "selected" : ""}>Upload Font Files</h3>
+    <h3 on:click={()=>$workstate = WorkState.Saving} class={$workstate === WorkState.Saving ? "selected" : ""}>Save Image</h3>
     <span class="spacer" />
     {#if $previewEl && !$saving}
       <button>Test</button>
       <button on:click={finish}>Done</button>
     {/if}
   </header>
-  <section>
-    {#each [...$links] as [el, linkmap]}
-      <LinksDisplay
-        {el}
-        {linkmap}
-      />
-    {/each}
-  </section>
+  {#if $workstate === WorkState.Linking}
+    <LinkControls />
+  {:else if $workstate === WorkState.Fonts}
+    <!-- <h1>hello</h1> -->
+    <FontControls />
+  {:else}
+    <!-- <h1>hello 2</h1> -->
+    <SaveControls />
+  {/if}
 </section>
 
 <style lang="postcss">
@@ -33,8 +38,11 @@
   section > header {
     @apply border-b-2 border-sproc_dark_gray-800 flex items-center px-10;
   }
+  section > header .selected {
+    @apply  bg-primary-500 text-sproc_light_gray-800 cursor-pointer;
+  }
   section > header > h3 {
-    @apply text-lg font-bold;
+    @apply font-bold text-lg mx-1 p-1 text-sproc_light_gray-50 rounded-t-xl hover:bg-primary-700 cursor-pointer;
   }
   section > header > .spacer {
     @apply flex-1;

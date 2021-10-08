@@ -5,15 +5,10 @@
   import DataItems from "./DataItems.svelte";
   import { blur, fly } from "svelte/transition";
   import {absoluteWhileTransitioning} from "../../utils/absoluteWhileTransitioning";
-  import SaveControls from "./SaveControls.svelte";
 
 </script>
 
-{#if $saving}
-  <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
-    <SaveControls />
-  </div>
-{:else if $selectedEl}
+{#if $selectedEl}
   <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
     <DataItems/>
   </div>

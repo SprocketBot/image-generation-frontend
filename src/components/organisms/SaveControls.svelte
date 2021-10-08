@@ -7,21 +7,6 @@
   let uploading = false;
   let filename = "";
 
-  async function base64convert (file) : Promise<string> {
-    return new Promise((resolve, reject)=>{
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        resolve(e.target.result);
-      }
-      reader.onerror = (e) =>{
-        reject(e.target.error);
-      }
-      reader.readAsDataURL(file)
-    })
-    
-  }
-
-
   async function saveOutput() {
     // read in all the font files and bake them into svg
     uploading = true;
@@ -53,22 +38,7 @@
   }
 
 
-  async function onFileSelected(e) {
-    if(e.target.files.length){
-      for(const file of e.target.files){
-        const tag = document.createElementNS($previewEl.namespaceURI, "a");
-        tag.setAttribute("data-font-name", file.name);
-        tag.setAttribute("href", await base64convert(file));
-        $fontElements.set(file.name, tag);
-      }
-      e.target.value = '';
-      $fontElements = $fontElements;
-    }
-  }
-  async function removeFontFile(name:string) {
-    $fontElements.delete(name);
-    $fontElements = $fontElements;
-  }
+
 </script>
 
 
@@ -77,15 +47,8 @@
     <h3>Saving Page</h3>
     <button on:click={()=>{$saving=false;}}>Cancel</button> 
   </header>
-  <ul>
-    <lh>Upload Fonts: </lh>
-    <input type="file" class="file" accept=".ttf, .otf, .woff, .woff2" multiple={true} id="fontFile" on:change={(e)=>onFileSelected(e)} />
-    {#each [...$fontElements] as [name, tag]}
-      <li>
-        {name} <button on:click={()=>removeFontFile(name)}>Remove</button>
-      </li>
-    {/each}
-  </ul>
+
+  
   <label for="filename">Filename: </label>
   <input type="text" id="filename" bind:value={filename}/>
   
@@ -121,8 +84,5 @@
   }
   input[type=text] {
     @apply text-sproc_dark_gray-500 bg-primary-500;
-  }
-  input.file {
-    @apply flex;
   }
 </style>
