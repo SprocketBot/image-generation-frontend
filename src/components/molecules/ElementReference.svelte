@@ -1,8 +1,5 @@
 <script lang="ts">
-    import { getContext } from "svelte";
-
-    import type { Writable } from "svelte/store";
-    import type { BoundBox } from "../../types";
+    import {indicatorBounds, selectedEl} from "../../stores"
     import {
         friendlyLookup,
         hiddenElements,
@@ -11,8 +8,6 @@
     import Accordion from "../atoms/Accordion.svelte";
 
     export let ref: SVGElement;
-    const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
-    const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
     /**
      * Used to prevent the mouseleave event from having an effect when a button is clicked.
      */

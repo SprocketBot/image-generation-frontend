@@ -1,8 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { svgData } from "../../stores"
 
-
-  export let svgData;
   const source: string = `/static/img/techdemo_figma2.svg`;
   let files;
 
@@ -15,18 +14,18 @@
       const reader = new FileReader();
       reader.readAsText(files[0])
       reader.onloadend = e => {
-        svgData = e.target.result.toString();
+        $svgData = e.target.result.toString();
       }
       
     }
     else{
-      svgData = await fetch(source).then((r) => r.text());
+      $svgData = await fetch(source).then((r) => r.text());
     }
   }
 </script>
 
 <div>
-  <input type="file" id="upload" bind:files>
+  <input type="file" accept=".svg" id="upload" bind:files>
   <button on:click={handleUpload}>
     {#if files?.[0]}
       Go!

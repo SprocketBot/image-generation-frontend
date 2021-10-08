@@ -1,15 +1,8 @@
 <script lang="ts">
-  import type { ElementsMap, SprocketData } from "src/types";
-  import { getContext } from "svelte";
-  import type { Writable } from "svelte/store";
+  import { links, saving, previewEl, imageTypeId, fontElements } from "../../stores";
+  import type { SprocketData } from "src/types";
 
   import { uploadTemplate } from "../../api";
-
-  const links = getContext<Writable<ElementsMap>>("links");
-  const saving = getContext<Writable<boolean>>("saving");
-  const previewEl = getContext<Writable<SVGElement>>("previewEl");
-  const imageTypeId = getContext<Writable<string>>("imageTypeId");
-  const fontElements = getContext<Writable<Map<string, Element>>>("fontElements");
 
   let uploading = false;
   let filename = "";
@@ -87,11 +80,11 @@
   <ul>
     <lh>Upload Fonts: </lh>
     <input type="file" class="file" accept=".ttf, .otf, .woff, .woff2" multiple={true} id="fontFile" on:change={(e)=>onFileSelected(e)} />
-    <li>
-      {#each [...$fontElements] as [name, tag]}
+    {#each [...$fontElements] as [name, tag]}
+      <li>
         {name} <button on:click={()=>removeFontFile(name)}>Remove</button>
-      {/each}
-    </li>
+      </li>
+    {/each}
   </ul>
   <label for="filename">Filename: </label>
   <input type="text" id="filename" bind:value={filename}/>
@@ -117,16 +110,19 @@
   h3 {
     @apply text-lg;
   }
+  li{
+    @apply flex w-full justify-between
+  }
+  li button{
+    @apply justify-self-end
+  }
   button {
     @apply px-2 py-1 bg-primary-500 hover:bg-primary-600 text-sproc_dark_gray-500;
   }
-  dd {
-    @apply flex;
-  }
-  input {
-    @appy text-sproc_dark_gray-500;
+  input[type=text] {
+    @apply text-sproc_dark_gray-500 bg-primary-500;
   }
   input.file {
-    @appy justify-right flex;
+    @apply flex;
   }
 </style>

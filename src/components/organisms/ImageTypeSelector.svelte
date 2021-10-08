@@ -1,17 +1,15 @@
 <script lang="ts">
   import { getTemplate, getImageTypes } from "../../api";
   import ImageTypeItem from "../molecules/ImageTypeItem.svelte";
-  import { createEventDispatcher, getContext } from "svelte";
-  import type { Writable } from "svelte/store";
-  export let imageType = undefined;
+  import { imageTypeId, imageType } from "../../stores";
+  import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-  const imageTypeId = getContext<Writable<string>>("imageTypeId")
   async function handleImageType(id) {
     const template = await getTemplate(id);
     console.log(id);
     $imageTypeId = id;
-    imageType = template.template_structure;
+    $imageType = template.template_structure;
     dispatch("selected", id);
   }
 </script>

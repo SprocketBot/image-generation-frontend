@@ -5,49 +5,20 @@
   import ImageTypeSelector from "../components/organisms/ImageTypeSelector.svelte";
   import ImageSelector from "../components/organisms/ImageSelector.svelte";
 
-  import { onDestroy, setContext } from "svelte";
-  import type { Writable } from "svelte/store";
-
   import EditLayout from "../components/layouts/EditLayout.svelte";
-  import {
-    indicatorBounds,
-    previewEl,
-    selectedEl,
-    links,
-    saving,
-    imageTypeId,
-    fontElements,
-  } from "../stores";
-  import type { BoundBox, ElementsMap } from "../types";
+  import { svgData, imageType } from "../stores";
 
-  let imageType;
-  let svgData;
 
-  setContext<Writable<SVGElement>>("previewEl", previewEl);
-  setContext<Writable<BoundBox>>("indicatorBounds", indicatorBounds);
-  setContext<Writable<SVGElement>>("selectedEl", selectedEl);
-  setContext<Writable<ElementsMap>>("links", links);
-  setContext<Writable<boolean>>("saving", saving);
-  setContext<Writable<string>>("imageTypeId", imageTypeId);
-  setContext<Writable<Map<string, Element>>>("fontElements", fontElements);
+
   
-
-  onDestroy(async () => {
-    $previewEl = undefined;
-    $selectedEl = undefined;
-    $indicatorBounds = {x:0, y:0, h:0, w:0}
-    $links.clear();
-    $fontElements.clear();
-    $saving = false;
-  })
 </script>
 
 <EditLayout>
   <div slot="preview">
-    {#if svgData}
-      <Preview {svgData} />
+    {#if $svgData}
+      <Preview/>
     {:else}
-      <ImageSelector bind:svgData />
+      <ImageSelector/>
     {/if}
   </div>
 
@@ -56,10 +27,10 @@
   </div>
 
   <div slot="sidePanel">
-    {#if imageType}
-      <EditSidePanel {imageType}/>
+    {#if $imageType}
+      <EditSidePanel/>
     {:else}
-      <ImageTypeSelector bind:imageType/>
+      <ImageTypeSelector/>
     {/if}
   </div>
 </EditLayout>

@@ -1,9 +1,7 @@
 <script lang="ts">
-    import { getContext } from "svelte";
-    import type { Writable } from "svelte/store";
+    import { previewEl } from "../../stores";
     import ElementReference from "../molecules/ElementReference.svelte";
 
-    const previewEl = getContext<Writable<any>>("previewEl");
 </script>
 
 {#if $previewEl}

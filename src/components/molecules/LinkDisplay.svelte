@@ -1,17 +1,12 @@
 <script lang="ts">
-  import type { BoundBox, ElementsMap, PropertiesMap, SVGProperty } from "../../types";
-  import { getContext } from "svelte";
+  import type { PropertiesMap, SVGProperty } from "../../types";
+  import {selectedEl, indicatorBounds, links} from "../../stores"
   import { slide } from "svelte/transition";
-  import type { Writable } from "svelte/store";
   import { optionTypes } from "../../utils/SvgRules";
   import OptionDisplay from "./OptionDisplay.svelte";
 
   export let el: SVGElement;
   export let linkmap: PropertiesMap;
-  
-  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
-  const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
-  const links = getContext<Writable<ElementsMap>>("links");
   
     function selectThisElement() {
     if($selectedEl === el) {
@@ -43,7 +38,7 @@
   </header>
   
   {#if el === $selectedEl}
-    <dl transition:slide>
+    <dl transition:slide|local>
       {#each [...linkmap] as [property, data]}
         <dt>
           {property}:

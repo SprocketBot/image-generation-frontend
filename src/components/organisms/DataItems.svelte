@@ -1,17 +1,11 @@
 <script lang="ts">
-  import type { BoundBox } from "src/types";
+  import {selectedEl, indicatorBounds, imageType } from "../../stores"
   import {
     applicableOperations,
     friendlyLookup,
     variableForOperation,
   } from "../../utils/SvgRules";
-  import { getContext } from "svelte";
-  import type { Writable } from "svelte/store";
   import DataItem from "../molecules/DataItem.svelte";
-
-  export let imageType: any;
-  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
-  const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
 
   function getRelevantItems(el: SVGElement, t = {}) {
     let subTemplate = {};
@@ -56,7 +50,7 @@
       <h3>Editing Element: <strong>{$selectedEl.id || friendlyLookup[$selectedEl.tagName] || $selectedEl.tagName}</strong></h3>
       <button on:click={handleClick}>Finish</button>
     </header>
-    <DataItem item={getRelevantItems($selectedEl, imageType)} />
+    <DataItem item={getRelevantItems($selectedEl, $imageType)} />
   {/if}
 </section>
 

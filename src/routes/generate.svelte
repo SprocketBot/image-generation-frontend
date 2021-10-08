@@ -4,8 +4,6 @@
     import ReportFilters from "../components/molecules/ReportFilters.svelte";
     import type { ImageTypeItemType } from "src/types";
     import SavedInputSelector from "../components/molecules/SavedInputSelector.svelte";
-    import { setContext } from "svelte";
-    import type { Writable } from "svelte/store";
     import { imageTypeId } from "../stores";
     import { runReport } from "../api/run.api";
 
@@ -13,8 +11,6 @@
     let filterValues: Record<string, string>;
     let inputFile;
 
-
-    setContext<Writable<string>>("imageTypeId", imageTypeId);
     function reportCodeSelected(e) {
         reportCode = e.detail;
     }

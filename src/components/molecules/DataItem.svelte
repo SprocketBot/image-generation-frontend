@@ -1,17 +1,15 @@
 <script lang="ts">
   import type { ElementsMap, SprocketData, SVGProperty } from "../../types";
   import { variableOperations } from "../../utils/SvgRules";
-  import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
   import Accordion from "../atoms/Accordion.svelte";
   import DropdownButton from "../atoms/DropdownButton.svelte";
+  import {selectedEl, links} from "../../stores"
 
   export let item: any = {};
   export let key: string = "Variables";
   export let name: string = "";
 
-  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
-  const links = getContext<Writable<ElementsMap>>("links");
   function setLink(event) {
     if (!$links.get($selectedEl)) {
       $links.set($selectedEl, new Map<SVGProperty, SprocketData>());

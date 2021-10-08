@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { getContext } from "svelte";
-  import type { Writable } from "svelte/store";
+  import { selectedEl , previewEl, saving} from "../../stores";
 
   import SvgList from "./SVGList.svelte";
   import DataItems from "./DataItems.svelte";
@@ -8,27 +7,22 @@
   import {absoluteWhileTransitioning} from "../../utils/absoluteWhileTransitioning";
   import SaveControls from "./SaveControls.svelte";
 
-  export let imageType;
-  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
-  const previewEl = getContext<Writable<SVGElement>>("previewEl");
-  const saving = getContext<Writable<boolean>>("saving");
-
 </script>
 
 {#if $saving}
-  <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
+  <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
     <SaveControls />
   </div>
 {:else if $selectedEl}
-  <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
-    <DataItems {imageType} />
+  <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
+    <DataItems/>
   </div>
 {:else if $previewEl}
-  <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
+  <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
     <SvgList />
   </div>
 {:else}
-  <div out:blur={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning class="text">
+  <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning class="text">
     <strong>Please upload your svg template.</strong>
   </div>
 {/if}

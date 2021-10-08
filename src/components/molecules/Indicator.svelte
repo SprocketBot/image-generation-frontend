@@ -1,15 +1,9 @@
 <script lang="ts">
-  import { getContext } from "svelte";
-  import type { Writable } from "svelte/store";
-  import type { BoundBox } from "../../types";
-
-  const bounds = getContext<Writable<BoundBox>>("indicatorBounds");
-  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
-    //bounds.subscribe(console.trace);
+  import { indicatorBounds, selectedEl } from "../../stores";
 
   function onWindowResize() {
     if (!$selectedEl) {
-      $bounds = {
+      $indicatorBounds = {
         x: -1,
         y: -1,
         h: 0,
@@ -18,7 +12,7 @@
     } else {
       const rect = $selectedEl.getBoundingClientRect();
 
-      $bounds = {
+      $indicatorBounds = {
         x: rect.x,
         y: rect.y,
         w: rect.width,
@@ -32,8 +26,8 @@
 
 <div
   class:hasSelection={Boolean($selectedEl)}
-  style="top: {$bounds.y - 3}px; left: {$bounds.x - 3}px; width: {$bounds.w +
-    6}px; height: {$bounds.h + 6}px"
+  style="top: {$indicatorBounds.y - 3}px; left: {$indicatorBounds.x - 3}px; width: {$indicatorBounds.w +
+    6}px; height: {$indicatorBounds.h + 6}px"
 />
 
 <style lang="postcss">

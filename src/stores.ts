@@ -3,6 +3,7 @@ import type { BoundBox, ElementsMap, PropertiesMap } from "./types";
 
 export const template = writable<any | undefined>(undefined);
 export const svgData = writable<string>("");
+export const imageType = writable<any>(undefined);
 export const imageTypeId = writable<string>("");
 
 export const previewEl = writable<SVGElement>(undefined);

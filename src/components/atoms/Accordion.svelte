@@ -8,7 +8,7 @@
 </div>
 
 {#if shown}
-<div transition:slide>
+<div transition:slide|local>
     <slot name="content"/>
 </div>
 {/if}

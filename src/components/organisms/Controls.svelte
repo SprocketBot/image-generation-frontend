@@ -1,14 +1,7 @@
 <script lang="ts">
-  import { getContext } from "svelte";
-  import type { Writable } from "svelte/store";
-  import type {
-  ElementsMap,
-  } from "../../types";
+  import { previewEl, saving, links} from "../../stores";
   import LinksDisplay from "../molecules/LinkDisplay.svelte";
 
-  const previewEl = getContext<Writable<SVGElement>>("previewEl");
-  const saving = getContext<Writable<boolean>>("saving");
-  const links = getContext<Writable<ElementsMap>>("links");
   function finish() {
     $saving = true;
   }

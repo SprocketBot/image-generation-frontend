@@ -1,22 +1,17 @@
 <script lang="ts">
-  import { getContext, onMount } from "svelte";
-  import type { Writable } from "svelte/store";
-  import type { BoundBox } from "../../types";
+  import { previewEl, indicatorBounds, selectedEl, svgData } from "..//../stores";
+  import { onMount } from "svelte";
   import { selectableElements } from "../../utils/SvgRules";
   import Indicator from "../molecules/Indicator.svelte";
 
-  export let svgData: string = undefined;
   let container: HTMLElement;
-  const previewEl = getContext<Writable<SVGElement>>("previewEl");
-  const indicatorBounds = getContext<Writable<BoundBox>>("indicatorBounds");
-  const selectedEl = getContext<Writable<SVGElement>>("selectedEl");
 
   onMount(async () => {
-    if (!svgData) {
+    if (!$svgData) {
       throw new Error("Missing required prop 'svgData'!");
     }
     const parser = new DOMParser();
-    const newEl = parser.parseFromString(svgData, "image/svg+xml").children[0];
+    const newEl = parser.parseFromString($svgData, "image/svg+xml").children[0];
 
     if (newEl.nodeName === "svg" && newEl instanceof SVGElement) {
       container.appendChild(newEl);
