@@ -1,14 +1,19 @@
 <script lang="ts">
   import type { OptionType, SVGProperty } from "src/types";
+import { onMount } from "svelte";
   import { links } from "../../stores";
   import DropdownButton from "../atoms/DropdownButton.svelte";
 
   export let el : SVGElement;
   export let property: SVGProperty;
   export let option: OptionType;
-  let selection = option.default;
+  let selection = $links.get(el).get(property)?.options[option.name] || option.default;
 
-
+  onMount(async ()=>{
+    if(! $links.get(el).get(property).options[option.name]){
+      updateOption({detail: option.default})
+    }
+  })
   function updateOption(event){
     const currentProperty = $links.get(el).get(property)
     let newOptions = {...currentProperty.options};

@@ -29,16 +29,16 @@ export const variableForOperation = {
 export const optionTypes:OptionsRecord = {
     text: [
         {
-            name: "justify",
-            display_name: "Justify Text",
+            name: "h-align",
+            display_name: "Horizontal Alignment",
             options: ["left", "center", "right"],
             default: "center",
         },
         {
-            name: "test",
-            display_name: "Just testing",
-            options: ["foo", "bar", "baz"],
-            default: "baz",
+            name: "v-align",
+            display_name: "Vertical Alignment",
+            options: ["baseline", "center", "hanging"],
+            default: "center",
         }
     ],
     image: [
