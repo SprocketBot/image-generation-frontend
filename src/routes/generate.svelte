@@ -10,6 +10,7 @@
     let reportCode;
     let filterValues: Record<string, string>;
     let inputFile;
+    let disable:boolean;
 
     function reportCodeSelected(e) {
         reportCode = e.detail;
@@ -17,6 +18,10 @@
 
     function generateReport(){
         runReport(reportCode, inputFile, `${$imageTypeId}/output/${new Date().toJSON()}.png`, filterValues);
+    }
+
+    $:{
+        disable = (inputFile === "" || filterValues=={})
     }
 </script>
 
@@ -37,7 +42,13 @@
                 </span>
             </div>
 
-            <button on:click={generateReport}>Generate Image</button>
+            <button disabled={disable} on:click={generateReport}>
+                {#if disable}
+                    Select things
+                {:else}
+                    Generate Image
+                {/if}
+            </button>
         {/if}
     </section>
 </CardLayout>
@@ -64,5 +75,9 @@
     }
     button {
         @apply px-2 py-1 bg-primary-500 hover:bg-primary-600 mx-4 text-sproc_dark_gray-500 mb-2;
+    }
+
+    button:disabled{
+        @apply cursor-default bg-primary-700;
     }
 </style>
