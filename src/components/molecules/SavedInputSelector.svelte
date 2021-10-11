@@ -4,20 +4,23 @@
     export let reportCode: string;
 </script>
 
-<select bind:value>
-    {#await getSavedInputs(reportCode)}
-        <option>Loading...</option>
-    {:then results}
+{#await getSavedInputs(reportCode)}
+    <div>Loading...</div>
+{:then results}
+    <select bind:value>
         {#each results as result}
             <option>{result}</option>
         {/each}
-    {:catch}
-        <option>Error!</option>
-    {/await}
-</select>
+    </select>
+{:catch}
+    <div>Error fetching from minio</div>
+{/await}
 
 <style lang="postcss">
     select {
+        @apply bg-primary-500 text-sproc_light_gray-800 px-2 py-1 w-full;
+    }
+    div {
         @apply bg-primary-500 text-sproc_light_gray-800 px-2 py-1 w-full;
     }
 </style>

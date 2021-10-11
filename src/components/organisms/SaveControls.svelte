@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { links, saving, previewEl, imageTypeId, fontElements } from "../../stores";
+  import { links, previewEl, imageTypeId, fontElements } from "../../stores";
   import type { SprocketData } from "src/types";
-
   import { uploadTemplate } from "../../api";
 
   let uploading = false;
@@ -10,12 +9,14 @@
   async function saveOutput() {
     // read in all the font files and bake them into svg
     uploading = true;
-    const fontsDefs = document.createElementNS($previewEl.namespaceURI, "def");
-    fontsDefs.setAttribute("id", "fonts");
-    for(const [, tag] of $fontElements){
-      fontsDefs.append(tag);
+    if($fontElements.size > 0){
+      const fontsDefs = document.createElementNS($previewEl.namespaceURI, "def");
+      fontsDefs.setAttribute("id", "fonts");
+      for(const [, tag] of $fontElements){
+        fontsDefs.append(tag);
+      }
+      $previewEl.appendChild(fontsDefs);
     }
-    $previewEl.appendChild(fontsDefs);
     
     // bake in sproket-data into svg
     for (const [el, linkmap] of $links) {
@@ -34,7 +35,8 @@
 
     let svgData = $previewEl.outerHTML;
     await uploadTemplate(svgData, $imageTypeId, filename);
-    $saving = false;
+
+    //TODO: prompt user file uploaded successfully, and yeet everything
   }
 
 
@@ -43,11 +45,11 @@
 
 
 <section>
-  <header>
-    <h3>Saving Page</h3>
-    <button on:click={()=>{$saving=false;}}>Cancel</button> 
-  </header>
-
+  {#if $fontElements.size===0}
+    <strong>You have not uploaded any fonts. This may cause text to not be rendered properly</strong>
+  {:else}
+    <p>Give your file a name you'll rembmer. Don't forget to add the '.svg' extension</p>
+  {/if}
   
   <label for="filename">Filename: </label>
   <input type="text" id="filename" bind:value={filename}/>
@@ -65,24 +67,21 @@
 
 <style lang="postcss">
   section {
-    @apply px-4 py-4 max-w-full w-full select-none;
-  }
-  header {
-    @apply flex justify-between mb-4;
-  }
-  h3 {
-    @apply text-lg;
-  }
-  li{
-    @apply flex w-full justify-between
-  }
-  li button{
-    @apply justify-self-end
+    @apply p-4 max-w-full w-full select-none;
   }
   button {
     @apply px-2 py-1 bg-primary-500 hover:bg-primary-600 text-sproc_dark_gray-500;
   }
+  label {
+    @apply text-xl text-primary-500
+  }
   input[type=text] {
     @apply text-sproc_dark_gray-500 bg-primary-500;
+  }
+  strong {
+    @apply block text-xl text-pink-600
+  }
+  p {
+    @apply text-xl text-primary-500 py-3
   }
 </style>

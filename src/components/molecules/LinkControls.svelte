@@ -1,10 +1,10 @@
 <script lang="ts">
-  import {selectedEl, indicatorBounds, links} from "../../stores"
+  import {selectedEl, indicatorBounds, links, previewEl, imageType} from "../../stores"
   import { slide } from "svelte/transition";
   import { optionTypes } from "../../utils/SvgRules";
   import OptionDisplay from "../molecules/OptionDisplay.svelte";
   import type { SVGProperty } from "../../types";
-
+  
   function selectThisElement(el) {
     if($selectedEl === el) {
       $selectedEl = undefined
@@ -23,46 +23,59 @@
     $links.get(el).delete(property);
     $links.get(el).size == 0 ? clearLink(el) : $links = $links;
   }
-
 </script>
 
 <section>
-  {#each [...$links] as [el, linkmap]}
-    <header on:click={()=>selectThisElement(el)}>
-      {el.id}
-      <span><button on:click|stopPropagation={()=>clearLink(el)}>Delete</button></span>
-    </header>
-    {#if el === $selectedEl}
-      <ul transition:slide|local>
-        {#each [...linkmap] as [property, data]}
-          <li>
-          {property} --> {linkmap.get(property).varPath}:
-          <button on:click|stopPropagation={() => clearProperty(el, property)}>
-            Delete
-          </button>
-          {#if optionTypes[property].length}
-          <ul>
-            <span>Options: </span>
-              {#each optionTypes[property] as option}
-                <li>
-                  <OptionDisplay {el} {property} {option} />
-                </li>
-              {/each}
+  {#if $links.size > 0}
+    <p>Links: </p>
+    {#each [...$links] as [el, linkmap]}
+      <header on:click={()=>selectThisElement(el)}>
+        {el.id}
+        <span><button on:click|stopPropagation={()=>clearLink(el)}>Delete</button></span>
+      </header>
+      {#if el === $selectedEl}
+        <ul transition:slide|local>
+          {#each [...linkmap] as [property, data]}
+            <li>
+            {property} --> {linkmap.get(property).varPath}:
+            <button on:click|stopPropagation={() => clearProperty(el, property)}>
+              Delete
+            </button>
+            {#if optionTypes[property].length}
+            <ul>
+              <span>Options: </span>
+                {#each optionTypes[property] as option}
+                  <li>
+                    <OptionDisplay {el} {property} {option} />
+                  </li>
+                {/each}
+            </ul>
+            {/if}
+            </li>
+          {/each}
           </ul>
-          {/if}
-          </li>
-        {/each}
-        </ul>
+      {/if}
+    {/each}
+  {:else}
+    
+    {#if !$previewEl || !$imageType}     
+      <p>Upload an Image and select an Image Type</p>
+    {:else}
+      {#if $selectedEl}
+        <p>Select a variable to link it to from the list to assign a link or press Finish</p>
+      {:else}
+        <p>Double-click on an element or chose it from the right panel </p>
+      {/if}
     {/if}
-  {/each}
+  {/if}
 </section>
 
 <style lang="postcss">
   section {
-    @apply pl-10 pt-5 select-none
+    @apply p-4 select-none
   }
   header {
-    @apply cursor-pointer font-bold;
+    @apply cursor-pointer font-bold px-3;
   }
   ul {
     @apply font-bold pl-4;
@@ -72,5 +85,8 @@
   }
   button {
     @apply text-red-500;
+  }
+  p {
+    @apply py-3 text-xl text-primary-500
   }
 </style>

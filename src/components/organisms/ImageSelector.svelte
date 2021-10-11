@@ -1,14 +1,8 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { svgData } from "../../stores"
 
   const source: string = `/static/img/techdemo_figma2.svg`;
   let files;
-
-  onMount(async () => {
-    //TODO: select an image to edit can go here
-  })
-
   async function handleUpload(){
     if(files?.[0]){
       const reader = new FileReader();

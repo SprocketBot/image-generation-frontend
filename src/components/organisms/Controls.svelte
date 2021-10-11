@@ -1,12 +1,9 @@
 <script lang="ts">
   import { WorkState } from "../../types";
   import LinkControls from "../molecules/LinkControls.svelte";
-  import { previewEl, saving, workstate} from "../../stores";
+  import { previewEl, workstate} from "../../stores";
   import FontControls from "../molecules/FontControls.svelte";
   import SaveControls from "./SaveControls.svelte";
-  function finish() {
-    $saving = true;
-  }
 </script>
 
 <section class="controls">
@@ -15,9 +12,8 @@
     <h3 on:click={()=>$workstate = WorkState.Fonts} class={$workstate === WorkState.Fonts ? "selected" : ""}>Upload Font Files</h3>
     <h3 on:click={()=>$workstate = WorkState.Saving} class={$workstate === WorkState.Saving ? "selected" : ""}>Save Image</h3>
     <span class="spacer" />
-    {#if $previewEl && !$saving}
+    {#if $previewEl && $workstate!==WorkState.Saving}
       <button>Test</button>
-      <button on:click={finish}>Done</button>
     {/if}
   </header>
   {#if $workstate === WorkState.Linking}

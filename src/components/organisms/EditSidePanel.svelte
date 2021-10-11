@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { selectedEl , previewEl, saving} from "../../stores";
+  import { selectedEl , previewEl} from "../../stores";
 
   import SvgList from "./SVGList.svelte";
   import DataItems from "./DataItems.svelte";

@@ -37,11 +37,10 @@
 </script>
 
 <section>
-  <h1>Upload your font files</h1>
-  <p>The service runs in a container with no installed fonts. You must provide every font used in the base image</p>
+  <p>The service runs in a container with no installed fonts. You must upload every font used in the base image</p>
 
+  <div class="fileinput" on:click={()=>{fileinput.click()}}>Upload Font Files</div>
   <ul>
-    <div class="fileinput" on:click={()=>{fileinput.click()}}>Upload Font Files</div>
     <input type="file" accept=".ttf, .otf, .woff, .woff2" multiple={true} id="fontFile" on:change={(e)=>onFileSelected(e)} bind:this={fileinput}/>
     {#each [...$fontElements] as [name, tag]}
       <li>
@@ -54,6 +53,12 @@
 <style lang="postcss">
   section {
     @apply px-4 py-4 max-w-full w-full select-none;
+  }
+  h3 {
+    @apply text-lg;
+  }
+  ul{
+    @apply grid grid-cols-3 m-1
   }
   li{
     @apply flex w-full justify-between
@@ -69,5 +74,8 @@
   }
   .fileinput {
     @apply px-2 py-1 bg-primary-500 hover:bg-primary-600 text-sproc_dark_gray-500;
+  }
+  p {
+    @apply text-xl text-primary-500 py-3
   }
 </style>
