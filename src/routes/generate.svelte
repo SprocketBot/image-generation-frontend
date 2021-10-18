@@ -2,10 +2,10 @@
     import ImageTypeSelector from "../components/organisms/ImageTypeSelector.svelte";
     import CardLayout from "../components/layouts/CardLayout.svelte";
     import ReportFilters from "../components/molecules/ReportFilters.svelte";
-    import type { ImageTypeItemType } from "src/types";
     import SavedInputSelector from "../components/molecules/SavedInputSelector.svelte";
     import { imageTypeId } from "../stores";
     import { runReport } from "../api/run.api";
+    import { downloadImage } from "../api";
 
     let reportCode;
     let filterValues: Record<string, string>;
@@ -16,8 +16,19 @@
         reportCode = e.detail;
     }
 
-    function generateReport(){
-        runReport(reportCode, inputFile, `${$imageTypeId}/output/${new Date().toJSON()}.png`, filterValues);
+    async function generateReport(){
+        let runTime = new Date().toJSON()
+        let outFile = `${$imageTypeId}/output/${runTime}.png`
+        if(await runReport(reportCode, inputFile, outFile, filterValues)){
+            const base64ImageStr = await downloadImage(outFile);
+            const a = document.createElement("a"); //Create <a>
+            a.href = `data:image/png;base64,${base64ImageStr}`;
+            a.download = `${runTime}.png`;
+            a.click();
+            a.remove();
+        } else{
+            alert("error running img gen")
+        }
     }
 
     $:{

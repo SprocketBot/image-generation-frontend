@@ -27,3 +27,9 @@ export async function uploadTemplate(svgHTML: string | SVGElement, reportType: s
         })
         .then(r => r.json())
 }
+
+export async function downloadImage(filename: string) : Promise<any> {
+    if (!browser) return {}
+    let res = await fetch(`/api/outputs/${filename}`).then(r => r.json());
+    return res.blob;
+}
