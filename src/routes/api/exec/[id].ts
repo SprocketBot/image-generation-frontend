@@ -6,14 +6,20 @@ export async function post({body, params}: Request): Promise<EndpointOutput> {
     const data = JSON.parse(body.toString());
     const results = await ReportTemplateDAO.runReport(params.id, data.filterValues);
     // TODO: Make nats request to the service
-    natsRequest("media-gen.img.create",
-        {
-            inputFile: data.inputFile,
-            outputFile: data.outputFile,
-            filterValues: results
+    try {
+        await natsRequest("media-gen.img.create",
+            {
+                inputFile: data.inputFile,
+                outputFile: data.outputFile,
+                filterValues: results
+            }
+        )
+        return {
+            status: 200
         }
-    )
-    return {
-        
+    } catch {
+        return {
+            status: 500
+        }
     }
 }
