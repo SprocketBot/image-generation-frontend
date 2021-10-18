@@ -18,7 +18,6 @@ export const get = async ({ query }: Request): Promise<EndpointOutput> => {
                 })
                 .on("end", () => resolve(output))
                 .on("error", (e) => {
-                    console.log(e);
                     reject(e)
                 });
         })

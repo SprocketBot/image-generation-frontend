@@ -7,7 +7,6 @@
 
   async function handleImageType(id) {
     const template = await getTemplate(id);
-    console.log(id);
     $imageTypeId = id;
     $imageType = template.template_structure;
     dispatch("selected", id);

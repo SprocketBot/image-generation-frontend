@@ -19,10 +19,8 @@
   {#if $workstate === WorkState.Linking}
     <LinkControls />
   {:else if $workstate === WorkState.Fonts}
-    <!-- <h1>hello</h1> -->
     <FontControls />
   {:else}
-    <!-- <h1>hello 2</h1> -->
     <SaveControls />
   {/if}
 </section>
@@ -45,8 +43,5 @@
   }
   section > header > button {
     @apply px-2 py-1 bg-primary-500 hover:bg-primary-600 ml-4 text-sproc_dark_gray-500;
-  }
-  section > section {
-    @apply pl-10 select-none;
   }
 </style>

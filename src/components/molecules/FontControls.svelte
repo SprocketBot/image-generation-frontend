@@ -17,7 +17,6 @@
   }
 
   async function onFileSelected(e) {
-    console.log(e.target.files)
     if(e.target.files.length){
       for(const file of e.target.files){
         const tag = document.createElementNS($previewEl.namespaceURI, "a");
@@ -53,9 +52,6 @@
 <style lang="postcss">
   section {
     @apply px-4 py-4 max-w-full w-full select-none;
-  }
-  h3 {
-    @apply text-lg;
   }
   ul{
     @apply grid grid-cols-3 m-1

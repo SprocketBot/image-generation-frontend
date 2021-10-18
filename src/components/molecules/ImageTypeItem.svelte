@@ -23,9 +23,6 @@
   div {
     @apply mb-4;
   }
-  span:not(.spacer) {
-    @apply mr-4;
-  }
   p {
     @apply font-light text-sm;
   }

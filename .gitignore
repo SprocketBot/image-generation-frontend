@@ -6,6 +6,6 @@ node_modules
 
 .husky/_/
 
-src/config.json
+src/config*.json
 
 build/

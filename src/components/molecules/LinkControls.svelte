@@ -28,34 +28,37 @@
 <section>
   {#if $links.size > 0}
     <p>Links: </p>
-    {#each [...$links] as [el, linkmap]}
-      <header on:click={()=>selectThisElement(el)}>
-        {el.id}
-        <span><button on:click|stopPropagation={()=>clearLink(el)}>Delete</button></span>
-      </header>
-      {#if el === $selectedEl}
-        <ul transition:slide|local>
-          {#each [...linkmap] as [property, data]}
-            <li>
-            {property} --> {linkmap.get(property).varPath}:
-            <button on:click|stopPropagation={() => clearProperty(el, property)}>
-              Delete
-            </button>
-            {#if optionTypes[property].length}
-            <ul>
-              <span>Options: </span>
-                {#each optionTypes[property] as option}
-                  <li>
-                    <OptionDisplay {el} {property} {option} />
-                  </li>
-                {/each}
+    <div class="links">
+      {#each [...$links] as [el, linkmap]}
+        <header on:click={()=>selectThisElement(el)}>
+          {el.id}
+          <span><button on:click|stopPropagation={()=>clearLink(el)}>Delete</button></span>
+        </header>
+        {#if el === $selectedEl}
+          <ul transition:slide|local>
+            {#each [...linkmap] as [property, data]}
+              <li>
+              {property} --> {linkmap.get(property).varPath}:
+              <button on:click|stopPropagation={() => clearProperty(el, property)}>
+                Delete
+              </button>
+              {#if optionTypes[property].length}
+              <ul>
+                <span>Options: </span>
+                  {#each optionTypes[property] as option}
+                    <li>
+                      <OptionDisplay {el} {property} {option} />
+                    </li>
+                  {/each}
+              </ul>
+              {/if}
+              </li>
+            {/each}
             </ul>
-            {/if}
-            </li>
-          {/each}
-          </ul>
-      {/if}
-    {/each}
+        {/if}
+      {/each}
+
+    </div>
   {:else}
     
     {#if !$previewEl || !$imageType}     
@@ -72,7 +75,7 @@
 
 <style lang="postcss">
   section {
-    @apply p-4 select-none
+    @apply p-4 select-none;
   }
   header {
     @apply cursor-pointer font-bold px-3;
@@ -87,6 +90,6 @@
     @apply text-red-500;
   }
   p {
-    @apply py-3 text-xl text-primary-500
+    @apply py-3 text-xl text-primary-500;
   }
 </style>

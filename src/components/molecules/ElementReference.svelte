@@ -62,6 +62,8 @@
                     on:mouseover|preventDefault|stopPropagation={() =>
                         updateBounds(true)}
                     on:mouseleave|preventDefault|stopPropagation={() =>updateBounds(false)}
+                    on:focus|preventDefault|stopPropagation={() =>
+                        updateBounds(true)}
                 >
                     {$selectedEl === ref ? "Unselect" : "Select"}
                 </button>
@@ -72,6 +74,8 @@
                         updateBounds(true)}
                     on:mouseleave|preventDefault|stopPropagation={() => updateBounds(false)}
                     on:click|preventDefault|stopPropagation
+                    on:focus|preventDefault|stopPropagation={() =>
+                        updateBounds(true)}
                 >
                     Locate
                 </button>
