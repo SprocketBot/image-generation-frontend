@@ -48,7 +48,7 @@
   {#if $selectedEl}
     <header>
       <h3>Editing Element: <strong>{$selectedEl.id || friendlyLookup[$selectedEl.tagName] || $selectedEl.tagName}</strong></h3>
-      <button on:click={handleClick}>Finish</button>
+      <button on:click={handleClick}>Unselect Element (Esc)</button>
     </header>
     <DataItem item={getRelevantItems($selectedEl, $imageType)} />
   {/if}
