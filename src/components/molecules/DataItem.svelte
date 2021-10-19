@@ -1,16 +1,17 @@
 <script lang="ts">
-  import type { ElementsMap, SprocketData, SVGProperty } from "../../types";
+  import type { SprocketData, SVGProperty } from "../../types";
+  import { WorkState } from "../../types"
   import { variableOperations } from "../../utils/SvgRules";
-  import type { Writable } from "svelte/store";
   import Accordion from "../atoms/Accordion.svelte";
   import DropdownButton from "../atoms/DropdownButton.svelte";
-  import {selectedEl, links} from "../../stores"
+  import {selectedEl, links, workstate} from "../../stores"
 
   export let item: any = {};
   export let key: string = "Variables";
   export let name: string = "";
 
   function setLink(event) {
+    $workstate = WorkState.Linking;
     if (!$links.get($selectedEl)) {
       $links.set($selectedEl, new Map<SVGProperty, SprocketData>());
     }
