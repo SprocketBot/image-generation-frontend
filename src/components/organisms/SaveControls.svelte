@@ -3,8 +3,13 @@
   import type { SprocketData } from "src/types";
   import { uploadTemplate } from "../../api";
 
-  let uploading = false;
   let filename = "";
+  let uploading = false;
+  let canSave = false;
+
+  $:{
+    canSave = $links.size > 0 && $fontElements.size > 0 && filename.slice(-4) === ".svg"
+  }
 
   async function saveOutput() {
     // read in all the font files and bake them into svg
@@ -36,6 +41,7 @@
     let svgData = $previewEl.outerHTML;
     await uploadTemplate(svgData, $imageTypeId, filename);
 
+    uploading = false;
     //TODO: prompt user file uploaded successfully, and yeet everything
   }
 
@@ -45,16 +51,18 @@
 
 
 <section>
+  {#if $links.size === 0}
+    <strong>You haven't assigned any links</strong>
+  {/if}
   {#if $fontElements.size===0}
     <strong>You have not uploaded any fonts. This may cause text to not be rendered properly</strong>
-  {:else}
-    <p>Give your file a name you'll rembmer. Don't forget to add the '.svg' extension</p>
   {/if}
+    <p>Give your file a name you'll rembmer. Don't forget to add the '.svg' extension</p>
   
   <label for="filename">Filename: </label>
   <input type="text" id="filename" bind:value={filename}/>
   
-  <button on:click={saveOutput}>
+  <button on:click={saveOutput} disabled={!canSave || uploading}>
     {#if uploading}
       Working
     {:else}
@@ -71,6 +79,9 @@
   }
   button {
     @apply px-2 py-1 bg-primary-500 hover:bg-primary-600 text-sproc_dark_gray-500;
+  }
+  button:disabled {
+    @apply bg-sproc_light_gray-500 cursor-default
   }
   label {
     @apply text-xl text-primary-500
