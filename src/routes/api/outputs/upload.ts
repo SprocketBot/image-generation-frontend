@@ -3,10 +3,18 @@ import { mClient } from "../../../utils/server/minio";
 
 export const post = async ({body}: Request): Promise<Response> => {
     const data = JSON.parse(body);
-    await mClient.putObject("svg-reports", `${data.reportType}/${data.reportName}`, data.svg)
-    return {
-        headers: {},
-        status: 200,
-        body: "true"
+    try {
+        let result = await mClient.putObject("svg-reports", `${data.reportType}/${data.reportName}`, data.svg)
+        return {
+            headers: {},
+            status: 200,
+            body: JSON.stringify(result)
+        }
+    }
+    catch {
+        return {
+            headers: {},
+            status: 500,
+        }
     }
 }

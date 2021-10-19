@@ -6,6 +6,8 @@
   let filename = "";
   let uploading = false;
   let canSave = false;
+  let saved = false;
+  let saveError = false;
 
   $:{
     canSave = $links.size > 0 && $fontElements.size > 0 && filename.slice(-4) === ".svg"
@@ -39,7 +41,13 @@
     }
 
     let svgData = $previewEl.outerHTML;
-    await uploadTemplate(svgData, $imageTypeId, filename);
+    let result = await uploadTemplate(svgData, $imageTypeId, filename)
+
+    if(result.etag){
+      saved = true;
+    } else{
+      saveError = true;
+    }
 
     uploading = false;
     //TODO: prompt user file uploaded successfully, and yeet everything
@@ -57,7 +65,7 @@
   {#if $fontElements.size===0}
     <strong>You have not uploaded any fonts. This may cause text to not be rendered properly</strong>
   {/if}
-    <p>Give your file a name you'll rembmer. Don't forget to add the '.svg' extension</p>
+  <p>Give your file a name you'll rembmer. Don't forget to add the '.svg' extension</p>
   
   <label for="filename">Filename: </label>
   <input type="text" id="filename" bind:value={filename}/>
@@ -69,6 +77,12 @@
       Save
     {/if}
   </button>
+
+  {#if saved}
+    <p>Success! You can now refresh to make a new template or head over to the generate tab to run one!</p>
+  {:else if saveError}
+    <p>Well this is awkward... something went wrong. Ping someone?</p>
+  {/if}
 </section>
 
 
