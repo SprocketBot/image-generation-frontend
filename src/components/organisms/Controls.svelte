@@ -36,7 +36,7 @@
     @apply  bg-primary-500 text-sproc_light_gray-800 cursor-pointer;
   }
   section > header > h3 {
-    @apply font-bold text-lg mx-1 p-1 text-sproc_light_gray-50 rounded-t-xl hover:bg-primary-700 cursor-pointer;
+    @apply font-bold text-lg mx-1 p-1 text-sproc_light_gray-50 rounded-t-xl hover:bg-primary-700 cursor-pointer px-5;
   }
   section > header > .spacer {
     @apply flex-1;
