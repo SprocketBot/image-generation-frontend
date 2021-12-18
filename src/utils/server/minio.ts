@@ -7,7 +7,7 @@ export function getClient() {
     return new Client({
         endPoint: config.minio.endpoint,
         port: config.minio.port,
-        useSSL: true,
+        useSSL: config.minio.ssl,
         accessKey: config.minio.access,
         secretKey: config.minio.secret
     });
