@@ -1,12 +1,13 @@
 import type { Request, Response } from "@sveltejs/kit"
-import { mClient } from "../../../../../utils/server/minio"
+import { getClient } from "../../../../../utils/server/minio"
 
 export const get = async ({ params }) => {
+  const mClient = getClient();
   try {
-    let { imageType, filename } = params;
+    const { imageType, filename } = params;
     const imgBuffer:Buffer = await new Promise((res, rej) => {
       mClient.getObject('svg-reports', `${imageType}/output/${filename}`, function (err, dataStream) {
-        let bufs:Buffer[] = [];
+        const bufs:Buffer[] = [];
         if (err) {
           rej(err)
         }

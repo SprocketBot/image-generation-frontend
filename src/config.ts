@@ -1,3 +1,3 @@
 import {readFileSync} from "fs";
 
-export default JSON.parse(readFileSync("config.json").toString())
+export default JSON.parse(readFileSync("./src/config.json").toString())

@@ -1,7 +1,8 @@
 import type { EndpointOutput, Request } from "@sveltejs/kit"
-import { mClient } from "../../../utils/server/minio";
+import { getClient } from "../../../utils/server/minio";
 
 export const get = async ({ query }: Request): Promise<EndpointOutput> => {
+    const mClient = getClient();
     if (!query.has("reportCode")) {
         return {
             status: 400

@@ -1,13 +1,14 @@
 
 import {Client} from "minio";
 
-import { minio } from "../../config";
+import config from "../../config";
 
-
-export const mClient = new Client({
-    endPoint: minio.endpoint,
-    port: minio.port,
-    useSSL: true,
-    accessKey: minio.access,
-    secretKey: minio.secret
-});
+export function getClient() {
+    return new Client({
+        endPoint: config.minio.endpoint,
+        port: config.minio.port,
+        useSSL: true,
+        accessKey: config.minio.access,
+        secretKey: config.minio.secret
+    });
+}
