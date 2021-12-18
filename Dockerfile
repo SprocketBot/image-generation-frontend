@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:16-alpine AS app_image
 
 WORKDIR /temp
 COPY . /temp
