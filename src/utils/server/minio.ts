@@ -1,7 +1,7 @@
 
 import {Client} from "minio";
 
-import { minio } from "../../config.json";
+import { minio } from "../../config";
 
 
 export const mClient = new Client({
