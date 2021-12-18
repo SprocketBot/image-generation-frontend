@@ -12,9 +12,6 @@ RUN cp src/config.template.json src/config.json \
 
 WORKDIR /app
 
-COPY ca-certificate.cer /app/ca-sertificate.cer
-COPY ca-certificate.cer /app/static/ca-sertificate.cer
-
 COPY static /app/static
 
 ENTRYPOINT ["node", "/app/index.js"]
