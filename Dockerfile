@@ -1,8 +1,9 @@
-FROM node:16-alpine AS app_image
+FROM node:14-alpine AS app_image
 
 WORKDIR /temp
 COPY . /temp
-RUN npm i \
+RUN cp src/config.template.json src/config.json \
+&& npm i \
 && npm run build \
 && mkdir /app \
 && cp -R build/* /app \
