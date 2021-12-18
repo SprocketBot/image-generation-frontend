@@ -1,5 +1,5 @@
 import KnexClient from "knex";
-import config from "../../config.json";
+import config from "../../config";
 import {readFileSync} from "fs";
 console.log(config.knex)
 
