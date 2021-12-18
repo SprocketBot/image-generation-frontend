@@ -7,7 +7,7 @@ import { minio } from "../../config.json";
 export const mClient = new Client({
     endPoint: minio.endpoint,
     port: minio.port,
-    useSSL: false,
+    useSSL: true,
     accessKey: minio.access,
     secretKey: minio.secret
 });
