@@ -1,11 +1,11 @@
 <script lang="ts">
-    import ImageTypeSelector from "../components/organisms/ImageTypeSelector.svelte";
-    import CardLayout from "../components/layouts/CardLayout.svelte";
-    import ReportFilters from "../components/molecules/ReportFilters.svelte";
-    import SavedInputSelector from "../components/molecules/SavedInputSelector.svelte";
-    import { imageTypeId } from "../stores";
-    import { runReport } from "../api/run.api";
-    import { downloadImage } from "../api";
+    import ImageTypeSelector from "$components/organisms/ImageTypeSelector.svelte";
+    import CardLayout from "$components/layouts/CardLayout.svelte";
+    import ReportFilters from "$components/molecules/ReportFilters.svelte";
+    import SavedInputSelector from "$components/molecules/SavedInputSelector.svelte";
+    import { imageTypeId } from "$src//stores";
+    import { runReport } from "$api/run.api";
+    import { downloadImage } from "$src/api";
 
     let reportCode;
     let filterValues: Record<string, string>;

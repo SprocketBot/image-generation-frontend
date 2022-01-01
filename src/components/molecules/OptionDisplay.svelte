@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { OptionType, SVGProperty } from "src/types";
 import { onMount } from "svelte";
-  import { links } from "../../stores";
-  import DropdownButton from "../atoms/DropdownButton.svelte";
+  import { links } from "$src/stores";
+  import DropdownButton from "$components/atoms/DropdownButton.svelte";
 
   export let el : SVGElement;
   export let property: SVGProperty;

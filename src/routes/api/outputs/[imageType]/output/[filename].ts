@@ -1,5 +1,5 @@
 import type { Request, Response } from "@sveltejs/kit"
-import { getClient } from "../../../../../utils/server/minio"
+import { getClient } from "$utils/server/minio"
 
 export const get = async ({ params }) => {
   const mClient = getClient();

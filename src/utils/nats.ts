@@ -1,6 +1,6 @@
 import {connect, NatsConnection, PublishOptions, JSONCodec, createInbox} from "nats";
 import { v4 } from "uuid";
-import config  from "../config"
+import config  from "$src/config"
 let client: NatsConnection | undefined;
 
 export async function getNatsClient() {

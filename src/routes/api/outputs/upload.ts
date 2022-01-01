@@ -1,5 +1,5 @@
 import type { Request, Response } from "@sveltejs/kit"
-import { getClient } from "../../../utils/server/minio";
+import { getClient } from "$utils/server/minio";
 
 export const post = async ({body}: Request): Promise<Response> => {
     const mClient = getClient();

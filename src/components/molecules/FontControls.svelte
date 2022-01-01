@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {previewEl, fontElements} from "../../stores"
+  import {previewEl, fontElements} from "$src/stores"
 
   let fileinput;
 

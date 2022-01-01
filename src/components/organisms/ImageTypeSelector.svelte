@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { getTemplate, getImageTypes } from "../../api";
-  import ImageTypeItem from "../molecules/ImageTypeItem.svelte";
-  import { imageTypeId, imageType } from "../../stores";
+  import { getTemplate, getImageTypes } from "$src/api";
+  import ImageTypeItem from "$components/molecules/ImageTypeItem.svelte";
+  import { imageTypeId, imageType } from "$src/stores";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 

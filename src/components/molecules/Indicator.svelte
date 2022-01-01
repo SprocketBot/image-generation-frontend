@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { indicatorBounds, selectedEl } from "../../stores";
+  import { indicatorBounds, selectedEl } from "$src/stores";
 
   function onWindowResize() {
     if (!$selectedEl) {

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import {selectedEl, indicatorBounds, links, previewEl, imageType} from "../../stores"
+  import {selectedEl, indicatorBounds, links, previewEl, imageType} from "$src/stores"
   import { slide } from "svelte/transition";
-  import { optionTypes } from "../../utils/SvgRules";
-  import OptionDisplay from "../molecules/OptionDisplay.svelte";
-  import type { SVGProperty } from "../../types";
+  import { optionTypes } from "$utils/SvgRules";
+  import OptionDisplay from "$components/molecules/OptionDisplay.svelte";
+  import type { SVGProperty } from "$src/types";
   
   function selectThisElement(el) {
     if($selectedEl === el) {

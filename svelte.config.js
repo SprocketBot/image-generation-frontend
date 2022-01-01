@@ -1,5 +1,6 @@
 import preprocess from 'svelte-preprocess';
 import nodeAdapter from "@sveltejs/adapter-node";
+import { resolve } from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,6 +13,15 @@ const config = {
 		target: '#svelte',
 		vite: {
 			noExternal: false,
+			resolve: {
+				alias: {
+					$src: resolve('src/'),
+					$api: resolve('src/api/'),
+					$components: resolve('src/components/'),
+					$routes: resolve('src/routes/'),
+					$utils: resolve('src/utils/')
+				}
+			}
 		},
 		adapter: nodeAdapter()
 	},
