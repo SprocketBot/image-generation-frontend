@@ -1,5 +1,5 @@
 import type { EndpointOutput } from "@sveltejs/kit";
-import { ReportTemplateDAO } from "../../../utils/server/database/ReportTemplate.dao";
+import { ReportTemplateDAO } from "$utils/server/database/ReportTemplate.dao";
 
 export async function get(): Promise<EndpointOutput> {
     const types = await ReportTemplateDAO.getAll();

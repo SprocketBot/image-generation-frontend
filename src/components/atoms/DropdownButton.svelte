@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
 
-  import clickOutside from "../../utils/clickOutside";
+  import clickOutside from "$utils/clickOutside";
   export let name: string;
   export let choices: string[];
   let open = false;

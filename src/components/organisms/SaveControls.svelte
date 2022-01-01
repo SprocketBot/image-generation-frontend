@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { links, previewEl, imageTypeId, fontElements } from "../../stores";
-  import type { SprocketData } from "src/types";
-  import { uploadTemplate } from "../../api";
+  import { links, previewEl, imageTypeId, fontElements } from "$src/stores";
+  import type { SprocketData } from "$src/types";
+  import { uploadTemplate } from "$src/api";
 
   let filename = "";
   let uploading = false;

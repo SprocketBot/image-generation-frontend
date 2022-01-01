@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { previewEl, indicatorBounds, selectedEl, svgData } from "..//../stores";
+  import { previewEl, indicatorBounds, selectedEl, svgData } from "$src/stores";
   import { onMount } from "svelte";
-  import { selectableElements } from "../../utils/SvgRules";
-  import Indicator from "../molecules/Indicator.svelte";
+  import { selectableElements } from "$utils/SvgRules";
+  import Indicator from "$components/molecules/Indicator.svelte";
 
   let container: HTMLElement;
 

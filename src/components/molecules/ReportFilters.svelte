@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getFilterValues } from "../../api/filters.api";
+    import { getFilterValues } from "$api/filters.api";
 
     export let reportCode: string;
     export let values = {};

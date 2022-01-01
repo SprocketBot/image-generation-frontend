@@ -1,11 +1,11 @@
 <script lang="ts">
-    import {indicatorBounds, selectedEl} from "../../stores"
+    import {indicatorBounds, selectedEl} from "$src/stores"
     import {
         friendlyLookup,
         hiddenElements,
         selectableElements,
-    } from "../../utils/SvgRules";
-    import Accordion from "../atoms/Accordion.svelte";
+    } from "$utils/SvgRules";
+    import Accordion from "$components/atoms/Accordion.svelte";
 
     export let ref: SVGElement;
     /**

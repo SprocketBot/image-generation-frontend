@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { previewEl } from "../../stores";
-    import ElementReference from "../molecules/ElementReference.svelte";
+    import { previewEl } from "$src/stores";
+    import ElementReference from "$components/molecules/ElementReference.svelte";
 
 </script>
 

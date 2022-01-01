@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { SprocketData, SVGProperty } from "../../types";
-  import { WorkState } from "../../types"
-  import { variableOperations } from "../../utils/SvgRules";
-  import Accordion from "../atoms/Accordion.svelte";
-  import DropdownButton from "../atoms/DropdownButton.svelte";
-  import {selectedEl, links, workstate} from "../../stores"
+  import type { SprocketData, SVGProperty } from "$src/types";
+  import { WorkState } from "$src/types"
+  import { variableOperations } from "$utils/SvgRules";
+  import Accordion from "$components/atoms/Accordion.svelte";
+  import DropdownButton from "$components/atoms/DropdownButton.svelte";
+  import {selectedEl, links, workstate} from "$src/stores"
 
   export let item: any = {};
   export let key: string = "Variables";

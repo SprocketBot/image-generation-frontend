@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { svgData } from "../../stores"
+  import { svgData } from "$src/stores"
 
   const source: string = `/static/img/techdemo_figma2.svg`;
   let files;

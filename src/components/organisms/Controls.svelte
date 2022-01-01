@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { WorkState } from "../../types";
-  import LinkControls from "../molecules/LinkControls.svelte";
-  import { previewEl, workstate} from "../../stores";
-  import FontControls from "../molecules/FontControls.svelte";
-  import SaveControls from "./SaveControls.svelte";
+  import { WorkState } from "$src/types";
+  import LinkControls from "$components/molecules/LinkControls.svelte";
+  import { previewEl, workstate} from "$src/stores";
+  import FontControls from "$components/molecules/FontControls.svelte";
+  import SaveControls from "$components/organisms/SaveControls.svelte";
 </script>
 
 <section class="controls">

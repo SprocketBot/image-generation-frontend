@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
-import type { BoundBox, ElementsMap, PropertiesMap } from "./types";
-import { WorkState } from "./types"
+import type { BoundBox, ElementsMap, PropertiesMap } from "$src/types";
+import { WorkState } from "$src/types"
 
 export const workstate = writable<WorkState>(WorkState.Linking);
 export const template = writable<any | undefined>(undefined);

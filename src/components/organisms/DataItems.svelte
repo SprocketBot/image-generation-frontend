@@ -1,11 +1,11 @@
 <script lang="ts">
-  import {selectedEl, indicatorBounds, imageType } from "../../stores"
+  import {selectedEl, indicatorBounds, imageType } from "$src/stores"
   import {
     applicableOperations,
     friendlyLookup,
     variableForOperation,
-  } from "../../utils/SvgRules";
-  import DataItem from "../molecules/DataItem.svelte";
+  } from "$utils/SvgRules";
+  import DataItem from "$components/molecules/DataItem.svelte";
 
   function getRelevantItems(el: SVGElement, t = {}) {
     let subTemplate = {};
