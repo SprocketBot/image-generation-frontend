@@ -2,14 +2,11 @@ import type { Request, Response } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio";
 
 export const post = async ({body}: Request): Promise<Response> => {
-    console.log("hit");
-    console.log(body);
     const mClient = getClient();
-    const data = JSON.parse(body);
+    const data = JSON.parse(body.toString());
     console.log(data);
     try {
-        //expires in 5 minutes
-        const result = await mClient.presignedPutObject("svg-reports", `${data.reportType}/${data.reportName}`, 60 * 5)
+        const result = await mClient.presignedPutObject("svg-reports", `${data.reportType}/${data.reportName}`, 60 * 2)
         console.log(result);
         return {
             headers: {},
