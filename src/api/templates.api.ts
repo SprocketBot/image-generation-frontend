@@ -1,5 +1,7 @@
 import { browser } from "$app/env";
-// TODO: Create an actual api endpoint for this
+import { uploadProgress, downloadProgress } from "$src/stores";
+import { FileManager } from "$src/utils/FileManager";
+
 export async function getTemplate(id): Promise<any> {
     if (!browser) return {}
     return await fetch(`/api/imageTypes/${encodeURI(id)}`).then(r => r.json())
@@ -14,50 +16,14 @@ export async function getImageTypes(): Promise<any[]> {
 export async function uploadTemplate(svgHTML: string | SVGElement, reportType: string, reportName: string): Promise<any> {
     let svgHTMLstr: string;
     svgHTML instanceof SVGElement ? svgHTMLstr = svgHTML.outerHTML : svgHTMLstr = svgHTML;
-    // if (svgHTML instanceof SVGElement) {
-    //     svgHTMLstr = svgHTML.outerHTML;
-    // }
-    const body = {
-        //svg: svgHTML,
-        reportType,
-        reportName,
-    }
-    console.log(body);
-    const res = await fetch("/api/outputs/upload",
-        {
-            method: "POST",
-            body: JSON.stringify(body),
-        })
-         .then(r => r.json())
-    
-    console.log(res);
-    //console.log(await fetch(res));
-    const xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-        console.log("UPLOAD SUCCESSFUL");
-        }
-        else {
-        console.log("UPLOAD FAILED");
-        }
-    }
-    };
+    const res = await fetch(`/api/images/${reportType}/${reportName}`, { method: "POST" }).then(r => r.json())
+    return await FileManager.uploadFile(res, new Blob([svgHTMLstr], {type:'image/svg+xml'}));
+}
 
-    xhr.upload.onprogress = function(e) {
-        if (e.lengthComputable) {
-            console.log(e.loaded / svgHTMLstr.length);
-        }
-    };
-
-    xhr.open("PUT", res);
-    xhr.send(svgHTMLstr);
-        return
-    }
-
-export async function downloadImage(filename: string) : Promise<any> {
+export async function downloadImage(filename: string): Promise<any> {
     if (!browser) return {}
-    const res = await fetch(`/api/outputs/${filename}`).then(r => r.json());
-    return res.blob;
+    const res = await fetch(`/api/images/${filename}`).then(r => r.json());
+    
+    return await FileManager.downloadFile(res.url, res.size);
 }

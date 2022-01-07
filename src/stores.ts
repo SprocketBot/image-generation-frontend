@@ -19,3 +19,7 @@ export const selectedEl = writable<SVGElement>(undefined);
 export const saving = writable<boolean>(false);
 export const links = writable<ElementsMap>(new Map<SVGElement, PropertiesMap>());
 export const fontElements = writable<Map<string, Element>>(new Map());
+export const uploadStatus = writable<string>("");
+export const uploadProgress = writable<number>(0);
+export const downloadStatus = writable<string>("");
+export const downloadProgress = writable<number>(0);
