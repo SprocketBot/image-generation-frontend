@@ -7,18 +7,19 @@
 
   import EditLayout from "../components/layouts/EditLayout.svelte";
   import { svgData, imageType } from "../stores";
-
-
-
+  import Modal from "../components/atoms/Modal.svelte";
+  import ModalContent from "../components/atoms/Modal.close.example.svelte"
   
+  let show = false;
+  setTimeout(() => (show = true), 2000);
 </script>
 
 <EditLayout>
   <div slot="preview">
     {#if $svgData}
-      <Preview/>
+      <Preview />
     {:else}
-      <ImageSelector/>
+      <ImageSelector />
     {/if}
   </div>
 
@@ -28,12 +29,16 @@
 
   <div slot="sidePanel">
     {#if $imageType}
-      <EditSidePanel/>
+      <EditSidePanel />
     {:else}
-      <ImageTypeSelector/>
+      <ImageTypeSelector />
     {/if}
   </div>
 </EditLayout>
+
+<Modal {show}>
+  <ModalContent />
+</Modal>
 
 <style lang="postcss">
   div {
