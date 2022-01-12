@@ -1,17 +1,13 @@
 <script lang="ts">
-  import { links, previewEl, imageTypeId, fontElements, uploadStatus, uploadProgress } from "$src/stores";
+  import { links, previewEl, imageTypeId, fontElements, uploadStatus, uploadProgress, filename } from "$src/stores";
   import type { SprocketData } from "$src/types";
   import { uploadTemplate } from "$src/api";
 
-  let filename = "";
   let uploading = false;
   let canSave = false;
   let saved = false;
   let saveError = false;
 
-  $:{
-    canSave = $links.size > 0 && $fontElements.size > 0 && filename.length > 0;
-  }
 
   async function saveOutput() {
     // read in all the font files and bake them into svg
@@ -40,9 +36,7 @@
       el.setAttribute("data-sprocket", sproketDataString);
     }
 
-    let svgData = $previewEl.outerHTML;
-
-    if(await uploadTemplate(svgData, $imageTypeId, filename)){
+    if(await uploadTemplate($previewEl, $imageTypeId, $filename)){
       saved = true;
     } else{
       saveError = true;
@@ -53,7 +47,6 @@
     for(const [el, linkmap] of $links){
       el.removeAttribute("data-sprocket");
     }
-    
 
     uploading = false;
   }
@@ -70,12 +63,9 @@
   {#if $fontElements.size===0}
     <strong>You have not uploaded any fonts. This may cause text to not be rendered properly</strong>
   {/if}
-  <p>Give your file a name you'll remember.</p>
+
   
-  <label for="filename">Filename: </label>
-  <input type="text" id="filename" bind:value={filename}/>
-  
-  <button on:click={saveOutput} disabled={!canSave || uploading}>
+  <button on:click={saveOutput}>
     {#if uploading}
       Working
     {:else}

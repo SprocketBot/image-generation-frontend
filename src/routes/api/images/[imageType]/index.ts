@@ -7,6 +7,7 @@ export const get = async ({ params }): Promise<EndpointOutput> => {
   try {
     const names = await new Promise<Array<string>>((resolve, reject) => {
       const output = [];
+      console.log(`here with ${imageType}`)
       mClient.listObjects("svg-reports", `${imageType}/`)
         .on("data", d => {
           if (d.prefix) {
@@ -22,7 +23,7 @@ export const get = async ({ params }): Promise<EndpointOutput> => {
     return {
       headers: {},
       status: 200,
-      body: JSON.stringify(names)
+      body: names 
     }
   }
   catch {

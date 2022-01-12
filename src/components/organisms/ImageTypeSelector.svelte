@@ -1,38 +1,29 @@
 <script lang="ts">
-  import { getTemplate, getImageTypes } from "$src/api";
-  import ImageTypeItem from "$components/molecules/ImageTypeItem.svelte";
-  import { imageTypeId, imageType } from "$src/stores";
-  import { createEventDispatcher } from "svelte";
-  const dispatch = createEventDispatcher();
+  import { imageTypeId } from "$src/stores";
 
-  async function handleImageType(id) {
-    const template = await getTemplate(id);
-    $imageTypeId = id;
-    $imageType = template.template_structure;
-    dispatch("selected", id);
+  export let imageTypes:any[]
+  let reportCode:string
+
+  $:{
+    $imageTypeId=reportCode;
   }
 </script>
 
-<section>
-  <h1>Select an Image Type</h1>
-  {#await getImageTypes()}
-    <h2>fetching image types</h2>
-  {:then imageTypes}
-    {#each imageTypes as type}
-      <ImageTypeItem {type} select={handleImageType} />
-    {/each}
-  {:catch error}
-    <h1>Sorry!</h1>
-    <p>We have encountered an error fetching image types.</p>
-    <pre>{error}</pre>
-  {/await}
-</section>
+<select bind:value={reportCode}>
+  {#each imageTypes as type}
+    <option value={type.report_code}>
+      <div>{type.display_name}</div>
+      <div>{type.description}</div>
+    </option>
+  {/each}
+</select> 
 
 <style lang="postcss">
-  section {
-    @apply px-4 py-2 overflow-auto h-full select-none;
+
+  select {
+        @apply bg-primary-500 text-sproc_light_gray-800 px-2 py-1 w-full box-content ;
   }
-  h1 {
-    @apply text-lg font-bold  border-b-primary-500 border-b-2 mb-2;
+  option{
+    @apply flex ;
   }
 </style>

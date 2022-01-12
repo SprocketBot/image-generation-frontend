@@ -11,7 +11,7 @@ class FileManager {
     downloadProgress.set(0);
 
     downloadStatus.set("starting");
-
+    
     const result = new Promise<Blob>((res, rej) => {
       const xhr = new XMLHttpRequest();
       xhr.responseType = "blob";
@@ -28,7 +28,7 @@ class FileManager {
         }
       };
 
-      xhr.upload.onprogress = (e) => {
+      xhr.onprogress = (e) => {
         if (e.lengthComputable) {
           downloadProgress.set(e.loaded / size);
         }
@@ -39,7 +39,9 @@ class FileManager {
         this._busy = false;
         res(blob);
       }
+      console.log("here");
       xhr.open("GET", presignedURL);
+      xhr.send();
       downloadStatus.set("in progress");
     })
     return result;
@@ -48,7 +50,7 @@ class FileManager {
 
   uploadFile(presignedURL: string, file: Blob) {
     if (this._busy) throw Error("File manager busy")
-
+    uploadProgress.set(0);
     this._busy = true;
 
     console.log(presignedURL, file);
@@ -60,7 +62,6 @@ class FileManager {
               if (xhr.status === 200) {
                 console.log("UPLOAD SUCCESSFUL");
                 this._busy = false;
-                uploadProgress.set(0);
                 res(true);
               }
               else {
@@ -75,7 +76,6 @@ class FileManager {
       xhr.upload.onprogress = (e) => {
         console.log(e);
         if (e.lengthComputable) {
-            
               uploadProgress.set(e.loaded / e.total);
           }
       };

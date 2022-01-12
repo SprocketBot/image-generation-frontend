@@ -1,20 +1,23 @@
 <script lang="ts">
-  import { svgData } from "$src/stores"
+  import { previewEl } from "$src/stores"
+  import { svgStringToPreviewEl } from "$src/utils/svgUtils";
 
   const source: string = `/static/img/techdemo_figma2.svg`;
   let files;
   async function handleUpload(){
+    let svgData:string;
     if(files?.[0]){
       const reader = new FileReader();
       reader.readAsText(files[0])
       reader.onloadend = e => {
-        $svgData = e.target.result.toString();
+        svgData = e.target.result.toString();
       }
       
     }
     else{
-      $svgData = await fetch(source).then((r) => r.text());
+      svgData = await fetch(source).then((r) => r.text());
     }
+    $previewEl = svgStringToPreviewEl(svgData);
   }
 
 </script>
@@ -28,6 +31,6 @@
 
 <style lang="postcss">
   div{
-    @apply h-full w-full p-8 justify-center align-middle;
+    
   }
 </style>

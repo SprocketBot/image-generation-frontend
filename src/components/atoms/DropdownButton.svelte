@@ -34,7 +34,7 @@ toggle between hiding and showing the dropdown content */
 
 <style lang="postcss">
   .dropbtn {
-    @apply text-white bg-primary-500 p-1 border-none cursor-pointer hover:bg-primary-600 focus:bg-primary-600 text-sproc_dark_gray-500;
+    @apply bg-primary-500 p-1 border-none cursor-pointer hover:bg-primary-600 focus:bg-primary-600 text-sproc_dark_gray-500;
   }
 
   .dropdown {
