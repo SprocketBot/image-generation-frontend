@@ -28,7 +28,7 @@ export const get = async ({ params }) => {
     }
   } catch {
     return {
-      status: 500, //TODO: more meaningful errors : file not found? downloading error?
+      status: 500, 
     }
   }
 }

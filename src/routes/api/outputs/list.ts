@@ -5,7 +5,10 @@ export const get = async ({ query }: Request): Promise<EndpointOutput> => {
     const mClient = getClient();
     if (!query.has("reportCode")) {
         return {
-            status: 400
+            status: 400,
+            body: {
+                error: "missing reportCode"
+            }
         }
     }
     try {

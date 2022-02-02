@@ -3,9 +3,11 @@ import { getClient } from "$utils/server/minio";
 
 export const post = async ({body}: Request): Promise<Response> => {
     const mClient = getClient();
-    const data = JSON.parse(body);
+    const data = JSON.parse(body.toString());
+    console.log(data);
     try {
-        let result = await mClient.putObject("svg-reports", `${data.reportType}/${data.reportName}`, data.svg)
+        const result = await mClient.presignedPutObject("svg-reports", `${data.reportType}/${data.reportName}`, 60 * 2)
+        console.log(result);
         return {
             headers: {},
             status: 200,
