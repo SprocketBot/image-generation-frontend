@@ -22,12 +22,13 @@ export const get = async ({ params }): Promise<EndpointOutput> => {
     return {
       headers: {},
       status: 200,
-      body: JSON.stringify(names)
+      body: names 
     }
   }
-  catch {
+  catch (err) {
     return {
       headers: {},
+      body: err,
       status: 500,
     }
   }

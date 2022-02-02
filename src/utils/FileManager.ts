@@ -11,24 +11,19 @@ class FileManager {
     downloadProgress.set(0);
 
     downloadStatus.set("starting");
-
+    
     const result = new Promise<Blob>((res, rej) => {
       const xhr = new XMLHttpRequest();
       xhr.responseType = "blob";
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            console.log("DOWNLOAD SUCCESSFUL");
-            
-          }
-          else {
-            console.log("DOWNLOAD FAILED");
-            rej();
+          if (xhr.status !== 200) {
+            rej("DOWNLOAD FAILED");
           }
         }
       };
 
-      xhr.upload.onprogress = (e) => {
+      xhr.onprogress = (e) => {
         if (e.lengthComputable) {
           downloadProgress.set(e.loaded / size);
         }
@@ -40,6 +35,7 @@ class FileManager {
         res(blob);
       }
       xhr.open("GET", presignedURL);
+      xhr.send();
       downloadStatus.set("in progress");
     })
     return result;
@@ -48,34 +44,26 @@ class FileManager {
 
   uploadFile(presignedURL: string, file: Blob) {
     if (this._busy) throw Error("File manager busy")
-
+    uploadProgress.set(0);
     this._busy = true;
 
-    console.log(presignedURL, file);
 
     const result = new Promise<boolean>((res, rej) => {
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
               if (xhr.status === 200) {
-                console.log("UPLOAD SUCCESSFUL");
                 this._busy = false;
-                uploadProgress.set(0);
                 res(true);
               }
               else {
-                console.log("UPLOAD FAILED");
                 this._busy = false;
-                console.log(xhr.status, xhr.statusText)
-                rej("UPLOAD FAILED");
               }
           }
       };
       xhr.onerror = (e) =>{console.log(e)}
       xhr.upload.onprogress = (e) => {
-        console.log(e);
         if (e.lengthComputable) {
-            
               uploadProgress.set(e.loaded / e.total);
           }
       };

@@ -1,9 +1,9 @@
 import type { EndpointOutput, Request } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio";
 
-export const get = async ({ query }: Request): Promise<EndpointOutput> => {
+export const get = async ({ url }: Request): Promise<EndpointOutput> => {
     const mClient = getClient();
-    if (!query.has("reportCode")) {
+    if (!url.searchParams.has("reportCode")) {
         return {
             status: 400,
             body: {
@@ -14,7 +14,7 @@ export const get = async ({ query }: Request): Promise<EndpointOutput> => {
     try {
         const reports = await new Promise<Array<unknown>>((resolve, reject) => {
             const output = [];
-            mClient.listObjects("svg-reports", `${query.get("reportCode")}/`)
+            mClient.listObjects("svg-reports", `${url.searchParams.get("reportCode")}/`)
                 .on("data", d => {
                     if (d.name && d.name.endsWith(".svg")) {
                         output.push(d.name.split("/")[1])

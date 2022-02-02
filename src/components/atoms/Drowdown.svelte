@@ -3,7 +3,7 @@
 
   import clickOutside from "$utils/clickOutside";
   export let name: string;
-  export let choices: string[];
+  export let items: [];
   let open = false;
 
   const dispatch = createEventDispatcher();

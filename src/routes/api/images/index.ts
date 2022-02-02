@@ -21,7 +21,7 @@ export const get = async (): Promise<EndpointOutput> => {
     return {
       headers: {},
       status: 200,
-      body: JSON.stringify(images)
+      body: images
     }
   }
   catch {

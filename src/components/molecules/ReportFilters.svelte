@@ -1,26 +1,25 @@
 <script lang="ts">
-    import { getFilterValues } from "$api/filters.api";
+    export let values;
+    export let filters;
 
-    export let reportCode: string;
-    export let values = {};
+    $:{
+        console.log(filters)
+    }
 </script>
 
-{#await getFilterValues(reportCode)}
-    <h2>Loading...</h2>
-{:then filters}
-    {#each filters as filter}
-        <label>
-            <span>{filter.name}</span>
-            <select bind:value={values[filter.code]}>
-                {#each filter.data as option}
-                    <option value={option.value}>
-                        {option.description}
-                    </option>
-                {/each}
-            </select>
-        </label>
-    {/each}
-{/await}
+{#each filters as filter}
+    <label>
+        <span>{filter.name}</span>
+        <select bind:value={values[filter.code]}>
+            {#each filter.data as option}
+                <option value={option.value}>
+                    {option.description}
+                </option>
+            {/each}
+        </select>
+    </label>
+{/each}
+
 
 <style lang="postcss">
     label {
