@@ -1,17 +1,11 @@
 <script lang="ts">
-  import { imageTypeId } from "$src/stores";
-
   export let imageTypes:any[]
-  let reportCode:string
-
-  $:{
-    $imageTypeId=reportCode;
-  }
+  export let value;
 </script>
 
-<select bind:value={reportCode}>
+<select bind:value>
   {#each imageTypes as type}
-    <option value={type.report_code}>
+    <option value={type}>
       <div>{type.display_name}</div>
       <div>{type.description}</div>
     </option>
@@ -19,9 +13,8 @@
 </select> 
 
 <style lang="postcss">
-
   select {
-        @apply bg-primary-500 text-sproc_light_gray-800 px-2 py-1 w-full box-content ;
+        @apply bg-primary-500 text-sproc_light_gray-800 px-2 py-1 w-full box-content;
   }
   option{
     @apply flex ;

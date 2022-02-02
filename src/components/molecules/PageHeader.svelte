@@ -6,12 +6,12 @@
 
 <style lang="postcss">
     header {
-        @apply px-4 py-2;
+        @apply px-4 py-2 max-h-32 flex flex-col;
     }
     header img {
-        @apply w-2/3 m-auto;
+        @apply w-2/3 m-auto h-2/3;
     }
     header h1 {
-        @apply text-3xl font-bold text-center mt-2 pb-2 border-b-2 border-primary-500;
+        @apply object-contain text-3xl font-bold text-center mt-2 pb-10 border-b-2 border-primary-500 h-1/3;
     }
 </style>

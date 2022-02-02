@@ -1,16 +1,20 @@
 <script lang="ts">
-  import { links, previewEl, imageTypeId, fontElements, uploadStatus, uploadProgress, filename } from "$src/stores";
+  import { links, previewEl, fontElements, uploadStatus, uploadProgress, imageType } from "$src/stores";
   import type { SprocketData } from "$src/types";
   import { uploadTemplate } from "$src/api";
+  import LoadingBar from "../atoms/LoadingBar.svelte";
+
+  export let filename;
+  
 
   let uploading = false;
   let canSave = false;
   let saved = false;
   let saveError = false;
 
-
   async function saveOutput() {
     // read in all the font files and bake them into svg
+    
     uploading = true;
     if($fontElements.size > 0){
       const fontsDefs = document.createElementNS($previewEl.namespaceURI, "def");
@@ -35,8 +39,9 @@
       sproketDataString.replace('"', "'");
       el.setAttribute("data-sprocket", sproketDataString);
     }
+    $previewEl = $previewEl
 
-    if(await uploadTemplate($previewEl, $imageTypeId, $filename)){
+    if(await uploadTemplate($previewEl, $imageType.report_code, filename)){
       saved = true;
     } else{
       saveError = true;
@@ -47,7 +52,7 @@
     for(const [el, linkmap] of $links){
       el.removeAttribute("data-sprocket");
     }
-
+    $previewEl = $previewEl;
     uploading = false;
   }
 
@@ -74,11 +79,7 @@
   </button>
   
   {#if uploading}
-  <div class='loading-bar'>
-    <div class="bar" style="width:{$uploadProgress * 100}%">
-      {Math.floor($uploadProgress * 100)} %
-    </div>
-  </div>
+  <LoadingBar direction="up"/>
   {/if}
 
   {#if saved}

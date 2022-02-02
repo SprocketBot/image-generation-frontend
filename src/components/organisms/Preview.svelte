@@ -1,18 +1,18 @@
 <script lang="ts">
   import { previewEl, indicatorBounds, selectedEl, fontElements, links } from "$src/stores";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { selectableElements } from "$utils/SvgRules";
   import Indicator from "$components/molecules/Indicator.svelte";
 
   let container: HTMLElement;
+  export let el:SVGElement;
 
   onMount(async () => {
-    if (!$previewEl) {
-      throw new Error("Missing required prop 'svgData'!");
-    }
+    $previewEl = el
     container.appendChild($previewEl);
 
     //build out the assigned values list
+    $links = new Map();
     let assignedElements = $previewEl.querySelectorAll('[data-sprocket]');
       if(assignedElements.length>0){
         $links = new Map();
@@ -32,16 +32,22 @@
       }
 
     //build out fonts list
+    $fontElements = new Map();
     let fontDef = $previewEl.querySelector('def#fonts');
-    for(const font of fontDef.children){
-      $fontElements.set(font.getAttribute('data-font-name'), font);
+    if(fontDef){
+      for(const font of fontDef?.children){
+        $fontElements.set(font.getAttribute('data-font-name'), font);
+      }
+      fontDef.remove();
     }
-    fontDef.remove();
     $fontElements = $fontElements
 
     attachListeners($previewEl);
     
   });
+  onDestroy(()=>{
+    $previewEl = undefined
+  })
 
   function attachListeners(el: SVGElement) {
     if (selectableElements.includes(el.nodeName)) {

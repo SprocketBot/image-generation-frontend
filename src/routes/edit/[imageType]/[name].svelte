@@ -1,10 +1,20 @@
 <script lang="ts" context="module">
-  export async function load({ fetch, params, url }){
+  export async function load({ fetch, params, session }){
+    
+    //if session has imageType, we were redirected here with valid imageType already
+    if(session.imageType){
+      return {
+        props: {
+          imageTypeId: params.imageType,
+          name: params.name,
+        }
+      }
+    }
+
+    //check that imageType has a template with name params.name
     const response = await fetch(`/api/images/${params.imageType}`);
     const files:string[] = await response.json()
-    console.log(files);
-    
-    if(! (params.name in response)){      
+    if(! files.includes(params.name)){    
       return {
         status: 302,
         redirect: "/"
@@ -12,53 +22,86 @@
     }
 
     return {
-        props: {
-          imageTypeId: params.imageType,
-          name: params.name
-        }
+      props : {
+        imageTypeId: params.imageType,
+        name: params.name
       }
+    }
+    
   }
 </script>
 
 <script lang="ts">
+  import { session } from "$app/stores";
+
   import { downloadImage, getTemplate } from "$src/api";
+  import LoadingBar from "$src/components/atoms/LoadingBar.svelte";
   import EditLayout from "$src/components/layouts/EditLayout.svelte";
   import Controls from "$src/components/organisms/Controls.svelte";
   import EditSidePanel from "$src/components/organisms/EditSidePanel.svelte";
   import Preview from "$src/components/organisms/Preview.svelte";
 
-  import { downloadProgress, imageType, previewEl } from "$src/stores";
   import { svgStringToPreviewEl } from "$src/utils/svgUtils";
-
-  import { onMount } from "svelte";
 
   export let imageTypeId;
   export let name;
 
-  let downloaded: Promise<string>;
-  onMount(async ()=>{
-    if(!$previewEl){
-      downloaded = downloadImage(imageTypeId, name);
-      $previewEl = svgStringToPreviewEl(await downloaded);
-      $imageType = (await getTemplate(imageTypeId)).template_structure
-    } else{
-      downloaded = new Promise<string>((res)=>{res("already present")})
-    }
-  })
+  async function getPreviewEl() : Promise<SVGElement> {
+    return new Promise<SVGElement>(async (res,rej)=>{
+      if($session.previewEl){
+        const el = $session.previewEl
+        delete $session.previewEl
+        res(el)
+      }
+      else{
+        try{
+          let preview = await downloadImage(imageTypeId, name);
+          res(svgStringToPreviewEl(preview));
+        } catch (e){
+          rej(e);
+        }
+      }
+    })
+  }
+  
+  async function getImageType() : Promise<any> {
+    return new Promise<any>(async (res,rej)=>{
+      if($session.imageType){
+        let it = $session.imageType
+        delete $session.imageType
+        res(it)
+      } 
+      try{
+        res(await getTemplate(imageTypeId));
+      } catch (e){
+        rej(e);
+      }
+    })
+  }
 
 </script>
 <EditLayout>
   <div slot="preview">
-    {#await downloaded}
-      {$downloadProgress}
-    {:then}
-      <Preview/>
+    {#await getPreviewEl()}
+      <LoadingBar direction="down"/>
+    {:then el} 
+      <Preview {el}/>
     {/await}
   </div>
   <div slot="controls">
-    <Controls/>
+    <Controls filename={name}/>
   </div>
   <div slot="sidePanel">
-    <EditSidePanel/>
+    {#await getImageType()}
+      <h2>Getting Image Type</h2>
+    {:then imageType}
+      <EditSidePanel imTy={imageType}/>
+    {/await}
   </div>
 </EditLayout>
+
+<style lang="postcss">
+  div {
+    @apply h-full relative;
+  }
+</style>

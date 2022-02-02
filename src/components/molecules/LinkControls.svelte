@@ -26,51 +26,38 @@
 </script>
 
 <section>
-  {#if $links.size > 0}
-    <p>Links: </p>
-    <div class="links">
-      {#each [...$links] as [el, linkmap]}
-        <header on:click={()=>selectThisElement(el)}>
-          {el.id}
-          <span><button on:click|stopPropagation={()=>clearLink(el)}>Delete</button></span>
-        </header>
-        {#if el === $selectedEl}
-          <ul transition:slide|local>
-            {#each [...linkmap] as [property, data]}
-              <li>
-              {property} --> {linkmap.get(property).varPath}:
-              <button on:click|stopPropagation={() => clearProperty(el, property)}>
-                Delete
-              </button>
-              {#if optionTypes[property].length}
-              <ul>
-                <span>Options: </span>
-                  {#each optionTypes[property] as option}
-                    <li>
-                      <OptionDisplay {el} {property} {option} />
-                    </li>
-                  {/each}
-              </ul>
-              {/if}
-              </li>
-            {/each}
+  <p>Links: </p>
+  <div class="links">
+    {#each [...$links] as [el, linkmap]}
+      <header on:click={()=>selectThisElement(el)}>
+        {el.id}
+        <span><button on:click|stopPropagation={()=>clearLink(el)}>Delete</button></span>
+      </header>
+      {#if el === $selectedEl}
+        <ul transition:slide|local>
+          {#each [...linkmap] as [property, data]}
+            <li>
+            {property} --> {linkmap.get(property).varPath}:
+            <button on:click|stopPropagation={() => clearProperty(el, property)}>
+              Delete
+            </button>
+            {#if optionTypes[property].length}
+            <ul>
+              <span>Options: </span>
+                {#each optionTypes[property] as option}
+                  <li>
+                    <OptionDisplay {el} {property} {option} />
+                  </li>
+                {/each}
             </ul>
-        {/if}
-      {/each}
-
-    </div>
-  {:else}
-    
-    {#if !$previewEl || !$imageType}     
-      <p>Upload an Image and select an Image Type</p>
-    {:else}
-      {#if $selectedEl}
-        <p>Select a variable to link it to from the list to assign a link or press Finish</p>
-      {:else}
-        <p>Double-click on an element or chose it from the right panel </p>
+            {/if}
+            </li>
+          {/each}
+          </ul>
       {/if}
-    {/if}
-  {/if}
+    {/each}
+
+  </div>
 </section>
 
 <style lang="postcss">

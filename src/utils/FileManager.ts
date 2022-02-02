@@ -17,13 +17,8 @@ class FileManager {
       xhr.responseType = "blob";
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            console.log("DOWNLOAD SUCCESSFUL");
-            
-          }
-          else {
-            console.log("DOWNLOAD FAILED");
-            rej();
+          if (xhr.status !== 200) {
+            rej("DOWNLOAD FAILED");
           }
         }
       };
@@ -39,7 +34,6 @@ class FileManager {
         this._busy = false;
         res(blob);
       }
-      console.log("here");
       xhr.open("GET", presignedURL);
       xhr.send();
       downloadStatus.set("in progress");
@@ -53,28 +47,22 @@ class FileManager {
     uploadProgress.set(0);
     this._busy = true;
 
-    console.log(presignedURL, file);
 
     const result = new Promise<boolean>((res, rej) => {
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
               if (xhr.status === 200) {
-                console.log("UPLOAD SUCCESSFUL");
                 this._busy = false;
                 res(true);
               }
               else {
-                console.log("UPLOAD FAILED");
                 this._busy = false;
-                console.log(xhr.status, xhr.statusText)
-                rej("UPLOAD FAILED");
               }
           }
       };
       xhr.onerror = (e) =>{console.log(e)}
       xhr.upload.onprogress = (e) => {
-        console.log(e);
         if (e.lengthComputable) {
               uploadProgress.set(e.loaded / e.total);
           }

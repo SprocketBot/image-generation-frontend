@@ -17,7 +17,6 @@ export const get = async ({ params, url }): Promise<EndpointOutput> => {
       )
     }
   } catch (err) {
-    console.log(err)
     return {
       status: 500,
       body: err,

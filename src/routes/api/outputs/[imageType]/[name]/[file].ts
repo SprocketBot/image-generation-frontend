@@ -1,7 +1,7 @@
 import type { Request, Response } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio"
 
-export const get = async ({ params }) => {
+export const get = async ({ params }:Request) => {
   const mClient = getClient();
   try {
     const { imageType, name, file } = params;
@@ -17,7 +17,6 @@ export const get = async ({ params }) => {
       )
     }
   } catch (err) {
-    console.log(err)
     return {
       status: 500,
       body: err,

@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
   import Controls from "$components/organisms/Controls.svelte";
   import Preview from "$components/organisms/Preview.svelte";
   import EditSidePanel from "$components/organisms/EditSidePanel.svelte";
@@ -39,4 +39,4 @@
   div {
     @apply h-full relative;
   }
-</style>
+</style> -->

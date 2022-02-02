@@ -3,8 +3,8 @@ export const runReport = async (reportCode: string, inputFile:string, outputFile
         method: "POST",
         body: JSON.stringify(
             {
-                inputFile: `${reportCode}/${inputFile}`,
-                outputFile: outputFile,
+                inputFile,
+                outputFile,
                 filterValues
             }
         )
