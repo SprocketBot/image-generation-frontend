@@ -22,7 +22,7 @@ export async function rmqRequest(pattern: string, data: Record<string, unknown> 
       if (msg.properties.correlationId == correlationId) {
         console.log(' [.] Got %s', msg.content.toString());
         connection.close();
-        res(msg.content.toString());
+        res(JSON.parse(msg.content.toString()));
       }
     }, {
       noAck: true

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { links, previewEl, imageTypeId, fontElements } from "../../stores";
-  import type { SprocketData } from "src/types";
-  import { uploadTemplate } from "../../api";
+  import { links, previewEl, imageTypeId, fontElements, uploadStatus, uploadProgress } from "$src/stores";
+  import type { SprocketData } from "$src/types";
+  import { uploadTemplate } from "$src/api";
 
   let filename = "";
   let uploading = false;
@@ -10,7 +10,7 @@
   let saveError = false;
 
   $:{
-    canSave = $links.size > 0 && $fontElements.size > 0 && filename.slice(-4) === ".svg"
+    canSave = $links.size > 0 && $fontElements.size > 0 && filename.length > 0;
   }
 
   async function saveOutput() {
@@ -41,16 +41,21 @@
     }
 
     let svgData = $previewEl.outerHTML;
-    let result = await uploadTemplate(svgData, $imageTypeId, filename)
 
-    if(result.etag){
+    if(await uploadTemplate(svgData, $imageTypeId, filename)){
       saved = true;
     } else{
       saveError = true;
     }
 
+    // remove font def and sprocket data
+    $previewEl.querySelector("def#fonts")?.remove();
+    for(const [el, linkmap] of $links){
+      el.removeAttribute("data-sprocket");
+    }
+    
+
     uploading = false;
-    //TODO: prompt user file uploaded successfully, and yeet everything
   }
 
 
@@ -65,7 +70,7 @@
   {#if $fontElements.size===0}
     <strong>You have not uploaded any fonts. This may cause text to not be rendered properly</strong>
   {/if}
-  <p>Give your file a name you'll rembmer. Don't forget to add the '.svg' extension</p>
+  <p>Give your file a name you'll remember.</p>
   
   <label for="filename">Filename: </label>
   <input type="text" id="filename" bind:value={filename}/>
@@ -77,6 +82,14 @@
       Save
     {/if}
   </button>
+  
+  {#if uploading}
+  <div class='loading-bar'>
+    <div class="bar" style="width:{$uploadProgress * 100}%">
+      {Math.floor($uploadProgress * 100)} %
+    </div>
+  </div>
+  {/if}
 
   {#if saved}
     <p>Success! You can now refresh to make a new template or head over to the generate tab to run one!</p>
@@ -108,5 +121,11 @@
   }
   p {
     @apply text-xl text-primary-500 py-3
+  }
+  .loading-bar{
+    @apply bg-sproc_light_gray-50 w-64 h-12
+  }
+  .bar{
+    @apply bg-primary-500 h-full
   }
 </style>

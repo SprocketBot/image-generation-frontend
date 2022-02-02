@@ -1,5 +1,5 @@
 import KnexClient from "knex";
-import config from "../../config";
+import config from "$src/config";
 import {readFileSync} from "fs";
 console.log(config.knex)
 
@@ -37,7 +37,7 @@ XasS1dWpQBDAtUrPvp/jkq/0yAxLwES662PAIc7srtwDIjt6T/V9+NOYpQFsog/I
         }
     },
     asyncStackTraces: true,
-    debug: true,
+    debug: false,
     pool: {
         min: 2,
         max: 2

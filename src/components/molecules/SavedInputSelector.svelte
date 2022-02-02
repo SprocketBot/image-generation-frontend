@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getSavedInputs } from "../../api/savedInputs.api";
+    import { getSavedInputs } from "$api/savedInputs.api";
     export let value = "";
     export let reportCode: string;
 </script>

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { previewEl, indicatorBounds, selectedEl, svgData } from "..//../stores";
+  import { previewEl, indicatorBounds, selectedEl, svgData, fontElements, links } from "$src/stores";
   import { onMount } from "svelte";
-  import { selectableElements } from "../../utils/SvgRules";
-  import Indicator from "../molecules/Indicator.svelte";
+  import { selectableElements } from "$utils/SvgRules";
+  import Indicator from "$components/molecules/Indicator.svelte";
 
   let container: HTMLElement;
 
@@ -13,9 +13,39 @@
     const parser = new DOMParser();
     const newEl = parser.parseFromString($svgData, "image/svg+xml").children[0];
 
+    
+
     if (newEl.nodeName === "svg" && newEl instanceof SVGElement) {
       container.appendChild(newEl);
       previewEl.set(newEl);
+
+      //build out the assigned values list
+      let assignedElements = $previewEl.querySelectorAll('[data-sprocket]');
+
+      if(assignedElements.length>0){
+        $links = new Map();
+        for(const el of assignedElements){
+          let elMap = new Map();
+          $links.set(el as SVGElement, elMap);
+          let elLinks = JSON.parse(el.getAttribute('data-sprocket'));
+          for(const link of elLinks){
+            elMap.set(link.type, {
+              varPath: link.varPath,
+              options: link.options,
+            })
+          }
+          el.removeAttribute('data-sprocket');
+        }
+        $links = $links;
+      }
+
+      //build out fonts list
+      let fontDef = $previewEl.querySelector('def#fonts');
+      for(const font of fontDef.children){
+        $fontElements.set(font.getAttribute('data-font-name'), font);
+      }
+      fontDef.remove();
+      $fontElements = $fontElements
 
       attachListeners(newEl);
     }

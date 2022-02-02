@@ -6,10 +6,10 @@
     <img src="/img/Sprocket_Logo.png" alt="Sprocket Logo" />
     <h1>Image Generation Utility</h1>
     <nav>
-        <a href="/" class:current={$page.path === "/"}>
+        <a href="/" class:current={$page.url.pathname === "/"}>
             Create Template
         </a>
-        <a href="/generate" class:current={$page.path === "/generate"}>
+        <a href="/generate" class:current={$page.url.pathname === "/generate"}>
             Generate Image
         </a>
     </nav>

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { selectedEl , previewEl} from "../../stores";
+  import { selectedEl , previewEl} from "$src/stores";
 
-  import SvgList from "./SVGList.svelte";
-  import DataItems from "./DataItems.svelte";
+  import SvgList from "$components/organisms/SVGList.svelte";
+  import DataItems from "$components/organisms/DataItems.svelte";
   import { blur, fly } from "svelte/transition";
-  import {absoluteWhileTransitioning} from "../../utils/absoluteWhileTransitioning";
+  import {absoluteWhileTransitioning} from "$utils/absoluteWhileTransitioning";
 
 </script>
 
