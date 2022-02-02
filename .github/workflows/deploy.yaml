@@ -71,5 +71,5 @@ jobs:
         run: |
           curl -u ${{ secrets.DEV_BASIC_CREDS }} -XPOST ${{ secrets.DEV_WEBHOOK }}
         # TODO: Change branch name to `dev` when rolling out staging and production environments
-        if: ${{ steps.extract_branch.outputs.branch == 'main' && success() }}
+        if: ${{ steps.extract_branch.outputs.branch == 'dev' && success() }}
         
