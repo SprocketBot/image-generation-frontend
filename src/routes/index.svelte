@@ -31,6 +31,8 @@
     import EditOptions from "$src/components/organisms/EditOptions.svelte";
     import RunOptions from "$src/components/organisms/RunOptions.svelte";
 
+    import {slide} from 'svelte/transition'
+
     export let action;
     let imageType:any = undefined;
 
@@ -73,21 +75,29 @@
             {:else}
                 <div class="action-option">
                     {#if action === "create"}
-                        <CreateOptions {imageType}/>
+                        <div in:slide|local>
+                            <CreateOptions {imageType}/>
+                        </div>
                     {:else}
+                        <div in:slide|local>
                         {#await getImagesOfType(imageType.report_code)}
                            <h2>fetching saved templates</h2> 
                         {:then savedImages} 
                             {#if action=== "edit" }
-                                <EditOptions {imageType} {savedImages}/>
+                                
+                                    <EditOptions {imageType} {savedImages}/>
+                               
                             {:else}
-                                <RunOptions {imageType} {savedImages}/>
+                                <div in:slide|local>
+                                    <RunOptions {imageType} {savedImages}/>
+                                </div>
                             {/if}
                         {:catch error}
                             <h1>Sorry!</h1>
                             <p>We have encountered an error fetching sved Images.</p>
                             <pre>{error}</pre>
                         {/await}
+                        </div>
                     {/if}
                 </div>
             {/if}
