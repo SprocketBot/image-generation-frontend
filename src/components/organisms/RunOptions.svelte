@@ -66,14 +66,14 @@ import OutputSelector from "../molecules/OutputSelector.svelte";
       <button on:click={()=>run()}>Run</button>
       {/if}
     {:catch}
-            Error gathering filter values
+            <h2>Error gathering filter values</h2>
     {/await}
 
 
 
 <style lang="postcss">
   h2 {
-        @apply text-lg font-bold  border-b-primary-500 mb-2;
+        @apply text-lg font-bold  border-b-primary-500 my-2;
     }
   button {
       @apply justify-self-end px-2 py-1 bg-primary-500 hover:bg-primary-600 m-4 text-sproc_dark_gray-500 mb-2;

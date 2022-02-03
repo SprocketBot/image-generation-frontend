@@ -51,7 +51,7 @@
 
 
   h2 {
-      @apply text-lg font-bold  border-b-primary-500 mb-2;
+      @apply text-lg font-bold  border-b-primary-500 my-2;
   }
   
   input[type="text"] {
