@@ -31,9 +31,9 @@
   $:{
     canGo =
       filenames && previewEl && imageType &&
-      filename.length > 3 &&
       !filenames.includes(filename) &&
-      /[A-Za-z0-9_]+/.test(filename);
+      filename.length > 3 &&
+      filename.match(/[A-Za-z0-9_]{4,}/)[0].length === filename.length
   }
 
 </script>
@@ -43,8 +43,12 @@
 <input type="text" bind:value={filename} /> 
     {#await getFilenames(imageType.report_code)}
         <span>updating filenames</span>
-    {:then filenames} 
-        <span>{canGo}</span>
+    {:then filenames}
+        {#if canGo===undefined}
+            <span>select an image</span>
+        {:else if !canGo}
+            <span>choose unique name (4+ chars: A-Za-z0-9_)</span>
+        {/if}
     {/await}
 <h2>And Upload a template</h2>
 <ImageSelector bind:previewEl/>
