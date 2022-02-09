@@ -6,7 +6,8 @@ export const get = async ({ params }:Request) => {
   try {
     const { imageType, name, file } = params;
     const objectStats = await mClient.statObject('svg-reports', `${imageType}/${name}/outputs/${file}`); //this line checks that file exists
-    const getURL:string = await mClient.presignedGetObject('svg-reports', `${imageType}/${name}/outputs/${file}`, 60 * 2)
+    const getURL: string = await mClient.presignedGetObject('svg-reports', `${imageType}/${name}/outputs/${file}`, 60 * 2)
+
     return {
       status: 200,
       body: JSON.stringify(

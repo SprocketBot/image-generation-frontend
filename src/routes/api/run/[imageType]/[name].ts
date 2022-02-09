@@ -57,9 +57,9 @@ export async function post({body, params}: Request): Promise<EndpointOutput> {
           status: 200
       }
   } catch (err) {
-      console.log(err);
       return {
-          status: 500,
+        status: 500,
+        body:err
       }
   }
 }

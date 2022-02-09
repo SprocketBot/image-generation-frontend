@@ -35,10 +35,6 @@
 
     export let action;
     let imageType:any = undefined;
-
-    $:{
-        console.log(imageType);
-    }
 </script>
 
 <section>
@@ -128,7 +124,7 @@
         @apply flex mb-3;
     }
     form > label {
-        @apply flex-grow text-center;
+        @apply flex-grow text-center cursor-pointer;
     }
     form > .selected {
         @apply bg-primary-500 text-sproc_light_gray-800;

@@ -2,7 +2,6 @@ import type { EndpointOutput, Response, Request } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio";
 
 export const get = async ({ params }): Promise<EndpointOutput> => {
-  console.log("ere")
   const mClient = getClient();
   const { imageType, name } = params;
   try {

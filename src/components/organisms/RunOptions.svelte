@@ -28,14 +28,14 @@ import OutputSelector from "../molecules/OutputSelector.svelte";
       filterValues)
   }
 
-  $:{
-    console.log(savedImages);
-    console.log(filterValues)
+  $: {
+    inputFileName = `${imageType.report_code}/${projectName}/template.svg`;
+    refetchOutputs();
   }
 </script>
 
 {#if mode == "select"}
-  <h2>Pick a project to Edit</h2>
+  <h2>Pick a project to Run</h2>
   <SavedInputSelector bind:value={filename} {savedImages}/>
   
 {/if}
@@ -44,7 +44,6 @@ import OutputSelector from "../molecules/OutputSelector.svelte";
   <h2>Loading...</h2>
 {:then filters}
   {#if mode == "select"}
-    
     <h2>Select your filters</h2>
 
       <ReportFilters bind:values={filterValues} {filters} />
