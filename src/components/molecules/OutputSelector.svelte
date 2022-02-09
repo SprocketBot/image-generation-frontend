@@ -1,16 +1,55 @@
 <script lang="ts">
-  export let imageType;
-  export let filterValues;
+  export let report_code:string;
+  export let projectName: string;
+  export let filename: string;
+
+  import FaFileImage from "svelte-icons/fa/FaFileImage.svelte"
+  import FaFileCode from "svelte-icons/fa/FaFileCode.svelte"
+  import { downloadOutputImage } from "$src/api/outputs.api";
+
+
+  let split = filename.split(".")
+  let [name, extention] = [split[0], split[1]]
+
+  let downloading = false;
+  async function downloadOutput(){
+    
+    let blob = await downloadOutputImage(report_code, projectName, filename);
+
+    let a = document.createElement("a")
+    a.href = URL.createObjectURL(blob);
+    a.download=filename;
+    a.click();
+    a.remove();
+
+  }
 </script>
 
-<h2>Send to Service</h2>
+<div class = "container">
+  <div class="icon" on:click={()=>downloadOutput()}>
+    {#if extention == "svg"}
+      <FaFileCode/>
+    {:else}
+      <FaFileImage />
+    {/if}
+  </div>
+  <div class="extention">
+    {extention.toUpperCase()}
+  </div>
+</div>
+
+
 
 
 <style lang="postcss">
-  h2 {
-        @apply text-lg font-bold  border-b-primary-500 mb-2;
-    }
-  button {
-      @apply justify-self-end px-2 py-1 bg-primary-500 hover:bg-primary-600 m-4 text-sproc_dark_gray-500 mb-2;
+
+  div.icon {
+    @apply  h-8 cursor-pointer;
+  }
+  div.extention{
+    @apply flex justify-center;
+  }
+  div.container {
+    @apply mt-4 p-8 w-1/2 bg-sproc_light_gray-900 text-sproc_light_gray-100 border;
   }
 </style>

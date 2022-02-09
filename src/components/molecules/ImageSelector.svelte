@@ -15,7 +15,6 @@ import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
         const reader = new FileReader();
         reader.readAsText(files[0])
         reader.onprogress = e =>{
-          console.log(e);
         }
         reader.onloadend = e => {
           res(e.target.result.toString());

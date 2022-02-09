@@ -6,7 +6,7 @@
 
 <style lang="postcss">
     header {
-        @apply px-4 py-2 max-h-32 flex flex-col;
+        @apply px-4 py-2 max-h-32 flex flex-col mb-3;
     }
     header img {
         @apply w-2/3 m-auto h-2/3;

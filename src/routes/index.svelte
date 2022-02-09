@@ -31,12 +31,10 @@
     import EditOptions from "$src/components/organisms/EditOptions.svelte";
     import RunOptions from "$src/components/organisms/RunOptions.svelte";
 
+    import {slide} from 'svelte/transition'
+
     export let action;
     let imageType:any = undefined;
-
-    $:{
-        console.log(imageType);
-    }
 </script>
 
 <section>
@@ -73,21 +71,29 @@
             {:else}
                 <div class="action-option">
                     {#if action === "create"}
-                        <CreateOptions {imageType}/>
+                        <div in:slide|local>
+                            <CreateOptions {imageType}/>
+                        </div>
                     {:else}
+                        <div in:slide|local>
                         {#await getImagesOfType(imageType.report_code)}
                            <h2>fetching saved templates</h2> 
                         {:then savedImages} 
                             {#if action=== "edit" }
-                                <EditOptions {imageType} {savedImages}/>
+                                
+                                    <EditOptions {imageType} {savedImages}/>
+                               
                             {:else}
-                                <RunOptions {imageType} {savedImages}/>
+                                <div in:slide|local>
+                                    <RunOptions {imageType} {savedImages}/>
+                                </div>
                             {/if}
                         {:catch error}
                             <h1>Sorry!</h1>
                             <p>We have encountered an error fetching sved Images.</p>
                             <pre>{error}</pre>
                         {/await}
+                        </div>
                     {/if}
                 </div>
             {/if}
@@ -112,13 +118,13 @@
     @apply text-xl font-bold text-center text-primary-500;
 } */
     h2 {
-        @apply text-lg font-bold  border-b-primary-500 mb-2;
+        @apply text-lg font-bold  border-b-primary-500 my-2;
     }
     form {
         @apply flex mb-3;
     }
     form > label {
-        @apply flex-grow text-center;
+        @apply flex-grow text-center cursor-pointer;
     }
     form > .selected {
         @apply bg-primary-500 text-sproc_light_gray-800;

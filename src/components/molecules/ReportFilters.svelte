@@ -2,9 +2,6 @@
     export let values;
     export let filters;
 
-    $:{
-        console.log(filters)
-    }
 </script>
 
 {#each filters as filter}
