@@ -83,7 +83,7 @@
   {/if}
 
   {#if saved}
-    <p>Success! You can now refresh to make a new template or head over to the generate tab to run one!</p>
+    <p>Success! You can now refresh to make a new template or head over to the <a href="/?action=run">generate tab</a> tab to run one!</p>
   {:else if saveError}
     <p>Well this is awkward... something went wrong. Ping someone?</p>
   {/if}
@@ -112,6 +112,9 @@
   }
   p {
     @apply text-xl text-primary-500 py-3
+  }
+  p a {
+    @apply text-primary-400 underline
   }
   .loading-bar{
     @apply bg-sproc_light_gray-50 w-64 h-12
