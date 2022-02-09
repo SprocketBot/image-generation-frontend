@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { previewEl } from "$src/stores"
-import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
+  import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
+
+  export let previewEl;
 
   let working: boolean = false;
   let files:FileList;
@@ -8,7 +9,7 @@ import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
 
   async function handleUpload(){
     working = true;
-    $previewEl = undefined;
+    previewEl = undefined;
     let svgData:string;
     if(files?.[0]){
       svgData = await new Promise((res, rej)=>{
@@ -25,7 +26,8 @@ import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
       const parser = new DOMParser();
       const newEl = parser.parseFromString(svgData, "image/svg+xml").children[0];
       if (newEl.nodeName === "svg" && newEl instanceof SVGElement) {
-        $previewEl = newEl
+        previewEl = newEl
+        console.log(previewEl);
         filename = files?.[0].name
       }
       else{

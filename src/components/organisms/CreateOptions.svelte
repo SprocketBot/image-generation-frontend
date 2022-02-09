@@ -1,51 +1,60 @@
 <script lang="ts">
   import { getImagesOfType, uploadTemplate } from "$src/api";
   import ImageSelector from "../molecules/ImageSelector.svelte";
-  import { filename, previewEl } from "$src/stores";
   import { session } from "$app/stores";
   import { goto } from "$app/navigation";
+  import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
 
   export let imageType;
 
   let filenames: string[];
-  let inputFile
+  let filename = ""
+  let previewEl:SVGElement = undefined;
   let canGo
 
+  let navigating = false;
   async function getFilenames(id) {
       filenames = undefined;
       filenames = await getImagesOfType(id);
   }
 
   async function go() {
+    navigating = true;
+    await uploadTemplate(previewEl, imageType.report_code, filename);
     $session = {
-        previewEl : $previewEl,
+        previewEl : previewEl,
         imageType : imageType
     }
-    await uploadTemplate($previewEl, imageType.report_code, $filename);
-    goto(`/edit/${imageType.report_code}/${$filename}`);
+    goto(`/edit/${imageType.report_code}/${filename}`);
   }
 
   $:{
     canGo =
-      filenames && $previewEl && imageType &&
-      inputFile.length > 3 &&
-      !filenames.includes($filename) &&
-      /[A-Za-z0-9_]+/.test($filename);
+      filenames && previewEl && imageType &&
+      filename.length > 3 &&
+      !filenames.includes(filename) &&
+      /[A-Za-z0-9_]+/.test(filename);
   }
 
 </script>
 
 
 <h2>Give your project a name</h2>
-<input type="text" bind:value={inputFile} /> 
+<input type="text" bind:value={filename} /> 
     {#await getFilenames(imageType.report_code)}
         <span>updating filenames</span>
     {:then filenames} 
         <span>{canGo}</span>
     {/await}
 <h2>And Upload a template</h2>
-<ImageSelector />
-<button disabled={!canGo} on:click={() => go()}>GO!</button>
+<ImageSelector bind:previewEl/>
+<button disabled={!canGo} on:click={() => go()}>
+    {#if navigating}
+        <LoadingIndicator/>
+    {:else}
+        GO!
+    {/if}
+</button>
 
 <style lang="postcss">
 
