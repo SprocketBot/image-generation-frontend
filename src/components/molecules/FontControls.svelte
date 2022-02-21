@@ -70,7 +70,7 @@
   </ul>
   {#if !$previewEl}
     <strong>Select an image before uploading fonts</strong>
-  {:else}{/if}
+  {/if}
 </section>
 
 <style lang="postcss">

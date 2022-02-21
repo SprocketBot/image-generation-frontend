@@ -7,7 +7,7 @@ export async function get({ url, params }: Request): Promise<EndpointOutput> {
 
   try {
     //verify filter values are valid
-    let filterValues = await ReportTemplateDAO.getFilterValues(params.imageType)
+    const filterValues = await ReportTemplateDAO.getFilterValues(params.imageType)
 
     for (const {data, code, name} of filterValues) {
       const possibleValues: string[] = data.map(v => v.value.toString())

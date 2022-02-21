@@ -1,7 +1,7 @@
 import { downloadProgress, downloadStatus, uploadProgress } from '$src/stores';
 
 class FileManager {
-  private _busy: boolean = false;
+  private _busy = false;
   public get busy(): boolean { return this._busy }
 
   async downloadFile(presignedURL: string, size: number): Promise<Blob> {
@@ -34,6 +34,9 @@ class FileManager {
         this._busy = false;
         res(blob);
       }
+      xhr.onerror = (e) => {
+        rej(e)
+      }
       xhr.open("GET", presignedURL);
       xhr.send();
       downloadStatus.set("in progress");
@@ -61,7 +64,9 @@ class FileManager {
               }
           }
       };
-      xhr.onerror = (e) =>{console.log(e)}
+      xhr.onerror = (e) => {
+        rej(e)
+      }
       xhr.upload.onprogress = (e) => {
         if (e.lengthComputable) {
               uploadProgress.set(e.loaded / e.total);

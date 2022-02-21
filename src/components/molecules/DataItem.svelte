@@ -7,8 +7,8 @@
   import {selectedEl, links, workstate} from "$src/stores"
 
   export let item: any = {};
-  export let key: string = "Variables";
-  export let name: string = "";
+  export let key = "Variables";
+  export let name = "";
 
   function setLink(event) {
     $workstate = WorkState.Linking;

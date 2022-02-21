@@ -12,7 +12,7 @@ toggle between hiding and showing the dropdown content */
   function openDropdown() {
     open = !open;
   }
-  function handleClickOutside(event) {
+  function handleClickOutside() {
     open = false;
   }
   function choose(choice: string) {
@@ -25,7 +25,7 @@ toggle between hiding and showing the dropdown content */
   <button on:click={openDropdown} class="dropbtn">{name}</button>
   {#if open}
     <div id="myDropdown" class="dropdown-content">
-      {#each choices as choice}
+      {#each items as choice}
         <button on:click={() => choose(choice)}>{choice}</button>
       {/each}
     </div>

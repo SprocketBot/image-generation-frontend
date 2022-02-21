@@ -1,33 +1,31 @@
 <script lang="ts" context="module">
-  export async function load({ fetch, params, session }){
-    
+  export async function load({ fetch, params, session }) {
     //if session has imageType, we were redirected here with valid imageType already
-    if(session.imageType){
+    if (session.imageType) {
       return {
         props: {
           imageTypeId: params.imageType,
           name: params.name,
-        }
-      }
+        },
+      };
     }
 
     //check that imageType has a template with name params.name
     const response = await fetch(`/api/images/${params.imageType}`);
-    const files:string[] = await response.json()
-    if(! files.includes(params.name)){    
+    const files: string[] = await response.json();
+    if (!files.includes(params.name)) {
       return {
         status: 302,
-        redirect: "/"
-      }
+        redirect: "/",
+      };
     }
 
     return {
-      props : {
+      props: {
         imageTypeId: params.imageType,
-        name: params.name
-      }
-    }
-    
+        name: params.name,
+      },
+    };
   }
 </script>
 
@@ -47,55 +45,62 @@
   export let name;
 
   async function getPreviewEl() : Promise<SVGElement> {
-    return new Promise<SVGElement>(async (res,rej)=>{
+    return new Promise<SVGElement>((res,rej)=>{
       if($session.previewEl){
         const el = $session.previewEl
         delete $session.previewEl
         res(el)
       }
       else{
-        try{
-          let preview = await downloadImage(imageTypeId, name);
-          res(svgStringToPreviewEl(preview));
-        } catch (e){
-          rej(e);
-        }
+          downloadImage(imageTypeId, name).then((preview)=>{
+            try{
+              const previewEl = svgStringToPreviewEl(preview)
+              res(previewEl);
+            }catch (e) {
+              rej(e)
+            }
+          }).catch((e)=>{
+            rej(e);
+        })
       }
     })
   }
   
   async function getImageType() : Promise<any> {
-    return new Promise<any>(async (res,rej)=>{
+    return new Promise<any>((res,rej)=>{
       if($session.imageType){
         let it = $session.imageType
         delete $session.imageType
         res(it)
       } 
-      try{
-        res(await getTemplate(imageTypeId));
-      } catch (e){
-        rej(e);
+      else{
+        getTemplate(imageTypeId).then((it)=>{
+          res(it)
+        }).catch((e)=>{
+          rej(e);
+        })
       }
     })
   }
 
 </script>
+
 <EditLayout>
   <div slot="preview">
     {#await getPreviewEl()}
-      <LoadingBar direction="down"/>
-    {:then el} 
-      <Preview {el}/>
+      <LoadingBar direction="down" />
+    {:then el}
+      <Preview {el} />
     {/await}
   </div>
   <div slot="controls">
-    <Controls filename={name}/>
+    <Controls filename={name} />
   </div>
   <div slot="sidePanel">
     {#await getImageType()}
       <h2>Getting Image Type</h2>
     {:then imageType}
-      <EditSidePanel imTy={imageType}/>
+      <EditSidePanel imTy={imageType} />
     {/await}
   </div>
 </EditLayout>

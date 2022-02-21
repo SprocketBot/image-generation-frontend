@@ -5,7 +5,7 @@
 <script lang="ts">
     import { fade } from "svelte/transition";
     import MdClose from "svelte-icons/md/MdClose.svelte";
-    import { onMount, setContext } from "svelte";
+    import { setContext } from "svelte";
     export let show = false;
 
     setContext(MODAL_CLOSE_CONTEXT_KEY, () => show = false)
