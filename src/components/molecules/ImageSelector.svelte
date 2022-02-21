@@ -3,9 +3,11 @@
 
   export let previewEl;
 
-  let working: boolean = false;
+  let working = false;
   let files:FileList;
   let filename:string;
+
+
 
   async function handleUpload(){
     working = true;
@@ -45,7 +47,7 @@
     {:else}
       Choose a file
     {/if}
-    <input type="file" accept=".svg" id="upload" bind:files on:change={(e) => handleUpload()}>
+    <input type="file" accept=".svg" id="upload" bind:files on:change={handleUpload}>
   </label>
 </div>
 
