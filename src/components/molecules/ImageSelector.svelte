@@ -15,19 +15,16 @@
       svgData = await new Promise((res, rej)=>{
         const reader = new FileReader();
         reader.readAsText(files[0])
-        reader.onprogress = e =>{
-        }
         reader.onloadend = e => {
           res(e.target.result.toString());
         }
-        reader.onerror = (ev) => rej("Error reading")
+        reader.onerror = () => rej("Error reading")
       })
       
       const parser = new DOMParser();
       const newEl = parser.parseFromString(svgData, "image/svg+xml").children[0];
       if (newEl.nodeName === "svg" && newEl instanceof SVGElement) {
         previewEl = newEl
-        console.log(previewEl);
         filename = files?.[0].name
       }
       else{
@@ -41,7 +38,6 @@
 
 <div>
   <label>
-    <!-- {#if files.length === 0} -->
     {#if working}
       <LoadingIndicator />
     {:else if filename}

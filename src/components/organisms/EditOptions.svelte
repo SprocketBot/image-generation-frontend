@@ -4,8 +4,7 @@ import SavedInputSelector from "../molecules/SavedInputSelector.svelte";
 
 export let imageType;
 export let savedImages: any [];
-  let canGo:boolean = (imageType) !== undefined;
-  let filename:string = "";
+  let filename = "";
 
 </script>
 

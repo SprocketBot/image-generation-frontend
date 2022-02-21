@@ -6,8 +6,6 @@
   for(const key in filterValues){
     filters.push({filter: key, value: filterValues[key]})
   }
-  //   filters = [...filters, {filter:key, value: filterValues[key]}]
-  // }
 </script>
 
 <div>

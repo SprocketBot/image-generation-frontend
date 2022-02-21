@@ -1,5 +1,3 @@
-import {previewEl } from "$src/stores";
-
 export function svgStringToPreviewEl(svgString: string): SVGElement {
   const parser = new DOMParser();
   const newEl = parser.parseFromString(svgString, "image/svg+xml").children[0];

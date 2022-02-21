@@ -13,9 +13,8 @@
     <h3 on:click={()=>$workstate = WorkState.Linking} class={$workstate === WorkState.Linking ? "selected" : ""}>Assign Values</h3>
     <h3 on:click={()=>$workstate = WorkState.Fonts} class={$workstate === WorkState.Fonts ? "selected" : ""}>Upload Font Files</h3>
     <h3 on:click={()=>$workstate = WorkState.Saving} class={$workstate === WorkState.Saving ? "selected" : ""}>Save Image</h3>
-    <!-- <span class="spacer" /> -->
   </header>
-  <conatiner>
+  <section class="container">
     {#if !$previewEl}
       downloading Image
     {:else}
@@ -27,7 +26,7 @@
         <SaveControls {filename}/>
       {/if}
     {/if}
-  </conatiner>
+  </section>
 </section>
 
 <style lang="postcss">
@@ -43,7 +42,7 @@
   section > header > h3 {
     @apply font-bold text-lg mx-2 p-1 text-sproc_light_gray-50 rounded-t-xl hover:bg-primary-700 cursor-pointer px-5;
   }
-  container {
+  .container {
     @apply overflow-auto
   }
 </style>

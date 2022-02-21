@@ -1,6 +1,5 @@
 import KnexClient from "knex";
 import config from "$src/config";
-import {readFileSync} from "fs";
 console.log(config.knex)
 
 export const knexClient = KnexClient({

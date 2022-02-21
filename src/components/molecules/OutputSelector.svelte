@@ -7,13 +7,9 @@
   import FaFileCode from "svelte-icons/fa/FaFileCode.svelte"
   import { downloadOutputImage } from "$src/api/outputs.api";
 
+  let [name, extention] = filename.split(".")
 
-  let split = filename.split(".")
-  let [name, extention] = [split[0], split[1]]
-
-  let downloading = false;
   async function downloadOutput(){
-    
     let blob = await downloadOutputImage(report_code, projectName, filename);
 
     let a = document.createElement("a")
@@ -21,7 +17,6 @@
     a.download=filename;
     a.click();
     a.remove();
-
   }
 </script>
 
@@ -37,9 +32,6 @@
     {extention.toUpperCase()}
   </div>
 </div>
-
-
-
 
 <style lang="postcss">
 
