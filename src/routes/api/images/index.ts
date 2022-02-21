@@ -1,4 +1,4 @@
-import type { EndpointOutput, Response, Request } from "@sveltejs/kit"
+import type { EndpointOutput } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio";
 
 export const get = async (): Promise<EndpointOutput> => {

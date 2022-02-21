@@ -28,14 +28,36 @@ export type TemplateLeafNode = {
 
 export type SprocketData = {
     varPath: TemplateVariable,
-    options: {[key: string]: string}
+    options: { [key: string]: string }
     type: SVGProperty
 }
 
-export type ImageTypeItemType = {
+
+export interface Filter {
+    code: string;
+    description: string;
+    name: string;
+    query: string;
+}
+
+export interface FilterValues extends Filter {
+    data: any;
+}
+
+export interface ItemTypeQuery {
+    filters: Filter[];
+    query: string
+}
+
+export interface ImageTypeItem {
     display_name: string,
     report_code: string,
     description: string,
+}
+
+export interface ImageType extends ImageTypeItem {
+    query: ItemTypeQuery;
+    template_structure: any;
 }
 
 export type ElementsMap = Map<SVGElement, PropertiesMap>

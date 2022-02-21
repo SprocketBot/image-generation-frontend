@@ -7,7 +7,7 @@
   import FaFileCode from "svelte-icons/fa/FaFileCode.svelte"
   import { downloadOutputImage } from "$src/api/outputs.api";
 
-  let [name, extention] = filename.split(".")
+  let [, extention] = filename.split(".")
 
   async function downloadOutput(){
     let blob = await downloadOutputImage(report_code, projectName, filename);

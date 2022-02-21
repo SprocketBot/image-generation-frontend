@@ -1,15 +1,16 @@
 import { browser } from "$app/env";
+import type { ImageType, ImageTypeItem } from "$src/types";
 import { FileManager } from "$src/utils/FileManager";
 import { handleApiResponse } from "./common.api";
 
-export async function getTemplate(id: string): Promise<any> {
-    if (!browser) return {}
-    return handleApiResponse<any>(await fetch(`/api/imageTypes/${encodeURI(id)}`));
+export async function getTemplate(id: string): Promise<ImageType> {
+    if (!browser) return
+    return handleApiResponse<ImageType>(await fetch(`/api/imageTypes/${encodeURI(id)}`));
 }
 
-export async function getImageTypes(): Promise<string[]> {
+export async function getImageTypes(): Promise<ImageTypeItem[]> {
     if (!browser) return []
-    return handleApiResponse<string[]>(await fetch(`/api/imageTypes`));
+    return handleApiResponse<ImageTypeItem[]>(await fetch(`/api/imageTypes`));
 }
 
 export async function getImagesOfType(type: string): Promise<string[]> {
@@ -18,7 +19,7 @@ export async function getImagesOfType(type: string): Promise<string[]> {
 }
 
 
-export async function uploadTemplate(svg: SVGElement, reportType: string, reportName: string): Promise<any> {
+export async function uploadTemplate(svg: SVGElement, reportType: string, reportName: string): Promise<boolean> {
     const svgStr = svg.outerHTML
     const res = await handleApiResponse<string>(await fetch(`/api/images/${reportType}/${reportName}`, { method: "POST" }))
     return await FileManager.uploadFile(res, new Blob([svgStr], { type: 'image/svg+xml' }));

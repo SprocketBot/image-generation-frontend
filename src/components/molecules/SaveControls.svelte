@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { links, previewEl, fontElements, uploadStatus, uploadProgress, imageType } from "$src/stores";
+  import { links, previewEl, fontElements, imageType } from "$src/stores";
   import type { SprocketData } from "$src/types";
   import { uploadTemplate } from "$src/api";
   import LoadingBar from "../atoms/LoadingBar.svelte";
@@ -8,7 +8,6 @@
   
 
   let uploading = false;
-  let canSave = false;
   let saved = false;
   let saveError = false;
 
@@ -49,7 +48,7 @@
 
     // remove font def and sprocket data
     $previewEl.querySelector("def#fonts")?.remove();
-    for(const [el, linkmap] of $links){
+    for(const [el, ] of $links){
       el.removeAttribute("data-sprocket");
     }
     $previewEl = $previewEl;

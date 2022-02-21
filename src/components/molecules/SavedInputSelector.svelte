@@ -1,6 +1,6 @@
 <script lang="ts">
     export let value;
-    export let savedImages: any[];
+    export let savedImages: string[];
 </script>
 
 <select bind:value>

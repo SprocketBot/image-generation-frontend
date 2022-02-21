@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
-import type { BoundBox, ElementsMap, PropertiesMap } from "$src/types";
+import type { BoundBox, ElementsMap, ImageType, PropertiesMap } from "$src/types";
 import { WorkState } from "$src/types"
 
-export const imageType = writable<any>(undefined);
+export const imageType = writable<ImageType>(undefined);
 
 export const imageTypeId = writable<string>("");
 export const filename = writable<string>("");

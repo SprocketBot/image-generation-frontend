@@ -6,8 +6,9 @@
   import {absoluteWhileTransitioning} from "$utils/absoluteWhileTransitioning";
   import SvgList from "$components/molecules/SVGList.svelte";
   import { onMount } from "svelte";
+import type { ImageType } from "$src/types";
 
-  export let imTy;
+  export let imTy: ImageType;
 
   onMount(()=>{
     $imageType = imTy;

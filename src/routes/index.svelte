@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-    import type { Request } from "@sveltejs/kit";
-    export async function load({url}:Request){
+    import type { LoadInput, LoadOutput,  } from "@sveltejs/kit";
+    export async function load({url}:LoadInput): Promise<LoadOutput>{
         let action = "create";
         if(url.searchParams.has("action")){
             switch (url.searchParams.get("action")) {

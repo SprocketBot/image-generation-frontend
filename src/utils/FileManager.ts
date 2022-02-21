@@ -28,7 +28,7 @@ class FileManager {
           downloadProgress.set(e.loaded / size);
         }
       };
-      xhr.onload = (e) => {
+      xhr.onload = () => {
         const blob = xhr.response;
         downloadStatus.set("finished");
         this._busy = false;

@@ -1,7 +1,7 @@
 import type { Request, Response } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio"
 
-export const get = async ({ params }:Request) => {
+export const get = async({ params }: Request): Promise<Response> => {
   const mClient = getClient();
   try {
     const { imageType, name, file } = params;
@@ -9,6 +9,7 @@ export const get = async ({ params }:Request) => {
     const getURL: string = await mClient.presignedGetObject('svg-reports', `${imageType}/${name}/outputs/${file}`, 60 * 2)
 
     return {
+      headers: {},
       status: 200,
       body: JSON.stringify(
         {
@@ -19,6 +20,7 @@ export const get = async ({ params }:Request) => {
     }
   } catch (err) {
     return {
+      headers: {},
       status: 500,
       body: err,
     }

@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
-  export async function load({ fetch, params, session }) {
+  import type { LoadInput, LoadOutput } from "@sveltejs/kit";
+  export async function load({ fetch, params, session }: LoadInput ): Promise<LoadOutput> {
     //if session has imageType, we were redirected here with valid imageType already
     if (session.imageType) {
       return {
@@ -38,8 +39,10 @@
   import Controls from "$src/components/organisms/Controls.svelte";
   import EditSidePanel from "$src/components/organisms/EditSidePanel.svelte";
   import Preview from "$src/components/organisms/Preview.svelte";
+  import type { ImageType } from "$src/types";
 
   import { svgStringToPreviewEl } from "$src/utils/svgUtils";
+
 
   export let imageTypeId;
   export let name;
@@ -66,7 +69,7 @@
     })
   }
   
-  async function getImageType() : Promise<any> {
+  async function getImageType() : Promise<ImageType> {
     return new Promise<any>((res,rej)=>{
       if($session.imageType){
         let it = $session.imageType

@@ -1,7 +1,7 @@
 import type { Request, Response } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio"
 
-export const get = async ({ params }) => {
+export const get = async ({ params }: Request) : Promise<Response> => {
   const mClient = getClient();
   try {
     const { imageType, filename } = params;
@@ -23,11 +23,14 @@ export const get = async ({ params }) => {
       })
     })
     return {
+      headers: {},
       status: 200,
       body: JSON.stringify({ blob: imgBuffer.toString("base64") })
     }
-  } catch {
+  } catch (e) {
     return {
+      headers: {},
+      body: e,
       status: 500, 
     }
   }

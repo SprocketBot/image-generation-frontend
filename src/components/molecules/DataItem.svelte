@@ -39,7 +39,7 @@
     {/if}
   </div>
   <div slot="content" class="container">
-    {#if item.hasOwnProperty("type")}
+    {#if Object.prototype.hasOwnProperty.call(item, "type")}
       <DropdownButton
         on:clicked={setLink}
         name="Use as"

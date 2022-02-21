@@ -1,7 +1,7 @@
-import type { EndpointOutput, Response, Request } from "@sveltejs/kit"
+import type { EndpointOutput, Request } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio";
 
-export const get = async ({ params }): Promise<EndpointOutput> => {
+export const get = async ({ params }: Request): Promise<EndpointOutput> => {
   const mClient = getClient();
   const { imageType } = params;
   try {

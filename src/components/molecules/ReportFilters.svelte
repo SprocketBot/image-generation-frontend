@@ -1,6 +1,9 @@
 <script lang="ts">
+    import type { FilterValues } from "$src/types";
+
+
     export let values;
-    export let filters;
+    export let filters: FilterValues[];
 
 </script>
 

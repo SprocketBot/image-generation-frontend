@@ -12,7 +12,7 @@ toggle between hiding and showing the dropdown content */
   function openDropdown() {
     open = !open;
   }
-  function handleClickOutside(event) {
+  function handleClickOutside() {
     open = false;
   }
   function choose(choice: string) {

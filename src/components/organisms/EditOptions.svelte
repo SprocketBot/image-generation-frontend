@@ -1,9 +1,10 @@
 <script lang="ts">
 import { goto } from "$app/navigation";
+import type { ImageTypeItem } from "$src/types";
 import SavedInputSelector from "../molecules/SavedInputSelector.svelte";
 
-export let imageType;
-export let savedImages: any [];
+export let imageType: ImageTypeItem;
+export let savedImages: string[];
   let filename = "";
 
 </script>

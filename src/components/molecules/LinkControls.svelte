@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {selectedEl, indicatorBounds, links, previewEl, imageType} from "$src/stores"
+  import {selectedEl, indicatorBounds, links} from "$src/stores"
   import { slide } from "svelte/transition";
   import { optionTypes } from "$utils/SvgRules";
   import OptionDisplay from "$components/molecules/OptionDisplay.svelte";

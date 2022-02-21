@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import config  from "$src/config"
 let client: NatsConnection | undefined;
 
-export async function getNatsClient() {
+export async function getNatsClient() : Promise<NatsConnection> {
     if(client) return client;
     client = await connect({servers: config.transport.url, name: config.transport.queue});
     return client;

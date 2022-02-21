@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {selectedEl, indicatorBounds, imageType } from "$src/stores"
+  import { selectedEl, indicatorBounds, imageType } from "$src/stores";
   import {
     applicableOperations,
     friendlyLookup,
@@ -10,12 +10,12 @@
   function getRelevantItems(el: SVGElement, t = {}) {
     let subTemplate = {};
     for (const item of Object.keys(t)) {
-      if(item === "description") {
+      if (item === "description") {
         subTemplate[item] = t[item];
         continue;
       }
 
-      if (t[item].hasOwnProperty("type")) {
+      if (Object.prototype.hasOwnProperty.call(t[item], "type")) {
         //item is a leaf element. Check if it can be applied to element and add it to subtemplate
         if (
           applicableOperations[el.nodeName]
@@ -47,10 +47,19 @@
 <section>
   {#if $selectedEl}
     <header>
-      <h3>Editing Element: <strong>{$selectedEl.id || friendlyLookup[$selectedEl.tagName] || $selectedEl.tagName}</strong></h3>
+      <h3>
+        Editing Element: 
+          <strong>
+            {$selectedEl.id ||
+            friendlyLookup[$selectedEl.tagName] ||
+            $selectedEl.tagName}
+          </strong>
+      </h3>
       <button on:click={handleClick}>Unselect Element (Esc)</button>
     </header>
-    <DataItem item={getRelevantItems($selectedEl, $imageType.template_structure)} />
+    <DataItem
+      item={getRelevantItems($selectedEl, $imageType.template_structure)}
+    />
   {/if}
 </section>
 

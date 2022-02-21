@@ -1,7 +1,7 @@
 import type { EndpointOutput, Response, Request } from "@sveltejs/kit"
 import { getClient } from "$utils/server/minio";
 
-export const get = async ({ params, url }): Promise<EndpointOutput> => {
+export const get = async ({ params }: Request): Promise<EndpointOutput> => {
   const mClient = getClient();
   const { imageType, name } = params;
   try {
@@ -24,7 +24,7 @@ export const get = async ({ params, url }): Promise<EndpointOutput> => {
   }
 }
 
-export const post = async ({ params }): Promise<Response> => {
+export const post = async ({ params } : Request): Promise<Response> => {
   const mClient = getClient();
   const { imageType, name } = params;
   try {

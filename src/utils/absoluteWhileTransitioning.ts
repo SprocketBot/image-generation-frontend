@@ -1,4 +1,4 @@
-export const absoluteWhileTransitioning = (node: HTMLElement) => {
+export const absoluteWhileTransitioning = (node: HTMLElement) : void => {
     let originalPosition = node.style.position || undefined;
     let originalWidth = node.style.width;
     const start = () => {
