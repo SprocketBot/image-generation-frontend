@@ -1,40 +1,33 @@
 <script lang="ts">
-  import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
+import {getSVGData} from "$src/utils/svgData";
 
-  export let previewEl;
+import {tick} from "svelte";
 
-  let working = false;
-  let files:FileList;
-  let filename:string;
+import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
+
+export let previewEl;
+
+let working = false;
+let files: FileList;
+let filename: string;
 
 
 
-  async function handleUpload(){
+async function handleUpload(file) {
     working = true;
-    previewEl = undefined;
-    let svgData:string;
-    if(files?.[0]){
-      svgData = await new Promise((res, rej)=>{
-        const reader = new FileReader();
-        reader.readAsText(files[0])
-        reader.onloadend = e => {
-          res(e.target.result.toString());
-        }
-        reader.onerror = () => rej("Error reading")
-      })
-      
-      const parser = new DOMParser();
-      const newEl = parser.parseFromString(svgData, "image/svg+xml").children[0];
-      if (newEl.nodeName === "svg" && newEl instanceof SVGElement) {
-        previewEl = newEl
-        filename = files?.[0].name
-      }
-      else{
-        filename = "Please select an SVG"
-      }
-    }
+    await tick();
+    const data = await getSVGData(file);
+    previewEl = data.previewEl;
+    filename = data.filename;
+    await tick();
     working = false;
-  }
+}
+
+$: {
+    if (files?.length) {
+        handleUpload(files[0]);
+    }
+}
 
 </script>
 
@@ -47,7 +40,7 @@
     {:else}
       Choose a file
     {/if}
-    <input type="file" accept=".svg" id="upload" bind:files on:change={handleUpload}>
+    <input type="file" accept=".svg" id="upload" bind:files>
   </label>
 </div>
 
