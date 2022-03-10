@@ -3,7 +3,7 @@
     export let shown = false;
 </script>
 
-<div on:click={() => (shown = !shown)}>
+<div on:click={() => { shown = !shown }}>
     <slot name="header" {shown}/>
 </div>
 

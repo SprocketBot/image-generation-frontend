@@ -4,19 +4,19 @@ export interface ReportQueryData {
      * Filters will be replaced inline when the query is complete
      * @example
      * "
-     * SELECT SOME_COLUMN AS DATA 
+     * SELECT SOME_COLUMN AS DATA
      * FROM SOME_TABLE
      * WHERE SOME_COLUMN = :some_filter_code
      * "
      */
     query: string;
 
-    filters: {
+    filters: Array<{
         name: string;
         description: string;
         code: string;
         query: string;
-    }[]
+    }>;
 }
 
 export interface ReportTemplate {

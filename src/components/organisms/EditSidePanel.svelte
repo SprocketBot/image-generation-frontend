@@ -1,33 +1,34 @@
 <script lang="ts">
-  import { selectedEl , previewEl} from "$src/stores";
+  import {selectedEl, imageType} from "$src/stores";
 
-  import SvgList from "$components/organisms/SVGList.svelte";
-  import DataItems from "$components/organisms/DataItems.svelte";
-  import { blur, fly } from "svelte/transition";
+  import DataItems from "$components/molecules/DataItems.svelte";
+  import {blur, fly} from "svelte/transition";
   import {absoluteWhileTransitioning} from "$utils/absoluteWhileTransitioning";
+  import SvgList from "$components/molecules/SVGList.svelte";
+  import {onMount} from "svelte";
+import type {ImageType} from "$src/types";
+
+  export let imTy: ImageType;
+
+  onMount(() => {
+      $imageType = imTy;
+  });
 
 </script>
 
 {#if $selectedEl}
-  <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
+  <div out:blur|local={{}} in:fly={{y: 50}} use:absoluteWhileTransitioning>
     <DataItems/>
   </div>
-{:else if $previewEl}
-  <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning>
-    <SvgList />
-  </div>
 {:else}
-  <div out:blur|local={{}} in:fly={{ y: 50 }} use:absoluteWhileTransitioning class="text">
-    <strong>Please upload your svg template.</strong>
+  <div out:blur|local={{}} in:fly={{y: 50}} use:absoluteWhileTransitioning>
+    <SvgList />
   </div>
 {/if}
 
 
 <style lang="postcss">
-  div.text {
-    @apply p-4;
-  }
-  strong {
-    @apply text-primary-500;
+  div { 
+    @apply h-full max-w-full;
   }
 </style>

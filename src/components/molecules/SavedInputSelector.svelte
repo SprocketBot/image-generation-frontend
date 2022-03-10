@@ -1,20 +1,13 @@
 <script lang="ts">
-    import { getSavedInputs } from "$api/savedInputs.api";
-    export let value = "";
-    export let reportCode: string;
+    export let value;
+    export let savedImages: string[];
 </script>
 
-{#await getSavedInputs(reportCode)}
-    <div>Loading...</div>
-{:then results}
-    <select bind:value>
-        {#each results as result}
-            <option>{result}</option>
-        {/each}
-    </select>
-{:catch}
-    <div>Error fetching from minio</div>
-{/await}
+<select bind:value>
+    {#each savedImages as result}
+        <option>{result}</option>
+    {/each}
+</select>
 
 <style lang="postcss">
     select {

@@ -1,26 +1,28 @@
 <script lang="ts">
-  import type { SprocketData, SVGProperty } from "$src/types";
-  import { WorkState } from "$src/types"
-  import { variableOperations } from "$utils/SvgRules";
+  import type {SprocketData, SVGProperty} from "$src/types";
+  import {WorkState} from "$src/types";
+  import {variableOperations} from "$utils/SvgRules";
   import Accordion from "$components/atoms/Accordion.svelte";
   import DropdownButton from "$components/atoms/DropdownButton.svelte";
-  import {selectedEl, links, workstate} from "$src/stores"
+  import {
+      selectedEl, links, workstate,
+  } from "$src/stores";
 
   export let item: any = {};
-  export let key: string = "Variables";
-  export let name: string = "";
+  export let key = "Variables";
+  export let name = "";
 
   function setLink(event) {
-    $workstate = WorkState.Linking;
-    if (!$links.get($selectedEl)) {
-      $links.set($selectedEl, new Map<SVGProperty, SprocketData>());
-    }
-    $links.get($selectedEl).set(event.detail, {
-      varPath:name,
-      options: {},
-      type: event.detail
-    });
-    $links = $links;
+      $workstate = WorkState.Linking;
+      if (!$links.get($selectedEl)) {
+          $links.set($selectedEl, new Map<SVGProperty, SprocketData>());
+      }
+      $links.get($selectedEl).set(event.detail, {
+          varPath: name,
+          options: {},
+          type: event.detail,
+      });
+      $links = $links;
   }
 </script>
 
@@ -39,7 +41,7 @@
     {/if}
   </div>
   <div slot="content" class="container">
-    {#if item.hasOwnProperty("type")}
+    {#if Object.prototype.hasOwnProperty.call(item, "type")}
       <DropdownButton
         on:clicked={setLink}
         name="Use as"

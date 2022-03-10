@@ -1,5 +1,5 @@
-import { knexClient } from "../knex";
-import type { ReportTemplate } from "./ReportTemplate.model";
+import {knexClient} from "../knex";
+import type {ReportTemplate} from "./ReportTemplate.model";
 
 export type ReportTemplateGetAll = Array<Omit<ReportTemplate, "templateStructure">>;
 
@@ -28,7 +28,7 @@ class ReportTemplateDAO {
 
     async getByCode(reportCode: string): Promise<ReportTemplate> {
         const result = await knexClient.select("*").from("report_template")
-            .where({ report_code: reportCode });
+            .where({report_code: reportCode});
         if (result.length) {
             return result[0] as ReportTemplate;
         }
@@ -37,32 +37,30 @@ class ReportTemplateDAO {
 
     async runReport(reportCode: string, reportFilters: Record<string, string>) {
         const template = await this.getByCode(reportCode);
-        const { query } = template.query;
+        const {query} = template.query;
         const results = await knexClient.raw(query, reportFilters);
-        if(!results.rows.length) throw new Error("No data returned from query!");
+        if (!results.rows.length) throw new Error("No data returned from query!");
         const result = results.rows[0];
-        if(!result?.data) throw new Error("Missing required property 'data' from report results");
+        if (!result?.data) throw new Error("Missing required property 'data' from report results");
         return result.data;
     }
 
     async getFilterValues(reportCode: string) {
         const template = await this.getByCode(reportCode);
         const filters = template.query.filters;
-        const filterValues = await Promise.all(
-            filters.map(async filter => {
-                const results = await knexClient.raw(filter.query);
+        const filterValues = await Promise.all(filters.map(async filter => {
+            const results = await knexClient.raw(filter.query);
                 
-                return {
-                    name: filter.name,
-                    description: filter.description,
-                    code: filter.code,
-                    data: results.rows
-                }
-            })
-        )
+            return {
+                name: filter.name,
+                description: filter.description,
+                code: filter.code,
+                data: results.rows,
+            };
+        }));
         return filterValues;
         
     }
 }
 const reportTemplateDao = new ReportTemplateDAO();
-export { reportTemplateDao as ReportTemplateDAO };
+export {reportTemplateDao as ReportTemplateDAO};

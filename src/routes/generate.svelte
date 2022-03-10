@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
     import ImageTypeSelector from "$components/organisms/ImageTypeSelector.svelte";
     import CardLayout from "$components/layouts/CardLayout.svelte";
     import ReportFilters from "$components/molecules/ReportFilters.svelte";
@@ -91,4 +91,4 @@
     button:disabled{
         @apply cursor-default bg-primary-700;
     }
-</style>
+</style> -->

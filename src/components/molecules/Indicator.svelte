@@ -1,24 +1,24 @@
 <script lang="ts">
-  import { indicatorBounds, selectedEl } from "$src/stores";
+  import {indicatorBounds, selectedEl} from "$src/stores";
 
   function onWindowResize() {
-    if (!$selectedEl) {
-      $indicatorBounds = {
-        x: -1,
-        y: -1,
-        h: 0,
-        w: 0,
-      };
-    } else {
-      const rect = $selectedEl.getBoundingClientRect();
+      if (!$selectedEl) {
+          $indicatorBounds = {
+              x: -1,
+              y: -1,
+              h: 0,
+              w: 0,
+          };
+      } else {
+          const rect = $selectedEl.getBoundingClientRect();
 
-      $indicatorBounds = {
-        x: rect.x,
-        y: rect.y,
-        w: rect.width,
-        h: rect.height,
-      };
-    }
+          $indicatorBounds = {
+              x: rect.x,
+              y: rect.y,
+              w: rect.width,
+              h: rect.height,
+          };
+      }
   }
 </script>
 
@@ -26,8 +26,8 @@
 
 <div
   class:hasSelection={Boolean($selectedEl)}
-  style="top: {$indicatorBounds.y - 3}px; left: {$indicatorBounds.x - 3}px; width: {$indicatorBounds.w +
-    6}px; height: {$indicatorBounds.h + 6}px"
+  style="top: {$indicatorBounds.y - 3}px; left: {$indicatorBounds.x - 3}px; width: {$indicatorBounds.w
+    + 6}px; height: {$indicatorBounds.h + 6}px"
 />
 
 <style lang="postcss">
