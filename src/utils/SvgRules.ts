@@ -1,32 +1,34 @@
-import type { OptionsRecord } from "src/types";
+import type {OptionsRecord} from "src/types";
 
 export const friendlyLookup = {
     svg: "Root",
     g: "Group",
     rect: "Rectangle",
-    text: "Text"
+    text: "Text",
+    path: "Vector",
 };
 export const applicableOperations = {
     rect: ["image", "fill", "stroke"],
-    polygon:["fill", "stroke"],
+    polygon: ["fill", "stroke"],
     text: ["text", "fill", "stroke"],
-    image: ["image", "stroke"]
+    image: ["image", "stroke"],
+    path: ["fill"],
 };
 
 export const variableOperations = {
     text: ["text"],
     color: ["fill", "stroke"],
-    image: ["image"]
-}
+    image: ["image"],
+};
 
 export const variableForOperation = {
     fill: "color",
     stroke: "color",
     image: "image",
-    text: "text"
-}
+    text: "text",
+};
 
-export const optionTypes:OptionsRecord = {
+export const optionTypes: OptionsRecord = {
     text: [
         {
             name: "h-align",
@@ -39,7 +41,7 @@ export const optionTypes:OptionsRecord = {
             display_name: "Vertical Alignment",
             options: ["baseline", "center", "hanging"],
             default: "center",
-        }
+        },
     ],
     image: [
         {
@@ -47,13 +49,14 @@ export const optionTypes:OptionsRecord = {
             display_name: "Rescale Image On",
             options: ["height", "width", "long", "short"],
             default: "height",
-        }],
+        },
+    ],
     fill: [],
-    stroke:[]
-}
+    stroke: [],
+};
 
 export const selectableElements = Object.keys(applicableOperations);
 export const hiddenElements = [
     "tspan",
-    "defs"
-]
+    "defs",
+];
