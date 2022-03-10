@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {indicatorBounds, selectedEl} from "$src/stores"
+    import {indicatorBounds, selectedEl} from "$src/stores";
     import {
         friendlyLookup,
         hiddenElements,
@@ -12,6 +12,25 @@
      * Used to prevent the mouseleave event from having an effect when a button is clicked.
      */
     let shouldUpdateBounds = true;
+    function updateBounds(value: boolean) {
+        if (!shouldUpdateBounds) return;
+        const rect = ref.getBoundingClientRect();
+        if (value) {
+            $indicatorBounds = {
+                x: rect.x,
+                y: rect.y,
+                w: rect.width,
+                h: rect.height,
+            };
+        } else if ($indicatorBounds.x === rect.x) {
+            // Check that the x matches, if it doesn't something else has been located and we shouldn't interfere
+
+            $indicatorBounds = {
+                x: -100, y: -100, h: 0, w: 0,
+            };
+
+        }
+    }
     function updateSelection() {
         shouldUpdateBounds = false;
         if (ref === $selectedEl) {
@@ -22,27 +41,8 @@
             updateBounds(true);
         }
     }
-    function updateBounds(value: boolean) {
-        if(!shouldUpdateBounds) return;
-        const rect = ref.getBoundingClientRect();
-        if (value) {
-            $indicatorBounds = {
-                x: rect.x,
-                y: rect.y,
-                w: rect.width,
-                h: rect.height,
-            };
-        } else {
-            // Check that the x matches, if it doesn't something else has been located and we shouldn't interfere
-            if ($indicatorBounds.x === rect.x) {
-                $indicatorBounds = { x: -100, y: -100, h: 0, w: 0 };
-            }
-        }
-    }
     let children: SVGElement[];
-    $: children = Array.from(ref.children).filter(
-        (c) => !hiddenElements.includes(c.nodeName) && c instanceof SVGElement
-    ) as SVGElement[];
+    $: children = Array.from(ref.children).filter(c => !hiddenElements.includes(c.nodeName) && c instanceof SVGElement) as SVGElement[];
 </script>
 
 <Accordion>
@@ -51,31 +51,27 @@
             {shown || !children.length ? "-" : "+"}
         </span>
         <span class="name" title={ref.id}>
-            {friendlyLookup[ref.nodeName] ?? ref.nodeName}{ref.id &&
-                ` (${ref.id})`}
+            {friendlyLookup[ref.nodeName] ?? ref.nodeName}{ref.id
+                && ` (${ref.id})`}
         </span>
         <span class="spacer" />
         <span class="actions">
             {#if selectableElements.includes(ref.nodeName)}
                 <button
                     on:click|preventDefault|stopPropagation={updateSelection}
-                    on:mouseover|preventDefault|stopPropagation={() =>
-                        updateBounds(true)}
-                    on:mouseleave|preventDefault|stopPropagation={() =>updateBounds(false)}
-                    on:focus|preventDefault|stopPropagation={() =>
-                        updateBounds(true)}
+                    on:mouseover|preventDefault|stopPropagation={() => { updateBounds(true) }}
+                    on:mouseleave|preventDefault|stopPropagation={() => { updateBounds(false) }}
+                    on:focus|preventDefault|stopPropagation={() => { updateBounds(true) }}
                 >
                     {$selectedEl === ref ? "Unselect" : "Select"}
                 </button>
             {:else}
                 <button
                     class="outline"
-                    on:mouseover|preventDefault|stopPropagation={() =>
-                        updateBounds(true)}
-                    on:mouseleave|preventDefault|stopPropagation={() => updateBounds(false)}
+                    on:mouseover|preventDefault|stopPropagation={() => { updateBounds(true) }}
+                    on:mouseleave|preventDefault|stopPropagation={() => { updateBounds(false) }}
                     on:click|preventDefault|stopPropagation
-                    on:focus|preventDefault|stopPropagation={() =>
-                        updateBounds(true)}
+                    on:focus|preventDefault|stopPropagation={() => { updateBounds(true) }}
                 >
                     Locate
                 </button>

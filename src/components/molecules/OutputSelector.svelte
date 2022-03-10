@@ -1,28 +1,28 @@
 <script lang="ts">
-  export let report_code:string;
+  export let report_code: string;
   export let projectName: string;
   export let filename: string;
 
-  import FaFileImage from "svelte-icons/fa/FaFileImage.svelte"
-  import FaFileCode from "svelte-icons/fa/FaFileCode.svelte"
-  import { downloadOutputImage } from "$src/api/outputs.api";
+  import FaFileImage from "svelte-icons/fa/FaFileImage.svelte";
+  import FaFileCode from "svelte-icons/fa/FaFileCode.svelte";
+  import {downloadOutputImage} from "$src/api/outputs.api";
 
-  let [, extention] = filename.split(".")
+  const [, extention] = filename.split(".");
 
-  async function downloadOutput(){
-    let blob = await downloadOutputImage(report_code, projectName, filename);
+  async function downloadOutput() {
+      const blob = await downloadOutputImage(report_code, projectName, filename);
 
-    let a = document.createElement("a")
-    a.href = URL.createObjectURL(blob);
-    a.download=filename;
-    a.click();
-    a.remove();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      a.remove();
   }
 </script>
 
 <div class = "container">
-  <div class="icon" on:click={()=>downloadOutput()}>
-    {#if extention == "svg"}
+  <div class="icon" on:click={async () => downloadOutput()}>
+    {#if extention === "svg"}
       <FaFileCode/>
     {:else}
       <FaFileImage />

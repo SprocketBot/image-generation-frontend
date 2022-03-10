@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ImageTypeItem } from "src/types";
+  import type {ImageTypeItem} from "src/types";
 
   export let type: ImageTypeItem;
   export let select: (id: string) => unknown = () => {};

@@ -1,43 +1,42 @@
-import type { EndpointOutput, Request } from "@sveltejs/kit"
-import { getClient } from "$utils/server/minio";
+import type {EndpointOutput, Request} from "@sveltejs/kit";
+import {getClient} from "$utils/server/minio";
 
-export const get = async ({ url }: Request): Promise<EndpointOutput> => {
+export const get = async ({url}: Request): Promise<EndpointOutput> => {
     const mClient = getClient();
     if (!url.searchParams.has("reportCode")) {
         return {
             status: 400,
             body: {
-                error: "missing reportCode"
-            }
-        }
+                error: "missing reportCode",
+            },
+        };
     }
     try {
-        const reports = await new Promise<Array<unknown>>((resolve, reject) => {
+        const reports = await new Promise<unknown[]>((resolve, reject) => {
             const output = [];
             mClient.listObjects("svg-reports", `${url.searchParams.get("reportCode")}/`)
                 .on("data", d => {
                     if (d.name && d.name.endsWith(".svg")) {
-                        output.push(d.name.split("/")[1])
+                        output.push(d.name.split("/")[1]);
                     }
                 })
-                .on("end", () => resolve(output))
-                .on("error", (e) => {
-                    reject(e)
+                .on("end", () => { resolve(output) })
+                .on("error", e => {
+                    reject(e);
                 });
-        })
+        });
 
         return {
             headers: {},
             status: 200,
-            body: JSON.stringify(reports)
-        }
-    }
-    catch {
+            body: JSON.stringify(reports),
+        };
+    } catch {
         return {
             headers: {},
             status: 500,
-        }
+        };
     }
 
     
-}
+};

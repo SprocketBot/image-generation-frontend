@@ -1,7 +1,7 @@
 <script lang="ts">
   import type {ImageTypeItem} from "src/types";
 
-  export let imageTypes:ImageTypeItem[]
+  export let imageTypes: ImageTypeItem[];
   export let value;
 </script>
 

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { uploadProgress, downloadProgress } from "$src/stores";
+  import {uploadProgress, downloadProgress} from "$src/stores";
   export let direction = "upload";
 
-  let progress:number;
-  $:{
-    direction=="up" ? progress = $uploadProgress : progress= $downloadProgress
+  let progress: number;
+  $: {
+      direction === "up" ? progress = $uploadProgress : progress = $downloadProgress;
   }
 
 </script>

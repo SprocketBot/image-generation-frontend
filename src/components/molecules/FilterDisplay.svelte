@@ -2,9 +2,9 @@
   export let projectName;
   export let filterValues;
 
-  let filters = [];
-  for(const key in filterValues){
-    filters.push({filter: key, value: filterValues[key]})
+  const filters = [];
+  for (const key in filterValues) {
+      filters.push({filter: key, value: filterValues[key]});
   }
 </script>
 

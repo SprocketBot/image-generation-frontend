@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { links, previewEl, fontElements, imageType } from "$src/stores";
-  import type { SprocketData } from "$src/types";
-  import { uploadTemplate } from "$src/api";
+  import {
+      links, previewEl, fontElements, imageType,
+  } from "$src/stores";
+  import type {SprocketData} from "$src/types";
+  import {uploadTemplate} from "$src/api";
   import LoadingBar from "../atoms/LoadingBar.svelte";
 
   export let filename;
@@ -12,49 +14,48 @@
   let saveError = false;
 
   async function saveOutput() {
-    // read in all the font files and bake them into svg
+      // read in all the font files and bake them into svg
     
-    uploading = true;
-    if($fontElements.size > 0){
-      const fontsDefs = document.createElementNS($previewEl.namespaceURI, "def");
-      fontsDefs.setAttribute("id", "fonts");
-      for(const [, tag] of $fontElements){
-        fontsDefs.append(tag);
+      uploading = true;
+      if ($fontElements.size > 0) {
+          const fontsDefs = document.createElementNS($previewEl.namespaceURI, "def");
+          fontsDefs.setAttribute("id", "fonts");
+          for (const [, tag] of $fontElements) {
+              fontsDefs.append(tag);
+          }
+          $previewEl.appendChild(fontsDefs);
       }
-      $previewEl.appendChild(fontsDefs);
-    }
     
-    // bake in sproket-data into svg
-    for (const [el, linkmap] of $links) {
-      const sproketData: SprocketData[] = [];
-      for (const [linkType, data] of linkmap) {
-        sproketData.push({
-          varPath: data.varPath,
-          options: data.options,
-          type: linkType,
-        });
+      // bake in sproket-data into svg
+      for (const [el, linkmap] of $links) {
+          const sproketData: SprocketData[] = [];
+          for (const [linkType, data] of linkmap) {
+              sproketData.push({
+                  varPath: data.varPath,
+                  options: data.options,
+                  type: linkType,
+              });
+          }
+          const sproketDataString = JSON.stringify(sproketData);
+          sproketDataString.replace("\"", "'");
+          el.setAttribute("data-sprocket", sproketDataString);
       }
-      const sproketDataString = JSON.stringify(sproketData);
-      sproketDataString.replace('"', "'");
-      el.setAttribute("data-sprocket", sproketDataString);
-    }
-    $previewEl = $previewEl
+      $previewEl = $previewEl;
 
-    if(await uploadTemplate($previewEl, $imageType.report_code, filename)){
-      saved = true;
-    } else{
-      saveError = true;
-    }
+      if (await uploadTemplate($previewEl, $imageType.report_code, filename)) {
+          saved = true;
+      } else {
+          saveError = true;
+      }
 
-    // remove font def and sprocket data
-    $previewEl.querySelector("def#fonts")?.remove();
-    for(const [el, ] of $links){
-      el.removeAttribute("data-sprocket");
-    }
-    $previewEl = $previewEl;
-    uploading = false;
+      // remove font def and sprocket data
+      $previewEl.querySelector("def#fonts")?.remove();
+      for (const [el] of $links) {
+          el.removeAttribute("data-sprocket");
+      }
+      $previewEl = $previewEl;
+      uploading = false;
   }
-
 
 
 </script>
@@ -64,7 +65,7 @@
   {#if $links.size === 0}
     <strong>You haven't assigned any links</strong>
   {/if}
-  {#if $fontElements.size===0}
+  {#if $fontElements.size === 0}
     <strong>You have not uploaded any fonts. This may cause text to not be rendered properly</strong>
   {/if}
 

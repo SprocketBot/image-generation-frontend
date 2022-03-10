@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { FilterValues } from "$src/types";
+    import type {FilterValues} from "$src/types";
 
 
     export let values;

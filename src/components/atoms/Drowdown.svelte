@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import {createEventDispatcher} from "svelte";
 
   import clickOutside from "$utils/clickOutside";
   export let name: string;
@@ -7,17 +7,17 @@
   let open = false;
 
   const dispatch = createEventDispatcher();
-  /* When the user clicks on the button, 
+  /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
   function openDropdown() {
-    open = !open;
+      open = !open;
   }
   function handleClickOutside() {
-    open = false;
+      open = false;
   }
   function choose(choice: string) {
-    open = false;
-    dispatch("clicked", choice);
+      open = false;
+      dispatch("clicked", choice);
   }
 </script>
 
@@ -26,7 +26,7 @@ toggle between hiding and showing the dropdown content */
   {#if open}
     <div id="myDropdown" class="dropdown-content">
       {#each items as choice}
-        <button on:click={() => choose(choice)}>{choice}</button>
+        <button on:click={() => { choose(choice) }}>{choice}</button>
       {/each}
     </div>
   {/if}

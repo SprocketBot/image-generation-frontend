@@ -1,6 +1,6 @@
 import KnexClient from "knex";
 import config from "$src/config";
-console.log(config.knex)
+console.log(config.knex);
 
 export const knexClient = KnexClient({
     client: "pg",
@@ -32,13 +32,13 @@ nj1pcBsdSX1meC60NQYcb8IpA/P0W3p/Ff6wL0EDacyOjkDuhpH+917Yk/eBr6Ae
 cZeXKlEjWu8UuzRPTHYDHzx0rFn7OCmNxWxy9x4FfIC+bMgTd0qssmtjV6DVcRDP
 XasS1dWpQBDAtUrPvp/jkq/0yAxLwES662PAIc7srtwDIjt6T/V9+NOYpQFsog/I
 9CIkM6KJMg0QczW1wtw4OEW2Bs/UB2bn+q7KPQvFZwV6KUBofw==
------END CERTIFICATE-----`
-        }
+-----END CERTIFICATE-----`,
+        },
     },
     asyncStackTraces: true,
     debug: false,
     pool: {
         min: 2,
-        max: 2
+        max: 2,
     },
-})
+});

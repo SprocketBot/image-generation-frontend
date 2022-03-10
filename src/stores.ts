@@ -1,6 +1,8 @@
-import { writable } from "svelte/store";
-import type { BoundBox, ElementsMap, ImageType, PropertiesMap } from "$src/types";
-import { WorkState } from "$src/types"
+import {writable} from "svelte/store";
+import type {
+    BoundBox, ElementsMap, ImageType, PropertiesMap,
+} from "$src/types";
+import {WorkState} from "$src/types";
 
 export const imageType = writable<ImageType>(undefined);
 
@@ -11,8 +13,8 @@ export const indicatorBounds = writable<BoundBox>({
     x: -100,
     y: -100,
     w: 0,
-    h: 0
-})
+    h: 0,
+});
 export const workstate = writable<WorkState>(WorkState.Linking);
 export const previewEl = writable<SVGElement>(undefined);
 export const selectedEl = writable<SVGElement>(undefined);

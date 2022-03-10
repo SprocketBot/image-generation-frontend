@@ -1,6 +1,6 @@
 export async function get() {
-  return {
-    headers: { Location: '/' },
-    status: 302,
-  }
+    return {
+        headers: {Location: "/"},
+        status: 302,
+    };
 }

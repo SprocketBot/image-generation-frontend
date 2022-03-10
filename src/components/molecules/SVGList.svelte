@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { previewEl } from "$src/stores";
+    import {previewEl} from "$src/stores";
     import ElementReference from "$components/molecules/ElementReference.svelte";
 
 </script>

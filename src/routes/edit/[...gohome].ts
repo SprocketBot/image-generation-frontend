@@ -1,6 +1,8 @@
-export async function get() {
-  return {
-    headers: { Location: '/' },
-    status: 302,
-  }
+import type {EndpointOutput} from "@sveltejs/kit";
+
+export async function get(): Promise<EndpointOutput> {
+    return {
+        headers: {Location: "/"},
+        status: 302,
+    };
 }

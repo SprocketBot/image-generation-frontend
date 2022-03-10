@@ -1,20 +1,20 @@
 <script lang="ts" context="module">
-    export const MODAL_CLOSE_CONTEXT_KEY = "Modal.Close"
+    export const MODAL_CLOSE_CONTEXT_KEY = "Modal.Close";
 </script>
 
 <script lang="ts">
-    import { fade } from "svelte/transition";
+    import {fade} from "svelte/transition";
     import MdClose from "svelte-icons/md/MdClose.svelte";
-    import { setContext } from "svelte";
+    import {setContext} from "svelte";
     export let show = false;
 
-    setContext(MODAL_CLOSE_CONTEXT_KEY, () => show = false)
+    setContext(MODAL_CLOSE_CONTEXT_KEY, () => { show = false });
 </script>
 
 {#if show}
-    <section transition:fade={{ duration: 250 }}>
+    <section transition:fade={{duration: 250}}>
         <div class="container">
-            <div class="icon" on:click={() => (show = false)}>
+            <div class="icon" on:click={() => { show = false }}>
                 <MdClose />
             </div>
             <slot />

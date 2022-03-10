@@ -1,18 +1,18 @@
 <script lang="ts">
-import { goto } from "$app/navigation";
-import type { ImageTypeItem } from "$src/types";
+import {goto} from "$app/navigation";
+import type {ImageTypeItem} from "$src/types";
 import SavedInputSelector from "../molecules/SavedInputSelector.svelte";
 
 export let imageType: ImageTypeItem;
 export let savedImages: string[];
-  let filename = "";
+let filename = "";
 
 </script>
 
 
 <h2>Pick a project to Edit</h2>
 <SavedInputSelector bind:value={filename} {savedImages}/>
-<button disabled={filename == ""} on:click={() => goto(`/edit/${imageType.report_code}/${filename}`)}>GO!</button>
+<button disabled={filename === ""} on:click={async () => goto(`/edit/${imageType.report_code}/${filename}`)}>GO!</button>
 
 <style lang="postcss">
   h2 {

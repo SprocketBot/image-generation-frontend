@@ -1,29 +1,29 @@
 <script lang="ts" context="module">
-    import type { LoadInput, LoadOutput,  } from "@sveltejs/kit";
-    export async function load({url}:LoadInput): Promise<LoadOutput>{
+    import type {LoadInput, LoadOutput} from "@sveltejs/kit";
+    export async function load({url}: LoadInput): Promise<LoadOutput> {
         let action = "create";
-        if(url.searchParams.has("action")){
+        if (url.searchParams.has("action")) {
             switch (url.searchParams.get("action")) {
                 case "run":
-                    action = "run"
+                    action = "run";
                     break;
                 case "edit":
-                    action = "edit"
+                    action = "edit";
                     break;
                 default:
                     break;
             }
         }
-        return{
+        return {
             props: {
-                action
-            }
-        }
+                action,
+            },
+        };
     }
 </script>
 
 <script lang="ts">
-    import { getImagesOfType, getImageTypes } from "$src/api";
+    import {getImagesOfType, getImageTypes} from "$src/api";
 
     import ImageTypeSelector from "$src/components/molecules/ImageTypeSelector.svelte";
     import PageHeader from "$src/components/molecules/PageHeader.svelte";
@@ -31,10 +31,10 @@
     import EditOptions from "$src/components/organisms/EditOptions.svelte";
     import RunOptions from "$src/components/organisms/RunOptions.svelte";
 
-    import {slide} from 'svelte/transition'
+    import {slide} from "svelte/transition";
 
     export let action;
-    let imageType:any = undefined;
+    let imageType: any = undefined;
 </script>
 
 <section>
@@ -79,7 +79,7 @@
                         {#await getImagesOfType(imageType.report_code)}
                            <h2>fetching saved templates</h2> 
                         {:then savedImages} 
-                            {#if action=== "edit" }
+                            {#if action === "edit" }
                                 
                                     <EditOptions {imageType} {savedImages}/>
                                
