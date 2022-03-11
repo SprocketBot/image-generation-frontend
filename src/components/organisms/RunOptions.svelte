@@ -2,14 +2,15 @@
   import {getFilterValues} from "$src/api/filters.api";
   import {getOutputs} from "$src/api/outputs.api";
   import {runReport} from "$src/api/run.api";
-import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
+  import type { ImageTypeItem } from "$src/types";
+  import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
   import FilterDisplay from "../molecules/FilterDisplay.svelte";
   import OutputSelector from "../molecules/OutputSelector.svelte";
 
   import ReportFilters from "../molecules/ReportFilters.svelte";
   import SavedInputSelector from "../molecules/SavedInputSelector.svelte";
 
-  export let imageType;
+  export let imageTypeItem:ImageTypeItem;
   export let savedImages;
 
   let filterValues = {};
@@ -23,13 +24,13 @@ import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
   let running = false;
 
   async function refetchOutputs() {
-      outputs = getOutputs(imageType.report_code, projectName);
+      outputs = getOutputs(imageTypeItem.report_code, projectName);
   }
 
   async function run() {
       running = true;
       await runReport(
-          imageType.report_code,
+          imageTypeItem.report_code,
           inputFileName,
           outputFileName,
           filterValues,
@@ -51,12 +52,12 @@ import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
   }
 
   $: {
-      inputFileName = `${imageType.report_code}/${projectName}/template.svg`;
+      inputFileName = `${imageTypeItem.report_code}/${projectName}/template.svg`;
       refetchOutputs();
   }
   $: {
       outputFileName = `${
-          imageType.report_code
+          imageTypeItem.report_code
       }/${projectName}/outputs/${getFilterName(filterValues)}`;
   }
 </script>
@@ -66,7 +67,7 @@ import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
   <SavedInputSelector bind:value={projectName} {savedImages} />
 {/if}
 
-{#await getFilterValues(imageType.report_code)}
+{#await getFilterValues(imageTypeItem.report_code)}
   <h2>Loading...</h2>
 {:then filters}
   {#if mode === "select"}
@@ -93,7 +94,7 @@ import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
         <h2>Download an Image already run</h2>
         <div class="images">
           {#each outputsForFilters(out) as filename}
-            <OutputSelector report_code={imageType.report_code} {projectName} {filename} />
+            <OutputSelector report_code={imageTypeItem.report_code} {projectName} {filename} />
           {/each}
         </div>
       {:else}

@@ -1,11 +1,12 @@
 <script lang="ts">
-  import {getImagesOfType, uploadTemplate} from "$src/api";
+  import {getImagesOfType, getTemplate, uploadTemplate} from "$src/api";
   import ImageSelector from "../molecules/ImageSelector.svelte";
   import {session} from "$app/stores";
   import {goto} from "$app/navigation";
   import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
+  import type { ImageTypeItem } from "$src/types";
 
-  export let imageType;
+  export let imageTypeItem: ImageTypeItem;
 
   let filenames: string[];
   let filename = "";
@@ -20,17 +21,17 @@
 
   async function go() {
       navigating = true;
-      await uploadTemplate(previewEl, imageType.report_code, filename);
+      await uploadTemplate(previewEl, imageTypeItem.report_code, filename);
       $session = {
           previewEl: previewEl,
-          imageType: imageType,
+          imageType: await getTemplate(imageTypeItem.report_code),
       };
-      goto(`/edit/${imageType.report_code}/${filename}`);
+      goto(`/edit/${imageTypeItem.report_code}/${filename}`);
   }
 
   $: {
       canGo
-      = filenames && previewEl && imageType
+      = filenames && previewEl && imageTypeItem
       && !filenames.includes(filename)
       && filename.length > 3
       && filename.match(/[A-Za-z0-9_]{4,}/)[0].length === filename.length;
@@ -41,7 +42,7 @@
 
 <h2>Give your project a name</h2>
 <input type="text" bind:value={filename} /> 
-    {#await getFilenames(imageType.report_code)}
+    {#await getFilenames(imageTypeItem.report_code)}
         <span>updating filenames</span>
     {:then filenames}
         {#if canGo === undefined}
