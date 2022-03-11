@@ -1,15 +1,16 @@
 <script lang="ts">
+
   import type {ImageTypeItem} from "src/types";
 
-  export let imageTypes: ImageTypeItem[];
+  export let imageTypeItems: ImageTypeItem[];
   export let value;
 </script>
 
 <select bind:value>
-  {#each imageTypes as type}
-    <option value={type}>
-      <div>{type.display_name}</div>
-      <div>{type.description}</div>
+  {#each imageTypeItems as imageTypeItem}
+    <option value={imageTypeItem}>
+      <div>{imageTypeItem.display_name}</div>
+      <div>{imageTypeItem.description}</div>
     </option>
   {/each}
 </select> 

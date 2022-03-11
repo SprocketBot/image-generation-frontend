@@ -23,7 +23,9 @@
 </script>
 
 <script lang="ts">
-    import {getImagesOfType, getImageTypes} from "$src/api";
+    import {
+        getImagesOfType, getImageTypes, getTemplate,
+    } from "$src/api";
 
     import ImageTypeSelector from "$src/components/molecules/ImageTypeSelector.svelte";
     import PageHeader from "$src/components/molecules/PageHeader.svelte";
@@ -32,9 +34,10 @@
     import RunOptions from "$src/components/organisms/RunOptions.svelte";
 
     import {slide} from "svelte/transition";
+    import type {ImageTypeItem} from "$src/types";
 
     export let action;
-    let imageType: any = undefined;
+    let imageTypeItem: ImageTypeItem;
 </script>
 
 <section>
@@ -61,10 +64,10 @@
         <h2>A Template Using Data From</h2>
         {#await getImageTypes()}
             <h2>fetching image types</h2>
-        {:then imageTypes}
-            <ImageTypeSelector {imageTypes} bind:value={imageType}/>
+        {:then imageTypeItems}
+            <ImageTypeSelector {imageTypeItems} bind:value={imageTypeItem}/>
 
-            {#if !imageType}
+            {#if !imageTypeItem}
                 <div class="unselected">
                     <h2>Select and Image Type</h2>
                 </div>
@@ -72,20 +75,20 @@
                 <div class="action-option">
                     {#if action === "create"}
                         <div in:slide|local>
-                            <CreateOptions {imageType}/>
+                            <CreateOptions {imageTypeItem}/>
                         </div>
                     {:else}
                         <div in:slide|local>
-                        {#await getImagesOfType(imageType.report_code)}
+                        {#await getImagesOfType(imageTypeItem.report_code)}
                            <h2>fetching saved templates</h2> 
                         {:then savedImages} 
                             {#if action === "edit" }
                                 
-                                    <EditOptions {imageType} {savedImages}/>
+                                    <EditOptions {imageTypeItem} {savedImages}/>
                                
                             {:else}
                                 <div in:slide|local>
-                                    <RunOptions {imageType} {savedImages}/>
+                                    <RunOptions {imageTypeItem} {savedImages}/>
                                 </div>
                             {/if}
                         {:catch error}

@@ -3,7 +3,7 @@ import {goto} from "$app/navigation";
 import type {ImageTypeItem} from "$src/types";
 import SavedInputSelector from "../molecules/SavedInputSelector.svelte";
 
-export let imageType: ImageTypeItem;
+export let imageTypeItem: ImageTypeItem;
 export let savedImages: string[];
 let filename = "";
 
@@ -12,7 +12,7 @@ let filename = "";
 
 <h2>Pick a project to Edit</h2>
 <SavedInputSelector bind:value={filename} {savedImages}/>
-<button disabled={filename === ""} on:click={async () => goto(`/edit/${imageType.report_code}/${filename}`)}>GO!</button>
+<button disabled={filename === ""} on:click={async () => goto(`/edit/${imageTypeItem.report_code}/${filename}`)}>GO!</button>
 
 <style lang="postcss">
   h2 {
