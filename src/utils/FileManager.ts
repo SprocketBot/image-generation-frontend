@@ -38,6 +38,7 @@ class FileManager {
                 res(blob);
             };
             xhr.onerror = e => {
+                this._busy = false;
                 rej(e);
             };
             xhr.open("GET", presignedURL);
