@@ -23,7 +23,9 @@
 </script>
 
 <script lang="ts">
-    import {getImagesOfType, getImageTypes, getTemplate} from "$src/api";
+    import {
+        getImagesOfType, getImageTypes, getTemplate,
+    } from "$src/api";
 
     import ImageTypeSelector from "$src/components/molecules/ImageTypeSelector.svelte";
     import PageHeader from "$src/components/molecules/PageHeader.svelte";
@@ -32,7 +34,7 @@
     import RunOptions from "$src/components/organisms/RunOptions.svelte";
 
     import {slide} from "svelte/transition";
-    import type { ImageTypeItem } from "$src/types";
+    import type {ImageTypeItem} from "$src/types";
 
     export let action;
     let imageTypeItem: ImageTypeItem;

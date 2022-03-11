@@ -1,10 +1,12 @@
 <script lang="ts">
-  import {getImagesOfType, getTemplate, uploadTemplate} from "$src/api";
+  import {
+      getImagesOfType, getTemplate, uploadTemplate,
+  } from "$src/api";
   import ImageSelector from "../molecules/ImageSelector.svelte";
   import {session} from "$app/stores";
   import {goto} from "$app/navigation";
   import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
-  import type { ImageTypeItem } from "$src/types";
+  import type {ImageTypeItem} from "$src/types";
 
   export let imageTypeItem: ImageTypeItem;
 

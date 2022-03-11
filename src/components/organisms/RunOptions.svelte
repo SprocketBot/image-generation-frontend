@@ -2,7 +2,7 @@
   import {getFilterValues} from "$src/api/filters.api";
   import {getOutputs} from "$src/api/outputs.api";
   import {runReport} from "$src/api/run.api";
-  import type { ImageTypeItem } from "$src/types";
+  import type {ImageTypeItem} from "$src/types";
   import LoadingIndicator from "../atoms/LoadingIndicator.svelte";
   import FilterDisplay from "../molecules/FilterDisplay.svelte";
   import OutputSelector from "../molecules/OutputSelector.svelte";
@@ -10,7 +10,7 @@
   import ReportFilters from "../molecules/ReportFilters.svelte";
   import SavedInputSelector from "../molecules/SavedInputSelector.svelte";
 
-  export let imageTypeItem:ImageTypeItem;
+  export let imageTypeItem: ImageTypeItem;
   export let savedImages;
 
   let filterValues = {};
