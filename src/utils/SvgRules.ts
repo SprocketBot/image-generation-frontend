@@ -12,7 +12,7 @@ export const applicableOperations = {
     polygon: ["fill", "stroke"],
     text: ["text", "fill", "stroke"],
     image: ["image", "stroke"],
-    path: ["fill"],
+    path: ["fill", "stroke"],
 };
 
 export const variableOperations = {
