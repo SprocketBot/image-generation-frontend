@@ -16,8 +16,8 @@ export interface BoundBox {
 export interface OptionType {
     name: string;
     display_name: string;
-    options: string[];
-    default: string;
+    options: (string|number)[];
+    default: string | number;
 }
 export type OptionsRecord = Record<SVGProperty, OptionType[]>;
 
