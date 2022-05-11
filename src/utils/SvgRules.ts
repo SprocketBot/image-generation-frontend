@@ -10,13 +10,14 @@ export const friendlyLookup = {
 export const applicableOperations = {
     rect: ["image", "fill", "stroke"],
     polygon: ["fill", "stroke"],
-    text: ["text", "fill", "stroke"],
+    text: ["text", "fill", "stroke", "number"],
     image: ["image", "stroke"],
     path: ["fill", "stroke"],
 };
 
 export const variableOperations = {
     text: ["text"],
+    number:["text"],
     color: ["fill", "stroke"],
     image: ["image"],
 };
@@ -26,6 +27,7 @@ export const variableForOperation = {
     stroke: "color",
     image: "image",
     text: "text",
+    number:"number"
 };
 
 export const optionTypes: OptionsRecord = {
@@ -42,6 +44,18 @@ export const optionTypes: OptionsRecord = {
             options: ["baseline", "center", "hanging"],
             default: "center",
         },
+        {
+            name: "truncate-to",
+            display_name: "Trunkate Text to",
+            options: ["as-is", 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],
+            default: "as-is",
+        },
+        {
+            name: 'case',
+            display_name: 'Adjust Case',
+            options: ["lower", "upper", "as-is"],
+            default: "as-is"
+        }
     ],
     image: [
         {
