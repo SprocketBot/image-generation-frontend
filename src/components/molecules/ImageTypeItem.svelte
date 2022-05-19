@@ -7,13 +7,13 @@
 
 <div class="item">
   <h2>
-    {type.display_name}
+    {type.displayName}
   </h2>
   <p>{type.description}</p>
   
     <button
       on:click={() => {
-        select(type.report_code);
+        select(type.reportCode);
       }}>Select</button
     >
   

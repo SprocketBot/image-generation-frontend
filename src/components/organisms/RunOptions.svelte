@@ -24,13 +24,13 @@
   let running = false;
 
   async function refetchOutputs() {
-      outputs = getOutputs(imageTypeItem.report_code, projectName);
+      outputs = getOutputs(imageTypeItem.reportCode, projectName);
   }
 
   async function run() {
       running = true;
       await runReport(
-          imageTypeItem.report_code,
+          imageTypeItem.reportCode,
           inputFileName,
           outputFileName,
           filterValues,
@@ -52,12 +52,12 @@
   }
 
   $: {
-      inputFileName = `${imageTypeItem.report_code}/${projectName}/template.svg`;
+      inputFileName = `${imageTypeItem.reportCode}/${projectName}/template.svg`;
       refetchOutputs();
   }
   $: {
       outputFileName = `${
-          imageTypeItem.report_code
+          imageTypeItem.reportCode
       }/${projectName}/outputs/${getFilterName(filterValues)}`;
   }
 </script>
@@ -67,7 +67,7 @@
   <SavedInputSelector bind:value={projectName} {savedImages} />
 {/if}
 
-{#await getFilterValues(imageTypeItem.report_code)}
+{#await getFilterValues(imageTypeItem.reportCode)}
   <h2>Loading...</h2>
 {:then filters}
   {#if mode === "select"}
@@ -94,7 +94,7 @@
         <h2>Download an Image already run</h2>
         <div class="images">
           {#each outputsForFilters(out) as filename}
-            <OutputSelector report_code={imageTypeItem.report_code} {projectName} {filename} />
+            <OutputSelector reportCode={imageTypeItem.reportCode} {projectName} {filename} />
           {/each}
         </div>
       {:else}

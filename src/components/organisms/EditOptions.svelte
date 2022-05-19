@@ -12,7 +12,7 @@ let filename = "";
 
 <h2>Pick a project to Edit</h2>
 <SavedInputSelector bind:value={filename} {savedImages}/>
-<button disabled={filename === ""} on:click={async () => goto(`/edit/${imageTypeItem.report_code}/${filename}`)}>GO!</button>
+<button disabled={filename === ""} on:click={async () => goto(`/edit/${imageTypeItem.reportCode}/${filename}`)}>GO!</button>
 
 <style lang="postcss">
   h2 {

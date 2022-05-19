@@ -1,7 +1,8 @@
 import type {
     EndpointOutput, Response, Request,
 } from "@sveltejs/kit";
-import {getClient} from "$utils/server/minio";
+import { getClient } from "$utils/server/minio";
+import config from "$src/config"
 
 export const get = async ({params}: Request): Promise<EndpointOutput> => {
     const mClient = getClient();
@@ -9,7 +10,7 @@ export const get = async ({params}: Request): Promise<EndpointOutput> => {
     try {
         const outputs = await new Promise<string[]>((resolve, reject) => {
             const output = [];
-            mClient.listObjects("svg-reports", `${imageType}/${name}/outputs/`)
+            mClient.listObjects(config.minio.bucket, `${imageType}/${name}/outputs/`)
                 .on("data", d => {
                     if (d.name) {
                         output.push(d.name.split("/")[3]);
@@ -38,7 +39,7 @@ export const post = async ({params}: Request): Promise<Response> => {
     const mClient = getClient();
     const {imageType, filename} = params;
     try {
-        const result = await mClient.presignedPutObject("svg-reports", `${imageType}/${filename}`, 60 * 2);
+        const result = await mClient.presignedPutObject(config.minio.bucket, `${imageType}/${filename}`, 60 * 2);
         return {
             headers: {},
             status: 200,

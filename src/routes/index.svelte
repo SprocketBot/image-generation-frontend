@@ -79,7 +79,7 @@
                         </div>
                     {:else}
                         <div in:slide|local>
-                        {#await getImagesOfType(imageTypeItem.report_code)}
+                        {#await getImagesOfType(imageTypeItem.reportCode)}
                            <h2>fetching saved templates</h2> 
                         {:then savedImages} 
                             {#if action === "edit" }

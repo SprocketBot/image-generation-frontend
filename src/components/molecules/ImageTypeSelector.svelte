@@ -9,7 +9,7 @@
 <select bind:value>
   {#each imageTypeItems as imageTypeItem}
     <option value={imageTypeItem}>
-      <div>{imageTypeItem.display_name}</div>
+      <div>{imageTypeItem.displayName}</div>
       <div>{imageTypeItem.description}</div>
     </option>
   {/each}

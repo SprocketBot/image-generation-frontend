@@ -1,5 +1,6 @@
 import type {EndpointOutput, Request} from "@sveltejs/kit";
-import {getClient} from "$utils/server/minio";
+import { getClient } from "$utils/server/minio";
+import config from "$src/config"
 
 export const get = async ({url}: Request): Promise<EndpointOutput> => {
     const mClient = getClient();
@@ -14,7 +15,7 @@ export const get = async ({url}: Request): Promise<EndpointOutput> => {
     try {
         const reports = await new Promise<unknown[]>((resolve, reject) => {
             const output = [];
-            mClient.listObjects("svg-reports", `${url.searchParams.get("reportCode")}/`)
+            mClient.listObjects(config.minio.bucket, `${url.searchParams.get("reportCode")}/`)
                 .on("data", d => {
                     if (d.name && d.name.endsWith(".svg")) {
                         output.push(d.name.split("/")[1]);

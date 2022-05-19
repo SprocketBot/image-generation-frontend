@@ -4,7 +4,7 @@ import {ReportTemplateDAO} from "$utils/server/database/ReportTemplate.dao";
 export const get = async ({params}: Request): Promise<EndpointOutput> => {
     try {
         const values = await ReportTemplateDAO.getFilterValues(params.id);
-
+        console.log(values)
         return {
             status: 200,
             body: JSON.stringify(values),

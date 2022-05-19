@@ -23,12 +23,12 @@
 
   async function go() {
       navigating = true;
-      await uploadTemplate(previewEl, imageTypeItem.report_code, filename);
+      await uploadTemplate(previewEl, imageTypeItem.reportCode, filename);
       $session = {
           previewEl: previewEl,
-          imageType: await getTemplate(imageTypeItem.report_code),
+          imageType: await getTemplate(imageTypeItem.reportCode),
       };
-      goto(`/edit/${imageTypeItem.report_code}/${filename}`);
+      goto(`/edit/${imageTypeItem.reportCode}/${filename}`);
   }
 
   $: {
@@ -44,7 +44,7 @@
 
 <h2>Give your project a name</h2>
 <input type="text" bind:value={filename} /> 
-    {#await getFilenames(imageTypeItem.report_code)}
+    {#await getFilenames(imageTypeItem.reportCode)}
         <span>updating filenames</span>
     {:then filenames}
         {#if canGo === undefined}

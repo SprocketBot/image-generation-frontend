@@ -28,6 +28,6 @@ import {onMount} from "svelte";
   
 </script>
 
-{option.display_name}
+{option.displayName}
 
 <DropdownButton bind:name={selection} choices={option.options} on:clicked={updateOption}/>

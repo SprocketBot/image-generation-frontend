@@ -7,28 +7,29 @@ export type ReportTemplateGetAll = Array<Omit<ReportTemplate, "templateStructure
  * Create Script:
  * | create table report_template
  * | (
- * |    template_structure jsonb not null,
- * |    report_code varchar(64)
+ * |    templateStructure jsonb not null,
+ * |    reportCode varchar(64)
  * |        constraint report_template_pk
  * |        primary key,
- * |    display_name text not null,
+ * |    displayName text not null,
  * |    description text not null
  * | );
- * | create unique index report_template_template_structure_uindex
- * | on report_template (template_structure);
+ * | create unique index report_templateStructure_uindex
+ * | on report_template (templateStructure);
  */
 class ReportTemplateDAO {
     recursed = false;
 
     async getAll(): Promise<ReportTemplateGetAll> {
-        const results = await knexClient.select("report_code", "display_name", "description").from("report_template");
+        
+        const results = await knexClient.select("reportCode", "displayName", "description").from("sprocket.image_template");
 
         return results as ReportTemplateGetAll;
     }
 
     async getByCode(reportCode: string): Promise<ReportTemplate> {
-        const result = await knexClient.select("*").from("report_template")
-            .where({report_code: reportCode});
+        const result = await knexClient.select("*").from("sprocket.image_template")
+            .where({ reportCode: reportCode });
         if (result.length) {
             return result[0] as ReportTemplate;
         }
@@ -48,9 +49,10 @@ class ReportTemplateDAO {
     async getFilterValues(reportCode: string) {
         const template = await this.getByCode(reportCode);
         const filters = template.query.filters;
+        console.log(filters);
         const filterValues = await Promise.all(filters.map(async filter => {
             const results = await knexClient.raw(filter.query);
-                
+            console.log(results);
             return {
                 name: filter.name,
                 description: filter.description,
