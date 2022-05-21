@@ -3,6 +3,7 @@
         "access": "",
         "secret": "",
         "endpoint": "",
+        "bucket": "",
         "ssl": true     
     },
     "knex":{
