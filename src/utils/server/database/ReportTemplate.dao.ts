@@ -52,10 +52,10 @@ class ReportTemplateDAO {
     async getFilterValues(reportCode: string) {
         const template = await this.getByCode(reportCode);
         const filters = template.query.filters;
-        console.log(filters);
+        //console.log(filters);
         const filterValues = await Promise.all(filters.map(async filter => {
             const results = await knexClient.raw(filter.query);
-            console.log(results);
+            //console.log(results);
             return {
                 name: filter.name,
                 description: filter.description,

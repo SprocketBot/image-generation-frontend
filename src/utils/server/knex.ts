@@ -1,6 +1,6 @@
 import KnexClient from "knex";
 import config from "$src/config";
-console.log(config.knex);
+
 
 export const knexClient = KnexClient({
     client: "pg",

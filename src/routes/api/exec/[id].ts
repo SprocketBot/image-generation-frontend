@@ -12,7 +12,7 @@ export async function post({body, params}: Request): Promise<EndpointOutput> {
             {
                 inputFile: data.inputFile,
                 outputFile: data.outputFile,
-                filterValues: results,
+                template: results,
             },
         );
         if (res?.err) {
