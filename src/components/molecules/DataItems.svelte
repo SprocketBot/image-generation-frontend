@@ -62,7 +62,7 @@
       <button on:click={handleClick}>Unselect Element (Esc)</button>
     </header>
     <DataItem
-      item={getRelevantItems($selectedEl, $imageType.template_structure)}
+      item={getRelevantItems($selectedEl, $imageType.templateStructure)}
     />
   {/if}
 </section>

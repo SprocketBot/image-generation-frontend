@@ -15,7 +15,7 @@ export interface BoundBox {
 
 export interface OptionType {
     name: string;
-    display_name: string;
+    displayName: string;
     options: (string|number)[];
     default: string | number;
 }
@@ -50,14 +50,14 @@ export interface ItemTypeQuery {
 }
 
 export interface ImageTypeItem {
-    display_name: string;
-    report_code: string;
+    displayName: string;
+    reportCode: string;
     description: string;
 }
 
 export interface ImageType extends ImageTypeItem {
     query: ItemTypeQuery;
-    template_structure: any;
+    templateStructure: any;
 }
 
 export type ElementsMap = Map<SVGElement, PropertiesMap>;

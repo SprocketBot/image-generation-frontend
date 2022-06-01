@@ -42,7 +42,7 @@
       }
       $previewEl = $previewEl;
 
-      if (await uploadTemplate($previewEl, $imageType.report_code, filename)) {
+      if (await uploadTemplate($previewEl, $imageType.reportCode, filename)) {
           saved = true;
       } else {
           saveError = true;

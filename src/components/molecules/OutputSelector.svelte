@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let report_code: string;
+  export let reportCode: string;
   export let projectName: string;
   export let filename: string;
 
@@ -10,7 +10,7 @@
   const [, extention] = filename.split(".");
 
   async function downloadOutput() {
-      const blob = await downloadOutputImage(report_code, projectName, filename);
+      const blob = await downloadOutputImage(reportCode, projectName, filename);
 
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
